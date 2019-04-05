@@ -14,7 +14,7 @@ class Controller
      */
     protected function getManager(string $model): Manager
     {
-        $manager = $model::info()["manager"];
+        $manager = $model::getInfo()["manager"];
 
         return new $manager();
     }

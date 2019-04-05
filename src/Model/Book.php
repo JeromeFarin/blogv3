@@ -1,6 +1,8 @@
 <?php
 namespace Application\Model;
 
+use Application\Manager;
+
 class Book
 {
     public $id;
@@ -13,7 +15,7 @@ class Book
     {
         return [
             "table" => "book",
-            "manager" => BookManager::class,
+            "manager" => Manager\BookManager::class,
             "columns" => [
                 "id" => "id",
                 "name" => "name",
