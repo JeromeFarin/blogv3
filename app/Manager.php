@@ -3,6 +3,8 @@
 
 namespace Framework;
 
+use Application\Model;
+
 /**
  * Class Manager
  * @package Framework
@@ -101,9 +103,15 @@ abstract class Manager
         }
     }
 
-    public function findAll($target)
+    public function findAll()
     {
-        $statement = $this->getPdo()->prepare("select * from $target");
+        $book = new Model\Book();
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select * from %s",
+                $book::getInfo()["table"]
+            )
+        );
 
         if ($statement->execute()) {
             return $statement;
@@ -112,9 +120,15 @@ abstract class Manager
         }
     }
 
-    public function find($target,$id)
+    public function find($book)
     {
-        $statement = $this->getPdo()->prepare("select * from $target where id = $id");
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select * from %s where id=%s",
+                $book::getInfo()["table"],
+                $book->getId()
+            )
+        );
 
         if ($statement->execute()) {
             return $statement;

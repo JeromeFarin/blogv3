@@ -10,14 +10,16 @@ class BookController extends Controller
     public function list()
     {
         $bookManager = new Manager\BookManager();
-        $result = $bookManager->findAll('book')->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
+        $result = $bookManager->findAll()->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
         return $this->render('Book/BookList.php',$result);
     }
 
     public function book($id)
     {
         $bookManager = new Manager\BookManager();
-        $result = $bookManager->find('book',$id)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
+        $book = new Model\Book();
+        $book->setId($id);
+        $result = $bookManager->find($book)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
         return $this->render('Book/Book.php',$result);
     }
 
