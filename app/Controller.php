@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Framework;
 
 use Zend\Diactoros\Response\HtmlResponse;

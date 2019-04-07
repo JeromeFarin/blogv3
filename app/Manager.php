@@ -136,4 +136,15 @@ abstract class Manager
             throw new \Exception("Error find()");
         }
     }
+
+    public function security($user,$pass)
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select * from %s where id=%s",
+                $book::getInfo()["table"],
+                $book->getId()
+            )
+        );
+    }
 }
