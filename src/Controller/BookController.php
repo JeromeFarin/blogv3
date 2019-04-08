@@ -11,7 +11,10 @@ class BookController extends Controller
     {
         $bookManager = $this->getManager(Model\Book::class);
         $result = $bookManager->findAll()->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
-        return $this->render('Book/BookList.php',$result);
+        return $this->render('Book/BookList.twig', array(
+            'title' => 'Book List',
+            'books' => $result
+        ));
     }
 
     public function book($id)
@@ -20,7 +23,10 @@ class BookController extends Controller
         $book = new Model\Book();
         $book->setId($id);
         $result = $bookManager->find($book)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
-        return $this->render('Book/Book.php',$result);
+        return $this->render('Book/Book.twig', array(
+            'book' => $result,
+            'title' => 'Book'
+        ));
     }
 
     public function delete($request)

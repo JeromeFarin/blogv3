@@ -1,0 +1,27 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+{% for book in book %}
+
+<h1>{{book.name}}</h1>
+
+<a href="/blogv3/book">Back</a>
+
+<p>{{book.owner}}</p>
+
+{% if session.user %}
+    {% if check %}
+        <form method="post">
+            <input type="hidden" name="id" value="{{book.id}}"><br>
+            <input type="text" name="name" value="{{book.name}}"><br>
+            <input type="text" name="owner" value="{{book.owner}}"><br>
+            <input type="submit" value="Edit book"><br>
+            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
+        </form>
+    {% endif %}
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}

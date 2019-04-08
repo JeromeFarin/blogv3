@@ -1,13 +1,15 @@
 <?php
 namespace Application\Model;
 
+use Application\Manager;
+
 class User
 {
-    private $id;
-    private $user;
-    private $pass;  
+    public $id;
+    public $user;
+    public $pass;  
 
-    public function getInfo()
+    public static function getInfo()
     {
         return [
             "table" => "user",

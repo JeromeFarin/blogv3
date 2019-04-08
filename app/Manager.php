@@ -137,14 +137,18 @@ abstract class Manager
         }
     }
 
-    public function security($user,$pass)
+    public function security($user)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "select * from %s where id=%s",
-                $book::getInfo()["table"],
-                $book->getId()
+                "select * from %s",
+                $user::getInfo()["table"]
             )
         );
+        if ($statement->execute()) {
+            return $statement;
+        } else {
+            throw new \Exception("Error security()");
+        }
     }
 }

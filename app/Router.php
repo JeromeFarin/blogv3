@@ -1,8 +1,8 @@
 <?php
 namespace Framework;
 
-use Zend\Diactoros\Response\HtmlResponse;
 use Application\Controller;
+use Framework;
 
 class Router 
 {
@@ -12,6 +12,14 @@ class Router
 
         if (strpos($request,'/')) {
             $request = substr($request,strpos($request,'/')+1);
+
+            if ($request === 'logout') {
+                return (new Controller\SecurityController())->logout();
+            }
+            
+            if ($request === 'login') {
+                return (new Controller\SecurityController())->login($requestG->getParsedBody());
+            }
 
             if ($requestG->getMethod() === "POST") {
                 if (isset($requestG->getParsedBody()['delete'])) {
@@ -34,11 +42,8 @@ class Router
                 return (new Controller\BookController())->book($param);
             }
 
-            // var_dump($param);
-
             throw new \Exception("Page not Found");
         }
-
         return (new Controller\DefaultController())->home();
     }
 }

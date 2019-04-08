@@ -7,6 +7,8 @@ class DefaultController extends Controller
 {
     public function home()
     {
-        return $this->render('Home.php');
+        return $this->render('Home.twig', array(
+            'title' => 'Home Page'
+        ));
     }
 }

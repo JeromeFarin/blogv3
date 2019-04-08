@@ -2,10 +2,24 @@
 
 {% block content %}
 
-<h1>Home Page</h1>
+<h1>{{title}}</h1>
 
 <p>It's home page</p>
 
 <p>You find book list just <a href="/blogv3/book">HERE</a></p>
+
+{% if session.user is not defined %}
+
+<form action="/blogv3/login" method="post">
+    <input type="text" name="user" placeholder="Username" required>
+    <input type="password" name="pass" placeholder="Password" required>
+    <input type="submit" value="Login">
+</form>
+
+{% else %}
+
+<a href="/blogv3/logout">Logout</a>
+
+{% endif %}
 
 {% endblock %}

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
