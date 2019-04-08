@@ -3,6 +3,8 @@ namespace Framework;
 
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Controller
 {
@@ -27,9 +29,13 @@ class Controller
         extract($data);
         ob_start();
         require(__DIR__ . '/../templates/' . $view);
-        $content = ob_get_clean();
+        $htmlContent = ob_get_clean();
 
-        return new HtmlResponse($content);
+        // $loader = new FilesystemLoader('../templates');
+        // $twig = new Environment($loader, ['cache' => false]);
+
+        // $htmlContent = $twig->render($view, $data);
+        return new HtmlResponse($htmlContent);
     }
 
     /**

@@ -12,7 +12,7 @@ class SecurityController extends Controller
         $user->setUser($_SESSION['user']);
         $user->setPass($_SESSION['pass']);
         $securityManager = $this->getManager(Model\User::class);
-        $result = $securityManager->security($user,$pass)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\User');
+        // $result = $securityManager->security($user,$pass)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\User');
         // return $this->render('Book/BookList.php',$result);
     }
 }
