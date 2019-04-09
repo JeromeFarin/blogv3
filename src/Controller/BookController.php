@@ -22,7 +22,7 @@ class BookController extends Controller
         $bookManager = $this->getManager(Model\Book::class);
         $book = new Model\Book();
         $book->setId($id);
-        $result = $bookManager->find($book)->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
+        $result = $bookManager->find($book)->fetch(\PDO::FETCH_OBJ);
         return $this->render('Book/Book.twig', array(
             'book' => $result,
             'title' => 'Book'
@@ -38,19 +38,19 @@ class BookController extends Controller
         return $this->redirect('/blogv3/book/');
     }
 
-    public function persist($values)
+    public function persist($request)
     {
         $book = new Model\Book();
-        if (isset($values->getParsedBody()["id"])) {
-            $book->setId($values->getParsedBody()["id"]);
+        if (isset($request->getParsedBody()["id"])) {
+            $book->setId($request->getParsedBody()["id"]);
         }
-        $book->setName($values->getParsedBody()["name"]);
-        $book->setOwner($values->getParsedBody()["owner"]);
-        if (isset($values->getParsedBody()["cover"])) {
-            $book->setCover($values->getParsedBody()["cover"]);
+        $book->setName($request->getParsedBody()["name"]);
+        $book->setOwner($request->getParsedBody()["owner"]);
+        if (isset($request->getParsedBody()["cover"])) {
+            $book->setCover($request->getParsedBody()["cover"]);
         }
-        if (isset($values->getParsedBody()["date_finish"])) {
-            $book->setDate($values->getParsedBody()["date_finish"]);
+        if (isset($request->getParsedBody()["date_finish"])) {
+            $book->setDate($request->getParsedBody()["date_finish"]);
         }
         
         $bookManager = $this->getManager(Model\Book::class);

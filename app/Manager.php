@@ -19,7 +19,7 @@ abstract class Manager
     public function getPdo(): \PDO
     {
         if (self::$pdo === null) {
-            self::$pdo = new \PDO("mysql:host=srv170.main-hosting.eu;dbname=u194151626_blog", "u194151626_blog", "BUbuse38");
+            self::$pdo = new \PDO("mysql:host=".getenv('PHP_JF_HOST').";dbname=".getenv('PHP_JF_DBNAME'), getenv('PHP_JF_USER'), getenv('PHP_JF_PASS'));
         }
 
         return self::$pdo;

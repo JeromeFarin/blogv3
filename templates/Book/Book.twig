@@ -2,8 +2,6 @@
 
 {% block content %}
 
-{% for book in book %}
-
 <h1>{{book.name}}</h1>
 
 <a href="/blogv3/book">Back</a>
@@ -21,7 +19,5 @@
         </form>
     {% endif %}
 {% endif %}
-
-{% endfor %}
 
 {% endblock %}
