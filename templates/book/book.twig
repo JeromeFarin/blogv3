@@ -8,7 +8,7 @@
 
 <p>{{book.owner}}</p>
 
-{% if session.user %}
+{% if session.mail %}
     {% if check %}
         <form method="post">
             <input type="hidden" name="id" value="{{book.id}}"><br>

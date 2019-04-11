@@ -2,7 +2,6 @@
 namespace Application\Controller;
 
 use Framework\Controller;
-use Application\Manager;
 use Application\Model;
 
 class BookController extends Controller
@@ -10,8 +9,8 @@ class BookController extends Controller
     public function list()
     {
         $bookManager = $this->getManager(Model\Book::class);
-        $result = $bookManager->findAll()->fetchAll(\PDO::FETCH_CLASS,'Application\Model\Book');
-        return $this->render('Book/BookList.twig', array(
+        $result = $bookManager->findAll();
+        return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
             'books' => $result
         ));
@@ -22,8 +21,8 @@ class BookController extends Controller
         $bookManager = $this->getManager(Model\Book::class);
         $book = new Model\Book();
         $book->setId($id);
-        $result = $bookManager->find($book)->fetch(\PDO::FETCH_OBJ);
-        return $this->render('Book/Book.twig', array(
+        $result = $bookManager->find($book);
+        return $this->render('book/book.twig', array(
             'book' => $result,
             'title' => 'Book'
         ));

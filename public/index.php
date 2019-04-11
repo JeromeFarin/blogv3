@@ -3,7 +3,6 @@ session_start();
 
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
-use Application\Controller\ArticleController;
 
 require __DIR__ . '/../vendor/autoload.php';
 

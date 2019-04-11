@@ -1,0 +1,21 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>It's home page</p>
+
+<p>You find book list just <a href="/blogv3/book">HERE</a></p>
+
+{% if session.mail is not defined %}
+
+<a href="/blogv3/login">Login</a>
+
+{% else %}
+
+<a href="/blogv3/logout">Logout</a>
+
+{% endif %}
+
+{% endblock %}

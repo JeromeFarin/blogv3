@@ -6,38 +6,80 @@ use Application\Manager;
 class User
 {
     public $id;
-    public $user;
+    public $username;
+    public $mail;
     public $pass;  
 
     public static function getInfo()
     {
         return [
             "table" => "user",
-            "manager" => Manager\SecurityManager::class,
+            "manager" => Manager\UserManager::class,
             "columns" => [
                 "id" => "id",
-                "user" => "user",
+                "username" => "username",
+                "mail" => "mail",
                 "pass" => "pass",
             ]
         ];
     }
 
     /**
-     * Get the value of user
+     * Get the value of id
      */ 
-    public function getUser()
+    public function getId()
     {
-        return $this->user;
+        return $this->id;
     }
 
     /**
-     * Set the value of user
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setUser($user)
+    public function setId($id)
     {
-        $this->user = $user;
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of username
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of mail
+     */ 
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Set the value of mail
+     *
+     * @return  self
+     */ 
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
 
         return $this;
     }
@@ -58,26 +100,6 @@ class User
     public function setPass($pass)
     {
         $this->pass = $pass;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
 
         return $this;
     }

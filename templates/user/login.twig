@@ -4,22 +4,18 @@
 
 <h1>{{title}}</h1>
 
-<p>It's home page</p>
+<a href="/blogv3">Back</a><br><br>
 
-<p>You find book list just <a href="/blogv3/book">HERE</a></p>
+{% if error is defined %}
 
-{% if session.user is not defined %}
+<em>{{error}}</em><br><br>
+
+{% endif %}
 
 <form action="/blogv3/login" method="post">
-    <input type="text" name="user" placeholder="Username" required>
+    <input type="email" name="mail" placeholder="Mail" required>
     <input type="password" name="pass" placeholder="Password" required>
     <input type="submit" value="Login">
 </form>
-
-{% else %}
-
-<a href="/blogv3/logout">Logout</a>
-
-{% endif %}
 
 {% endblock %}

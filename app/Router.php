@@ -14,11 +14,15 @@ class Router
             $request = substr($request,strpos($request,'/')+1);
 
             if ($request === 'logout') {
-                return (new Controller\SecurityController())->logout();
+                return (new Controller\UserController())->logout();
             }
             
             if ($request === 'login') {
-                return (new Controller\SecurityController())->login($requestG->getParsedBody());
+                if ($requestG->getMethod() === "POST") {
+                    return (new Controller\UserController())->login($requestG);
+                } else {
+                    return (new Controller\UserController())->login(null);
+                }
             }
 
             if ($requestG->getMethod() === "POST") {

@@ -15,7 +15,7 @@
     
 {% endfor %}
 <br>
-{% if session.user is defined%}
+{% if session.mail is defined%}
     {% if check %}
         <form method="post">
             <input type="text" name="name" placeholder="Name of book" required>

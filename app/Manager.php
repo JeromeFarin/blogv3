@@ -105,16 +105,15 @@ abstract class Manager
 
     public function findAll()
     {
-        $book = new Model\Book();
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "select * from %s",
-                $book::getInfo()["table"]
+                $this->model::getInfo()["table"]
             )
         );
 
         if ($statement->execute()) {
-            return $statement;
+            return $statement->fetchAll(\PDO::FETCH_CLASS,$this->namespace);
         } else {
             throw new \Exception("Error findAll()");
         }
@@ -131,7 +130,7 @@ abstract class Manager
         );
 
         if ($statement->execute()) {
-            return $statement;
+            return $statement->fetch(\PDO::FETCH_OBJ);
         } else {
             throw new \Exception("Error find()");
         }
