@@ -135,19 +135,4 @@ abstract class Manager
             throw new \Exception("Error find()");
         }
     }
-
-    public function security($user)
-    {
-        $statement = $this->getPdo()->prepare(
-            sprintf(
-                "select * from %s",
-                $user::getInfo()["table"]
-            )
-        );
-        if ($statement->execute()) {
-            return $statement;
-        } else {
-            throw new \Exception("Error security()");
-        }
-    }
 }
