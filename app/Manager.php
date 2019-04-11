@@ -28,7 +28,7 @@ abstract class Manager
     public function persist($object)
     {
         if ($object->getId() === null) {
-            $this->insert($object);
+            return $this->insert($object);
         } else {
             return $this->update($object);
         }
@@ -97,7 +97,8 @@ abstract class Manager
             )
         );
         if ($statement->execute(array_values($parameters))) {
-            return true;
+            $object->setId($this->getPdo()->lastInsertId());
+            return $object->getId();
         } else {
             throw new \Exception("Error insert()");
         }
