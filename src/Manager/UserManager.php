@@ -11,7 +11,7 @@ class UserManager extends Manager
     public function __construct() {
         $this->model = new User();
     }
-    public function checkMail($user)
+    public function check($user)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
@@ -19,30 +19,6 @@ class UserManager extends Manager
                 $user::getInfo()['table'],
                 'mail',
                 $user->getMail()
-            )
-        );
-        
-        if ($statement->execute()) {
-            $resultUser = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $resultUser;
-        } else {
-            return false;
-        }
-    }
-
-    public function check($request)
-    {
-        $parameters = [];
-
-        foreach ($request as $key => $value) {
-            array_push($parameters, $key . '=\'' . $value . '\'');
-        };
-
-        $statement = $this->getPdo()->prepare(
-            sprintf(
-                "select * from %s where %s",
-                $this->model::getInfo()['table'],
-                implode(" and ", $parameters)
             )
         );
         

@@ -3,7 +3,7 @@ namespace Framework;
 
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
-use Application\Manager\UserManager;
+use Application\Controller\UserController;
 
 class Controller
 {
@@ -36,7 +36,7 @@ class Controller
         ));
         $twig->addGlobal('session', $_SESSION);
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
-            $check = (new UserManager())->check($_SESSION);
+            $check = (new UserController())->login(null);
             if ($check != false) {
                 $twig->addGlobal('check',true);
             }
