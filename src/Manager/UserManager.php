@@ -6,7 +6,7 @@ use Application\Model\User;
 
 class UserManager extends Manager
 {
-    public $model;
+    protected $model;
 
     public function __construct() {
         $this->model = new User();

@@ -25,15 +25,6 @@ abstract class Manager
         return self::$pdo;
     }
 
-    public function persist($object)
-    {
-        if ($object->getId() === null) {
-            return $this->insert($object);
-        } else {
-            return $this->update($object);
-        }
-    }
-
     public function delete($object)
     {
         $statement = $this->getPdo()->prepare(
@@ -51,7 +42,7 @@ abstract class Manager
         }
     }
 
-    private function update($object)
+    public function update($object)
     {
         $parameters = [];
 

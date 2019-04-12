@@ -1,15 +1,22 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\Book;
+use Application\Handler\BookHandler;
 use Framework\Controller;
-use Application\Model;
 
 class BookController extends Controller
 {
+    private $model;
+    private $handler;
+
+    public function __construct() {
+        $this->model = new Book();
+        $this->handler = new BookHandler;
+    }
     public function list()
     {
-        $bookManager = $this->getManager(Model\Book::class);
-        $result = $bookManager->findAll();
+        $result = $this->handler->list();
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
             'books' => $result
@@ -18,10 +25,7 @@ class BookController extends Controller
 
     public function book($id)
     {
-        $bookManager = $this->getManager(Model\Book::class);
-        $book = new Model\Book();
-        $book->setId($id);
-        $result = $bookManager->find($book);
+        $result = $this->handler->one($id);
         return $this->render('book/book.twig', array(
             'book' => $result,
             'title' => 'Book'
@@ -30,30 +34,17 @@ class BookController extends Controller
 
     public function delete($request)
     {
-        $book = new Model\Book();
-        $book->setId($request->getParsedBody()['id']);
-        $bookManager = $this->getManager(Model\Book::class);
-        $bookManager->delete($book);
+        $this->handler->delete($request);
         return $this->redirect('/blogv3/book/');
     }
 
     public function persist($request)
     {
-        $book = new Model\Book();
         if (isset($request->getParsedBody()["id"])) {
-            $book->setId($request->getParsedBody()["id"]);
+            $result = $this->handler->edit($request);
+        } else {
+            $result = $this->handler->add($request);
         }
-        $book->setName($request->getParsedBody()["name"]);
-        $book->setOwner($request->getParsedBody()["owner"]);
-        if (isset($request->getParsedBody()["cover"])) {
-            $book->setCover($request->getParsedBody()["cover"]);
-        }
-        if (isset($request->getParsedBody()["date_finish"])) {
-            $book->setDate($request->getParsedBody()["date_finish"]);
-        }
-        
-        $bookManager = $this->getManager(Model\Book::class);
-        $back = $bookManager->persist($book);
-        return $this->redirect('/blogv3/book/'.$back);
+        return $this->redirect('/blogv3/book/'.$result);
     }
 }

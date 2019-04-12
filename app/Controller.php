@@ -11,7 +11,7 @@ class Controller
      * @param string $model
      * @return Manager
      */
-    protected function getManager(string $model): Manager
+    public function getManager(string $model): Manager
     {
         $manager = $model::getInfo()["manager"];
 
@@ -23,7 +23,7 @@ class Controller
      * @param array $data
      * @return HtmlResponse
      */
-    protected function render(string $view, array $data = []): HtmlResponse
+    public function render(string $view, array $data = []): HtmlResponse
     {
         // extract($data);
         // ob_start();
