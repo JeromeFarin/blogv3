@@ -6,26 +6,20 @@ use Framework\Controller;
 
 class BookHandler extends Controller
 {
-    private $model;
-
-    public function __construct() {
-        $this->model = new Book();
-    }
-
-    public function add($request)
+    public function add($request,$model)
     {
-        $this->model->setName($request->getParsedBody()["name"]);
-        $this->model->setOwner($request->getParsedBody()["owner"]);
+        $model->setName($request->getParsedBody()["name"]);
+        $model->setOwner($request->getParsedBody()["owner"]);
         
         $bookManager = $this->getManager(Book::class);
-        return $bookManager->insert($this->model);
+        return $bookManager->insert($model);
     }
 
-    public function delete($request)
+    public function delete($request,$model)
     {
-        $this->model->setId($request->getParsedBody()['id']);
+        $model->setId($request->getParsedBody()['id']);
         $bookManager = $this->getManager(Book::class);
-        return $bookManager->delete($this->model);
+        return $bookManager->delete($model);
     }
 
     public function list()
@@ -34,20 +28,20 @@ class BookHandler extends Controller
         return $bookManager->findAll();
     }
 
-    public function edit($request)
+    public function edit($request,$model)
     {
-        $this->model->setId($request->getParsedBody()["id"]);
-        $this->model->setName($request->getParsedBody()["name"]);
-        $this->model->setOwner($request->getParsedBody()["owner"]);
+        $model->setId($request->getParsedBody()["id"]);
+        $model->setName($request->getParsedBody()["name"]);
+        $model->setOwner($request->getParsedBody()["owner"]);
         
         $bookManager = $this->getManager(Book::class);
-        return $bookManager->update($this->model);
+        return $bookManager->update($model);
     }
 
-    public function one($id)
+    public function one($id,$model)
     {
         $bookManager = $this->getManager(Book::class);
-        $this->model->setId($id);
-        return $bookManager->find($this->model);
+        $model->setId($id);
+        return $bookManager->find($model);
     }
 }

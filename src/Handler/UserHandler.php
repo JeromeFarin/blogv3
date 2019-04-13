@@ -6,41 +6,35 @@ use Application\Model\User;
 
 class UserHandler extends Controller
 {
-    private $model;
-
-    public function __construct() {
-        $this->model = new User();
-    }
-
-    public function login($request)
+    public function login($request,$model)
     {
         if ($request != null) {
-            $this->model->setMail($request->getParsedBody()['mail']);
-            $this->model->setPass($request->getParsedBody()['pass']);
+            $model->setMail($request->getParsedBody()['mail']);
+            $model->setPass($request->getParsedBody()['pass']);
 
-            return $this->check();
+            return $this->check($model);
         } else {
             if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
-                $this->model->setMail($_SESSION['mail']);
-                $this->model->setPass($_SESSION['pass']);
+                $model->setMail($_SESSION['mail']);
+                $model->setPass($_SESSION['pass']);
 
-                return $this->check();
+                return $this->check($model);
             } else {
                 return 'login';
             }
         }   
     }
 
-    public function check()
+    public function check($model)
     {
         $userManager = $this->getManager(User::class);
-        $check = $userManager->check($this->model);
+        $check = $userManager->check($model);
         if ($check === false) {
             return 'profile';
         } else {
-            if (password_verify($this->model->getPass(),$check['pass'])) {
+            if (password_verify($model->getPass(),$check['pass'])) {
                 $_SESSION['mail'] = $check['mail'];
-                $_SESSION['pass'] = $this->model->getPass();
+                $_SESSION['pass'] = $model->getPass();
 
                 return 'ok';
             } else {

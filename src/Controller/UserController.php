@@ -16,7 +16,7 @@ class UserController extends Controller
     }
     public function login($request)
     {
-        $result = $this->handler->login($request);
+        $result = $this->handler->login($request,$this->model);
         if ($result == 'profile') {
             return $this->render('user/login.twig', array(
                 'title' => 'Connection',

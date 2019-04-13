@@ -25,7 +25,7 @@ class BookController extends Controller
 
     public function book($id)
     {
-        $result = $this->handler->one($id);
+        $result = $this->handler->one($id,$this->model);
         return $this->render('book/book.twig', array(
             'book' => $result,
             'title' => 'Book'
@@ -34,16 +34,16 @@ class BookController extends Controller
 
     public function delete($request)
     {
-        $this->handler->delete($request);
+        $this->handler->delete($request,$this->model);
         return $this->redirect('/blogv3/book/');
     }
 
     public function persist($request)
     {
         if (isset($request->getParsedBody()["id"])) {
-            $result = $this->handler->edit($request);
+            $result = $this->handler->edit($request,$this->model);
         } else {
-            $result = $this->handler->add($request);
+            $result = $this->handler->add($request,$this->model);
         }
         return $this->redirect('/blogv3/book/'.$result);
     }
