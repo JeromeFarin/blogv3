@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Model\Book;
 use Application\Handler\BookHandler;
 use Framework\Controller;
+use Application\Form\Book\AddForm;
 
 class BookController extends Controller
 {
@@ -17,18 +18,39 @@ class BookController extends Controller
     public function list()
     {
         $result = $this->handler->list();
+        $inputs = array(
+            'name' => '',
+            'owner' => ''
+        );
+        $submit = array(
+            'Create new book'
+        );
+        $form = (new AddForm())->create('post',$inputs,$submit);
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $result
+            'books' => $result,
+            'form' => $form
         ));
     }
 
     public function book($id)
     {
         $result = $this->handler->one($id,$this->model);
+        $arrayResult = (array)$result;
+        $request = array(
+            'id' => $arrayResult['id'],
+            'name' => $arrayResult['name'],
+            'owner' => $arrayResult['owner']
+        );
+        $submit = array(
+            'Edit book',
+            'Delete book'
+        );
+        $form = (new AddForm())->create('post',$request,$submit);
         return $this->render('book/book.twig', array(
             'book' => $result,
-            'title' => 'Book'
+            'title' => 'Book',
+            'form' => $form
         ));
     }
 

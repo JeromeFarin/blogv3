@@ -22,6 +22,21 @@ class Book
                 "owner" => "owner",
                 "cover" => "cover",
                 "date_finish" => "date_finish",
+            ],
+            "type" => [
+                "id" => "hidden",
+                "name" => "text",
+                "owner" => "text",
+                "cover" => "file",
+                "date_finish" => "date"
+            ],
+            "placeholder" => [
+                "name" => "Book name",
+                "owner" => "Book owner"
+            ],
+            "required" => [
+                "name" => "",
+                "owner" => ""
             ]
         ];
     }

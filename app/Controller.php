@@ -4,6 +4,7 @@ namespace Framework;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Application\Controller\UserController;
+use Application\Form\Book\AddForm;
 
 class Controller
 {
@@ -25,10 +26,6 @@ class Controller
      */
     public function render(string $view, array $data = []): HtmlResponse
     {
-        // extract($data);
-        // ob_start();
-        // require(__DIR__ . '/../templates/' . $view);
-        // $htmlContent = ob_get_clean();
 
         $loader = new \Twig_Loader_Filesystem('../templates');
         $twig = new \Twig_Environment($loader, array(

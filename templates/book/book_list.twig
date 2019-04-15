@@ -17,11 +17,12 @@
 <br>
 {% if session.mail is defined%}
     {% if check %}
-        <form method="post">
+        {{ form }}
+        {# <form method="post">
             <input type="text" name="name" placeholder="Name of book" required>
             <input type="text" name="owner" placeholder="Owner of book" required>
             <input type="submit" value="Create new book">
-        </form>
+        </form> #}
     {% endif %}
 {% endif %}
 
