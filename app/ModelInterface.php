@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Framework;
 
 /**
@@ -12,5 +11,5 @@ interface ModelInterface
     /**
      * @return array
      */
-    public static function info(): array;
+    public static function getInfo(): array;
 }

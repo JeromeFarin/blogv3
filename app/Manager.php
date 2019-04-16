@@ -16,10 +16,14 @@ abstract class Manager
      */
     private static $pdo;
 
-    public function getPdo(): \PDO
+    public function getPdo()
     {
         if (self::$pdo === null) {
-            self::$pdo = new \PDO("mysql:host=".getenv('PHP_JF_HOST').";dbname=".getenv('PHP_JF_DBNAME'), getenv('PHP_JF_USER'), getenv('PHP_JF_PASS'));
+            self::$pdo = new \PDO(
+                getenv("DATABASE_DSN"),
+                getenv('DATABASE_USER'),
+                getenv('DATABASE_PASSWORD')
+            );
         }
 
         return self::$pdo;

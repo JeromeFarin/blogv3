@@ -2,8 +2,9 @@
 namespace Application\Model;
 
 use Application\Manager;
+use Framework\ModelInterface;
 
-class Book
+class Book implements ModelInterface
 {
     public $id;
     public $name;
@@ -11,7 +12,7 @@ class Book
     public $cover;
     public $date_finish;
 
-    public static function getInfo()
+    public static function getInfo(): array
     {
         return [
             "table" => "book",
@@ -33,6 +34,10 @@ class Book
             "placeholder" => [
                 "name" => "Book name",
                 "owner" => "Book owner"
+            ],
+            "validation" => [
+                "name" => ["required", "min-length-20"],
+                "owner" => ["required", "min-length-5"],
             ],
             "required" => [
                 "name" => "",

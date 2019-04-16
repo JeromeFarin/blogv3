@@ -1,35 +1,52 @@
 <?php
+
 namespace Application\Controller;
 
 use Application\Model\Book;
 use Application\Handler\BookHandler;
 use Framework\Controller;
 use Application\Form\Book\AddForm;
+use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class BookController
+ * @package Application\Controller
+ */
 class BookController extends Controller
 {
+    /**
+     * @var Book
+     */
     private $model;
+
+    /**
+     * @var BookHandler
+     */
     private $handler;
 
     public function __construct() {
         $this->model = new Book();
         $this->handler = new BookHandler;
     }
-    public function list()
+
+    public function list(ServerRequestInterface $request)
     {
-        $result = $this->handler->list();
-        $inputs = array(
-            'name' => '',
-            'owner' => ''
-        );
-        $submit = array(
-            'Create new book'
-        );
-        $form = (new AddForm())->create('post',$inputs,$submit);
+        $book = new Book();
+
+        $form = new AddForm($book);
+
+        $form->handle($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form);
+        }
+
+
+
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $result,
-            'form' => $form
+            'books' => $this->handler->list(),
+            "form" => $form
         ));
     }
 

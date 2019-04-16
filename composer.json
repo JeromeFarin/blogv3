@@ -9,12 +9,17 @@
     "require": {
         "zendframework/zend-diactoros": "^2.1",
         "zendframework/zend-httphandlerrunner": "^1.1",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "symfony/debug": "^4.2"
     },
     "autoload": {
         "psr-4": {
             "Framework\\": "app",
             "Application\\": "src"
         }
+    },
+    "require-dev": {
+        "symfony/dotenv": "^4.2",
+        "symfony/var-dumper": "^4.2"
     }
 }

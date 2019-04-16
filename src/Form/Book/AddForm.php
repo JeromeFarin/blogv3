@@ -1,50 +1,91 @@
 <?php
+
 namespace Application\Form\Book;
 
 use Application\Model\Book;
+use Framework\FormInterface;
+use Framework\ModelInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-class AddForm
+/**
+ * Class AddForm
+ * @package Application\Form\Book
+ */
+class AddForm implements FormInterface
 {
-    private $model;
+    /**
+     * @var Book
+     */
+    private $book;
 
-    public function __construct() {
-        $this->model = new Book();
+    /**
+     * @var bool
+     */
+    private $submitted = false;
+
+    /**
+     * @var array
+     */
+    private $errors = [];
+
+    /**
+     * AddForm constructor.
+     * @param ModelInterface $model
+     */
+    public function __construct(ModelInterface $model)
+    {
+        $this->book = $model;
     }
 
-    public function create($type,$request,$submit)
+    public function handle(ServerRequestInterface $request): FormInterface
     {
-        $form = "<form method='$type'>";
-        $types = $this->model::getInfo()['type'];
-        $holder = $this->model::getInfo()['placeholder'];
-        $required = $this->model::getInfo()['required'];
+        if ($request->getMethod() === "POST" && isset($request->getParsedBody()["book"])) {
+            $this->submitted = true;
 
-        foreach ($request as $key => $value) {
-            if (isset($types[$key])) {
-                if (isset($holder[$key])) {
-                    if (isset($required[$key])) {
-                        $form .= "<input type='$types[$key]' name='$key' placeholder='$holder[$key]' value='$value' required>";
-                    } else {
-                        $form .= "<input type='$types[$key]' name='$key' placeholder='$holder[$key]' value='$value'>";
-                    }
-                } else {
-                    if (isset($required[$key])) {
-                        $form .= "<input type='$types[$key]' name='$key' value='$value' required>";
-                    } else {
-                        $form .= "<input type='$types[$key]' name='$key' value='$value'>";
-                    }
-                }
-            }
+            $bookData = $request->getParsedBody()["book"];
+
+            $this->book->setName($bookData["name"]);
+            $this->book->setOwner($bookData["owner"]);
         }
 
-        foreach ($submit as $value) {
-            if (strpos($value,'delete')) {
-                $form .= "<input type='submit' name='delete'  onclick='return confirm('Are you sure to delete this book ?');' value='$value'>";
-            }
-            $form .= "<input type='submit' value='$value'>";
+        return $this;
+    }
+
+    public function isSubmitted(): bool
+    {
+        return $this->submitted;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        if ($this->book->getName() === null || empty($this->book->getName())) {
+            $this->errors["name"] = "Le nom ne doit pas être vide.";
         }
 
-        $form .= "</form>";
+        if ($this->book->getOwner() === null || empty($this->book->getOwner())) {
+            $this->errors["owner"] = "Le nom de l'auteur ne doit pas être vide.";
+        }
 
-        return $form;
+        return count($this->errors) === 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @return ModelInterface
+     */
+    public function getData(): ModelInterface
+    {
+        return $this->book;
     }
 }

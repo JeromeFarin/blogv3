@@ -25,15 +25,15 @@ class Router
                 }
             }
 
+            if ($request === 'book') {
+                return (new Controller\BookController())->list($requestG);
+            }
+
             if ($requestG->getMethod() === "POST") {
                 if (isset($requestG->getParsedBody()['delete'])) {
                     return (new Controller\BookController())->delete($requestG);
                 }
                 return (new Controller\BookController())->persist($requestG);
-            }
-
-            if ($request === 'book') {
-                return (new Controller\BookController())->list();
             }
 
             $param = substr($request,strpos($request,'/')+1);
