@@ -17,23 +17,12 @@ class Router
             }
             
             if ($request === 'login') {
-                if ($requestG->getMethod() === "POST") {
-                    return (new Controller\UserController())->login($requestG);
-                } else {
-                    return (new Controller\UserController())->login(null);
-                }
+                return (new Controller\UserController())->login($requestG);
             }
 
             if ($request === 'book') {
                 return (new Controller\BookController())->list($requestG);
             }
-
-            // if ($requestG->getMethod() === "POST") {
-            //     if (isset($requestG->getParsedBody()['delete'])) {
-            //         return (new Controller\BookController())->delete($requestG);
-            //     }
-            //     return (new Controller\BookController())->persist($requestG);
-            // }
 
             $param = substr($request,strpos($request,'/')+1);
 

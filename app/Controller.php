@@ -33,7 +33,7 @@ class Controller
         $twig->addGlobal('session', $_SESSION);
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
             $check = (new UserController())->login(null);
-            if ($check != false) {
+            if ($check === true) {
                 $twig->addGlobal('check',true);
             }
         }

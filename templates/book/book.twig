@@ -8,20 +8,22 @@
 
 <p>{{book.owner}}</p>
 
-<form method="post">
-    <input type="hidden" name="id" value="{{book.id}}"><br>
-    <input type="text" name="book[name]" value="{{book.name}}"><br>
-    {% if form.errors.name is defined %}
-        <br>
-        ERROR : {{ form.errors.name }}
-    {% endif %}
-    <input type="text" name="book[owner]" value="{{book.owner}}"><br>
-    {% if form.errors.owner is defined %}
-        <br>
-        ERROR : {{ form.errors.name }}
-    {% endif %}
-    <input type="submit" name="edit" value="Edit book"><br>
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
-</form>
+{% if check %}
+    <form method="post">
+        <input type="hidden" name="id" value="{{book.id}}"><br>
+        <input type="text" name="book[name]" value="{{book.name}}"><br>
+        {% if form.errors.name is defined %}
+            <br>
+            ERROR : {{ form.errors.name }}
+        {% endif %}
+        <input type="text" name="book[owner]" value="{{book.owner}}"><br>
+        {% if form.errors.owner is defined %}
+            <br>
+            ERROR : {{ form.errors.name }}
+        {% endif %}
+        <input type="submit" name="edit" value="Edit book"><br>
+        <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
+    </form>
+{% endif %}
 
 {% endblock %}

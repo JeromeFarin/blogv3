@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Model\User;
 use Application\Handler\UserHandler;
 use Framework\Controller;
+use Application\Form\User\AddForm;
 
 class UserController extends Controller
 {
@@ -16,24 +17,26 @@ class UserController extends Controller
     }
     public function login($request)
     {
-        $result = $this->handler->login($request,$this->model);
-        if ($result == 'profile') {
-            return $this->render('user/login.twig', array(
-                'title' => 'Connection',
-                'error' => 'No profiles found'
-            ));
+        if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
+
+            $this->model->setMail($_SESSION['mail']);
+            $this->model->setPass($_SESSION['pass']);
+
+            return $this->handler->login($this->model,$request);
         }
-        if ($result == 'pass') {
-            return $this->render('user/login.twig', array(
-                'title' => 'Connection',
-                'error' => 'Wrong password'
-            ));
-        }
-        if ($result == 'ok') {
+        
+        $form = new AddForm($this->model);
+
+        $form->handle($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->handler->login($form->getData(),$request);
             return $this->redirect('/blogv3');
         }
+
         return $this->render('user/login.twig', array(
-            'title' => 'Connection'
+            'title' => 'Connection',
+            'form' => $form
         ));
     }
 

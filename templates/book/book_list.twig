@@ -15,7 +15,8 @@
     
 {% endfor %}
 <br>
-<form method="post">
+{% if check %}
+    <form method="post">
         <input type="text" name="book[name]" placeholder="name" value="{{ form.data.name }}"/>
         {% if form.errors.name is defined %}
             <br>
@@ -31,5 +32,6 @@
         <br>
         <button type="submit">Valid</button>
     </form>
+{% endif %}
 
 {% endblock %}

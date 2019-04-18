@@ -2,15 +2,16 @@
 namespace Application\Model;
 
 use Application\Manager;
+use Framework\ModelInterface;
 
-class User
+class User implements ModelInterface
 {
     public $id;
     public $username;
     public $mail;
     public $pass;  
 
-    public static function getInfo()
+    public static function getInfo(): array
     {
         return [
             "table" => "user",

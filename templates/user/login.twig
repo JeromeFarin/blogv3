@@ -12,9 +12,17 @@
 
 {% endif %}
 
-<form action="/blogv3/login" method="post">
-    <input type="email" name="mail" placeholder="Mail" required>
-    <input type="password" name="pass" placeholder="Password" required>
+<form method="post">
+    <input type="email" name="user[mail]" placeholder="Mail" required>
+    {% if form.errors.mail is defined %}
+        <br>
+        ERROR : {{ form.errors.mail }}
+    {% endif %}
+    <input type="password" name="user[pass]" placeholder="Password" required>
+    {% if form.errors.pass is defined %}
+        <br>
+        ERROR : {{ form.errors.pass }}
+    {% endif %}
     <input type="submit" value="Login">
 </form>
 

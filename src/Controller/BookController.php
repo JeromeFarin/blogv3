@@ -42,7 +42,8 @@ class BookController extends Controller
 
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $this->handler->list()
+            'books' => $this->handler->list(),
+            'form' => $form
         ));
     }
 
@@ -67,7 +68,8 @@ class BookController extends Controller
         
         return $this->render('book/book.twig', array(
             'book' => $result,
-            'title' => 'Book'
+            'title' => 'Book',
+            'form' => $form
         ));
     }
 }
