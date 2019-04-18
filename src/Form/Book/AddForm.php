@@ -5,7 +5,6 @@ namespace Application\Form\Book;
 use Application\Model\Book;
 use Framework\FormInterface;
 use Framework\ModelInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

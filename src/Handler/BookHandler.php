@@ -6,18 +6,14 @@ use Framework\Controller;
 
 class BookHandler extends Controller
 {
-    public function add($request,$model)
+    public function add($book)
     {
-        $model->setName($request->getParsedBody()["name"]);
-        $model->setOwner($request->getParsedBody()["owner"]);
-        
         $bookManager = $this->getManager(Book::class);
-        return $bookManager->insert($model);
+        return $bookManager->insert($book);
     }
 
-    public function delete($request,$model)
+    public function delete($model)
     {
-        $model->setId($request->getParsedBody()['id']);
         $bookManager = $this->getManager(Book::class);
         return $bookManager->delete($model);
     }
@@ -28,14 +24,10 @@ class BookHandler extends Controller
         return $bookManager->findAll();
     }
 
-    public function edit($request,$model)
-    {
-        $model->setId($request->getParsedBody()["id"]);
-        $model->setName($request->getParsedBody()["name"]);
-        $model->setOwner($request->getParsedBody()["owner"]);
-        
+    public function edit($book)
+    {        
         $bookManager = $this->getManager(Book::class);
-        return $bookManager->update($model);
+        return $bookManager->update($book);
     }
 
     public function one($id,$model)

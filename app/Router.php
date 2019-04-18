@@ -2,7 +2,6 @@
 namespace Framework;
 
 use Application\Controller;
-use Framework;
 
 class Router 
 {
@@ -29,12 +28,12 @@ class Router
                 return (new Controller\BookController())->list($requestG);
             }
 
-            if ($requestG->getMethod() === "POST") {
-                if (isset($requestG->getParsedBody()['delete'])) {
-                    return (new Controller\BookController())->delete($requestG);
-                }
-                return (new Controller\BookController())->persist($requestG);
-            }
+            // if ($requestG->getMethod() === "POST") {
+            //     if (isset($requestG->getParsedBody()['delete'])) {
+            //         return (new Controller\BookController())->delete($requestG);
+            //     }
+            //     return (new Controller\BookController())->persist($requestG);
+            // }
 
             $param = substr($request,strpos($request,'/')+1);
 
@@ -43,7 +42,7 @@ class Router
             }
 
             if (is_numeric($param)) {
-                return (new Controller\BookController())->book($param);
+                return (new Controller\BookController())->book($param,$requestG);
             }
 
             throw new \Exception("Page not Found");

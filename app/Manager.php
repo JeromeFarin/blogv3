@@ -91,6 +91,7 @@ abstract class Manager
                 implode(",", array_fill(0, count($parameters), "?"))
             )
         );
+
         if ($statement->execute(array_values($parameters))) {
             $object->setId($this->getPdo()->lastInsertId());
             return $object->getId();

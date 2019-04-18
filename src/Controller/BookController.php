@@ -31,59 +31,43 @@ class BookController extends Controller
 
     public function list(ServerRequestInterface $request)
     {
-        $book = new Book();
-
-        $form = new AddForm($book);
+        $form = new AddForm($this->model);
 
         $form->handle($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form);
+            $book = $this->handler->add($form->getData());
+            return $this->redirect('/blogv3/book/'.$book);
         }
-
-
 
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $this->handler->list(),
-            "form" => $form
+            'books' => $this->handler->list()
         ));
     }
 
-    public function book($id)
+    public function book($id,$request)
     {
         $result = $this->handler->one($id,$this->model);
-        $arrayResult = (array)$result;
-        $request = array(
-            'id' => $arrayResult['id'],
-            'name' => $arrayResult['name'],
-            'owner' => $arrayResult['owner']
-        );
-        $submit = array(
-            'Edit book',
-            'Delete book'
-        );
-        $form = (new AddForm())->create('post',$request,$submit);
+
+        $form = new AddForm($this->model);
+        
+        $form->handle($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($request->getParsedBody()['edit'])) {
+                $id = $this->handler->edit($form->getData());
+                return $this->redirect('/blogv3/book/'.$id);
+            }
+            if (isset($request->getParsedBody()['delete'])) {
+                $this->handler->delete($this->model);
+                return $this->redirect('/blogv3/book/');
+            }
+        }
+        
         return $this->render('book/book.twig', array(
             'book' => $result,
-            'title' => 'Book',
-            'form' => $form
+            'title' => 'Book'
         ));
-    }
-
-    public function delete($request)
-    {
-        $this->handler->delete($request,$this->model);
-        return $this->redirect('/blogv3/book/');
-    }
-
-    public function persist($request)
-    {
-        if (isset($request->getParsedBody()["id"])) {
-            $result = $this->handler->edit($request,$this->model);
-        } else {
-            $result = $this->handler->add($request,$this->model);
-        }
-        return $this->redirect('/blogv3/book/'.$result);
     }
 }

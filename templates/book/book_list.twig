@@ -6,10 +6,16 @@
 
 <a href="/blogv3/">Back</a>
 
-
-
 <br>
-    <form method="post">
+<br>
+
+{% for book in books %}
+
+<li><a href="/blogv3/book/{{book.id}}">{{book.name}}</a></li>
+    
+{% endfor %}
+<br>
+<form method="post">
         <input type="text" name="book[name]" placeholder="name" value="{{ form.data.name }}"/>
         {% if form.errors.name is defined %}
             <br>
@@ -23,31 +29,7 @@
             ERROR : {{ form.errors.owner }}
         {% endif %}
         <br>
-        <input type="file" name="book[cover]" placeholder="cover"/>
-        <br>
         <button type="submit">Valid</button>
     </form>
-
-<br>
-
-
-
-
-{% for book in books %}
-
-<li><a href="/blogv3/book/{{book.id}}">{{book.name}}</a></li>
-    
-{% endfor %}
-<br>
-{#{% if session.mail is defined%}#}
-{#    {% if check %}#}
-{#        {{ form }}#}
-{#        #}{# <form method="post">#}
-{#            <input type="text" name="name" placeholder="Name of book" required>#}
-{#            <input type="text" name="owner" placeholder="Owner of book" required>#}
-{#            <input type="submit" value="Create new book">#}
-{#        </form> #}
-{#    {% endif %}#}
-{#{% endif %}#}
 
 {% endblock %}
