@@ -2,12 +2,7 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
-
-<a href="/blogv3/">Back</a>
-
-<br>
-<br>
+<h1><a href="/blogv3/">{{title}}</a></h1>
 
 {% for book in books %}
 
@@ -16,19 +11,23 @@
 {% endfor %}
 <br>
 {% if check %}
-    <form method="post">
-        <input type="text" name="book[name]" placeholder="name" value="{{ form.data.name }}"/>
+    <form method="post" enctype="multipart/form-data">
+        <input type="text" name="book[name]" placeholder="name"/>
         {% if form.errors.name is defined %}
             <br>
             ERROR : {{ form.errors.name }}
         {% endif %}
 
         <br>
-        <input type="text" name="book[owner]" placeholder="owner" value="{{ form.data.owner }}"/>
+        <input type="text" name="book[owner]" placeholder="owner"/>
         {% if form.errors.owner is defined %}
             <br>
             ERROR : {{ form.errors.owner }}
         {% endif %}
+        <br>
+        <input type="file" name="book[cover]">
+        <br>
+        <input type="date" name="book[finished_date]">
         <br>
         <button type="submit">Valid</button>
     </form>

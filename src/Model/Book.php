@@ -10,7 +10,7 @@ class Book implements ModelInterface
     public $name;
     public $owner;
     public $cover;
-    public $date_finish;
+    public $finished_date;
 
     public static function getInfo(): array
     {
@@ -22,7 +22,17 @@ class Book implements ModelInterface
                 "name" => "name",
                 "owner" => "owner",
                 "cover" => "cover",
-                "date_finish" => "date_finish",
+                "finished_date" => "finished_date",
+            ],
+            "required" => [
+                "name" => [
+                    "min-length" => "5",
+                    "max-length" => "255"
+                ],
+                "owner" => [
+                    "min-length" => "5",
+                    "max-length" => "255"
+                ]
             ]
         ];
     }
@@ -66,14 +76,24 @@ class Book implements ModelInterface
     {
         return $this->cover;
     }
-
-    public function setDate_Finish($date_finish)
+    
+    /**
+     * Get the value of finished_date
+     */ 
+    public function getFinished_date()
     {
-        $this->date_finish = $date_finish;
+        return $this->finished_date;
     }
 
-    public function getDate_Finish()
+    /**
+     * Set the value of finished_date
+     *
+     * @return  self
+     */ 
+    public function setFinished_date($finished_date)
     {
-        return $this->date_finish;
+        $this->finished_date = $finished_date;
+
+        return $this;
     }
 }

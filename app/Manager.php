@@ -3,8 +3,6 @@
 
 namespace Framework;
 
-use Application\Model;
-
 /**
  * Class Manager
  * @package Framework
@@ -80,9 +78,8 @@ abstract class Manager
 
         foreach ($object::getInfo()["columns"] as $column => $property) {
             $parameters[$column] = $object->{sprintf("get%s", ucfirst($property))}();
-        }
-        
-
+        }        
+        // dd($parameters);
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "insert into %s (%s) values (%s)",
@@ -91,7 +88,7 @@ abstract class Manager
                 implode(",", array_fill(0, count($parameters), "?"))
             )
         );
-
+        
         if ($statement->execute(array_values($parameters))) {
             $object->setId($this->getPdo()->lastInsertId());
             return $object->getId();

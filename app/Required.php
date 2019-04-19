@@ -1,30 +1,28 @@
 <?php
-
 namespace Framework;
 
-class Required
+class Required 
 {
     private $message;
 
-    /**
-     * Required constructor.
-     * @param $message
-     */
-    public function __construct($message)
+    public function required($request,$filter)
     {
-        $this->message = $message;
+        $required = $request::getInfo()['required'][$filter];
+
+        foreach ($required as $key => $value) {
+            $size = $this->length($request->{sprintf("get%s", ucfirst($filter))}());
+
+            if ($key === "min-length" && $value > $size) {
+                return "Le champ doit contenir au moins $value caractères";
+            }
+            if ($key === "max-length" && $value < $size) {
+                return "Le champ ne doit pas contenir plus de $value caractères";
+            }
+        }
     }
 
-    public function test($value): bool
+    private function length($request)
     {
-        return !empty($value);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMessage()
-    {
-        return $this->message;
+        return strlen($request);
     }
 }

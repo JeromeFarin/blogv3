@@ -34,8 +34,8 @@ class BookController extends Controller
         $form = new AddForm($this->model);
 
         $form->handle($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        
+        if ($form->isSubmitted() && $form->isValid()) {;
             $book = $this->handler->add($form->getData());
             return $this->redirect('/blogv3/book/'.$book);
         }
@@ -55,14 +55,16 @@ class BookController extends Controller
         
         $form->handle($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (isset($request->getParsedBody()['edit'])) {
-                $id = $this->handler->edit($form->getData());
-                return $this->redirect('/blogv3/book/'.$id);
-            }
+        if ($form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
                 $this->handler->delete($this->model);
                 return $this->redirect('/blogv3/book/');
+            }
+            if ($form->isValid()) {
+                if (isset($request->getParsedBody()['edit'])) {
+                    $id = $this->handler->edit($form->getData());
+                    return $this->redirect('/blogv3/book/'.$id);
+                }
             }
         }
         
