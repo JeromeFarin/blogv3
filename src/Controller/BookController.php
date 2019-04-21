@@ -67,7 +67,7 @@ class BookController extends Controller
                 }
             }
         }
-        
+        // dd($result);
         return $this->render('book/book.twig', array(
             'book' => $result,
             'title' => 'Book',

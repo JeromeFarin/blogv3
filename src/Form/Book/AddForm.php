@@ -54,11 +54,10 @@ class AddForm extends Required implements FormInterface
 
             if (isset($_FILES['book_cover']) && $_FILES['book_cover']['size'] > 0) {
                 $this->uploadFile();
-            } 
-
-            if (isset($bookData["cover"])) {
+            } else {
                 $this->book->setCover($bookData["cover"]);
             }
+            
         }
 
         return $this;
