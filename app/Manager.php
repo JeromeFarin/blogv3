@@ -79,7 +79,7 @@ abstract class Manager
         foreach ($object::getInfo()["columns"] as $column => $property) {
             $parameters[$column] = $object->{sprintf("get%s", ucfirst($property))}();
         }        
-        // dd($parameters);
+        
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "insert into %s (%s) values (%s)",

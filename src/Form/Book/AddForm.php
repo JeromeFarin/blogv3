@@ -52,9 +52,13 @@ class AddForm extends Required implements FormInterface
                 $this->book->setFinished_date($bookData["finished_date"]);
             }
 
-            if (isset($_FILES['book_cover'])) {
+            if (isset($_FILES['book_cover']) && $_FILES['book_cover']['size'] > 0) {
                 $this->uploadFile();
             } 
+
+            if (isset($bookData["cover"])) {
+                $this->book->setCover($bookData["cover"]);
+            }
         }
 
         return $this;
@@ -109,63 +113,15 @@ class AddForm extends Required implements FormInterface
 
     private function uploadFile()
     {
-        // $file_size =$_FILES['book_cover']['size'];
-        // $file_tmp =$_FILES['book_cover']['tmp_name'];
-        // $file_type=substr($_FILES['book_cover']['type'],strpos($_FILES['book_cover']['type'],'/')+1);
-        
-        // $file = basename("../public/img/cover/.".$file_type);
-        // dd(dir("../public/img/cover"));
-        // dd($file_tmp,"/img/cover");
+        if ($_FILES['book_cover']['size'] < 5000000) {
+            $extension = strtolower(pathinfo($_FILES['book_cover']['name'], PATHINFO_EXTENSION));
+            
+            $cover = $this->book->getId().'.'.$extension;
 
-        // if ($file_size <= 5000000) {
-        //     if (move_uploaded_file($file_tmp,"../public/img/cover/")) {
-        //         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-        //     } else {
-        //         echo "Sorry, there was an error uploading your file.";
-        //     }
-        // }
+            move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../../public/img/cover/$cover");
 
-        $target_dir = "../public/img/cover";
-        $target_file = $target_dir . basename($_FILES["book_cover"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["book_cover"]["tmp_name"]);
-            if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
+            return $this->book->setCover($cover);
         }
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
-        }
-        // Check file size
-        if ($_FILES["book_cover"]["size"] > 5000000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-        // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["book_cover"]["tmp_name"], $target_file)) {
-                echo "The file ". basename( $_FILES["book_cover"]["name"]). " has been uploaded.";
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
-        }
+        $this->errors["cover"] = "Le fichier ne doit pas dépasser 5Mo.";
     }
 }

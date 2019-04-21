@@ -11,7 +11,7 @@
 {% endfor %}
 <br>
 {% if check %}
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         <input type="text" name="book[name]" placeholder="name"/>
         {% if form.errors.name is defined %}
             <br>
@@ -24,10 +24,6 @@
             <br>
             ERROR : {{ form.errors.owner }}
         {% endif %}
-        <br>
-        <input type="file" name="book_cover">
-        <br>
-        <input type="date" name="book[finished_date]">
         <br>
         <button type="submit">Valid</button>
     </form>
