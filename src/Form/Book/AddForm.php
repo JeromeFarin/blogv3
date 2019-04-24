@@ -44,7 +44,11 @@ class AddForm extends Required implements FormInterface
             $this->submitted = true;
 
             $bookData = $request->getParsedBody()["book"];
-            
+            // dd($bookData);
+            if (isset($bookData["id"])) {
+                $this->book->setId($bookData["id"]);
+            }
+
             $this->book->setName($bookData["name"]);
             $this->book->setOwner($bookData["owner"]);
 
@@ -54,7 +58,7 @@ class AddForm extends Required implements FormInterface
 
             if (isset($_FILES['book_cover']) && $_FILES['book_cover']['size'] > 0) {
                 $this->uploadFile();
-            } else {
+            } elseif (isset($bookData["cover"])) {
                 $this->book->setCover($bookData["cover"]);
             }
             

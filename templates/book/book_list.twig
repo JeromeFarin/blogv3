@@ -9,24 +9,5 @@
 <li><a href="/blogv3/book/{{book.id}}">{{book.name}}</a></li>
     
 {% endfor %}
-<br>
-{% if check %}
-    <form method="post">
-        <input type="text" name="book[name]" placeholder="name"/>
-        {% if form.errors.name is defined %}
-            <br>
-            ERROR : {{ form.errors.name }}
-        {% endif %}
-
-        <br>
-        <input type="text" name="book[owner]" placeholder="owner"/>
-        {% if form.errors.owner is defined %}
-            <br>
-            ERROR : {{ form.errors.owner }}
-        {% endif %}
-        <br>
-        <button type="submit">Valid</button>
-    </form>
-{% endif %}
 
 {% endblock %}

@@ -18,42 +18,4 @@
 
 {% endfor %}
 
-{% if check %}
-
-    <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="{{book.id}}"><br>
-        <input type="hidden" name="book[cover]" value="{{book.cover}}">
-        <input type="text" name="book[name]" value="{{book.name}}"><br>
-
-        {% if form.errors.name is defined %}
-            ERROR : {{ form.errors.name }}
-            <br>
-        {% endif %}
-
-        <input type="text" name="book[owner]" value="{{book.owner}}"><br>
-
-        {% if form.errors.owner is defined %}
-            ERROR : {{ form.errors.owner }}
-            <br>
-        {% endif %}
-
-        <input type="file" name="book_cover"><br>
-
-        {% if form.errors.cover is defined %}
-            ERROR : {{ form.errors.cover }}
-            <br>
-        {% endif %}
-
-        <input type="date" name="book[finished_date]" value="{{book.finished_date}}"><br>
-        <input type="submit" name="edit" value="Edit book"><br>
-        <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
-    </form><br>
-
-    <form method="post">
-        <input type="text" name="chapter[name]" placeholder="chapter name">
-        <input type="submit" value="Create chapter">
-    </form>
-
-{% endif %}
-
 {% endblock %}

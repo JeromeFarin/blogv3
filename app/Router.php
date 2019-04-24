@@ -12,6 +12,19 @@ class Router
         if (strpos($request,'/')) {
             $request = substr($request,strpos($request,'/')+1);
 
+            $param = substr($request,strpos($request,'/')+1);
+            
+            if (isset($_SESSION['mail']) && strpos('/'.$request,'admin')) {
+                if ($param === 'book') {
+                    return (new Controller\AdminController())->book($requestG);
+                }
+
+                if ($param === 'chapter') {
+                    return (new Controller\AdminController())->chapter($requestG);
+                }
+
+                return (new Controller\AdminController())->panel();
+            }
             if ($request === 'logout') {
                 return (new Controller\UserController())->logout();
             }
@@ -21,17 +34,15 @@ class Router
             }
 
             if ($request === 'book') {
-                return (new Controller\BookController())->list($requestG);
+                return (new Controller\BookController())->list();
             }
-
-            $param = substr($request,strpos($request,'/')+1);
 
             if (strpos($param,'/')) {
                 throw new \Exception("Not Valid Param");
             }
 
             if (is_numeric($param)) {
-                return (new Controller\BookController())->book($param,$requestG);
+                return (new Controller\BookController())->book($param);
             }
 
             throw new \Exception("Page not Found");

@@ -26,11 +26,11 @@ class Book implements ModelInterface
             ],
             "required" => [
                 "name" => [
-                    "min-length" => "5",
+                    "min-length" => "2",
                     "max-length" => "255"
                 ],
                 "owner" => [
-                    "min-length" => "5",
+                    "min-length" => "2",
                     "max-length" => "255"
                 ]
             ]

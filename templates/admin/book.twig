@@ -1,0 +1,45 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>Go back to <a href="/blogv3">Home Page</a></p>
+
+<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+
+<form method="post">
+    <input type="text" name="book[name]" placeholder="name"/>
+    <input type="text" name="book[owner]" placeholder="owner"/>
+    <button type="submit">Create Book</button>
+</form>
+<br>
+
+{% if form.errors.name is defined %}
+    ERROR : {{ form.errors.name }}
+{% endif %}
+
+{% if form.errors.owner is defined %}
+    ERROR : {{ form.errors.owner }}
+{% endif %}
+
+{% if form.errors.cover is defined %}
+    ERROR : {{ form.errors.cover }}
+{% endif %}
+
+{% for book in books %}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="book[id]" value="{{book.id}}">
+    <input type="hidden" name="book[cover]" value="{{book.cover}}">
+    <input type="text" name="book[name]" value="{{book.name}}">
+    <input type="text" name="book[owner]" value="{{book.owner}}">
+    <input type="file" name="book_cover">
+    <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
+    <input type="submit" name="edit" value="Edit book">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
+</form>
+    
+{% endfor %}
+
+{% endblock %}
