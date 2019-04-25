@@ -2,8 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Model\Book;
 use Framework\Controller;
+use Framework\Container;
 
 /**
  * Class BookController
@@ -11,21 +11,31 @@ use Framework\Controller;
  */
 class BookController extends Controller
 {
+    private $container;
+
+    public function __construct($container) {
+        $this->container = $container;
+    }
+    
     public function list()
     {
+        $handler = $this->container->get('Application\Handler\BookHandler');
+
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $this->handler->list()
+            'books' => $handler->list()
         ));
     }
 
     public function book($id)
     {
-        $model = new Book();
+        $model = $this->container->get('Application\Model\Book');
+
+        $handler = $this->container->get('Application\Handler\BookHandler');
 
         return $this->render('book/book.twig', array(
             'title' => 'Book',
-            'book' => $this->handler->one($id,$model)
+            'book' => $handler->one($id,$model)
         ));
     }
 }

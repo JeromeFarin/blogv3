@@ -2,12 +2,20 @@
 namespace Framework;
 
 use Application\Controller;
+use Application\Controller\BookController;
 
 class Router 
 {
-    public function route($requestG)
+    private $requestG;
+    private $container;
+
+    public function __construct($requestG,$container) {
+        $this->requestG = $requestG;
+        $this->container = $container;
+    }
+    public function route()
     {
-        $request = trim($requestG->getUri()->getPath(),'/');
+        $request = trim($this->requestG->getUri()->getPath(),'/');
 
         if (strpos($request,'/')) {
             $request = substr($request,strpos($request,'/')+1);
@@ -16,25 +24,29 @@ class Router
             
             if (isset($_SESSION['mail']) && strpos('/'.$request,'admin')) {
                 if ($param === 'book') {
-                    return (new Controller\AdminController())->book($requestG);
+                    return $this->container->get('Application\Controller\AdminController')->book($this->requestG);
                 }
 
                 if ($param === 'chapter') {
-                    return (new Controller\AdminController())->chapter($requestG);
+                    return $this->container->get('Application\Controller\AdminController')->chapter($this->requestG);
                 }
 
-                return (new Controller\AdminController())->panel();
+                return $this->container->get('Application\Controller\AdminController')->panel();
             }
             if ($request === 'logout') {
-                return (new Controller\UserController())->logout();
+                return $this->container->get('Application\Controller\UserController')->logout();
             }
             
             if ($request === 'login') {
-                return (new Controller\UserController())->login($requestG);
+                return $this->container->get('Application\Controller\UserController')->login($this->requestG);
             }
 
             if ($request === 'book') {
-                return (new Controller\BookController())->list();
+                $this->container->set('Application\Controller\BookController',function($container){
+                    return new BookController($container);
+                });
+                
+                return $this->container->get('Application\Controller\BookController')->list();
             }
 
             if (strpos($param,'/')) {
@@ -42,11 +54,15 @@ class Router
             }
 
             if (is_numeric($param)) {
-                return (new Controller\BookController())->book($param);
+                $this->container->set('Application\Controller\BookController',function($container){
+                    return new BookController($container);
+                });
+
+                return $this->container->get('Application\Controller\BookController')->book($param);
             }
 
             throw new \Exception("Page not Found");
         }
-        return (new Controller\DefaultController())->home();
+        return $this->container->get('Application\Controller\DefaultController')->home();
     }
 }

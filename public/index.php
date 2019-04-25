@@ -8,6 +8,8 @@ use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\Debug\DebugClassLoader;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+use Framework\Container;
+use Framework\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -28,10 +30,16 @@ if (getenv("APP_ENV") === "dev") {
     DebugClassLoader::enable();
 }
 
-$request = ServerRequestFactory::fromGlobals();
+$container = new Container();
 
-$router = new Framework\Router();
-$response = $router->route($request);
+$container->set('Framework\Router',function($container){
+    $request = ServerRequestFactory::fromGlobals();
+    
+    return new Router($request,$container);
+});
+
+$router = $container->get('Framework\Router');
+$response = $router->route();
 
 $emitter = new SapiEmitter();
 

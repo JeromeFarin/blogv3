@@ -3,8 +3,6 @@ namespace Framework;
 
 class Required 
 {
-    private $message;
-
     public function required($request,$filter)
     {
         $required = $request::getInfo()['required'][$filter];
