@@ -10,6 +10,7 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Framework\Container;
 use Framework\Router;
+use Application\Controller\BookController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -36,6 +37,12 @@ $container->set('Framework\Router',function($container){
     $request = ServerRequestFactory::fromGlobals();
     
     return new Router($request,$container);
+});
+
+$container->set('BookController', function($container){
+    $handler = $container->get('Application\Handler\BookHandler');
+    $model = $container->get('Application\Model\Book');
+    return new BookController($container,$handler,$model);
 });
 
 $router = $container->get('Framework\Router');

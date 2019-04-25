@@ -1,7 +1,6 @@
 <?php
 namespace Framework;
 
-use Application\Controller;
 use Application\Controller\BookController;
 
 class Router 
@@ -41,12 +40,17 @@ class Router
                 return $this->container->get('Application\Controller\UserController')->login($this->requestG);
             }
 
-            if ($request === 'book') {
-                $this->container->set('Application\Controller\BookController',function($container){
-                    return new BookController($container);
-                });
+            // if ($request === 'book') {
+            //     $this->container->set('Application\Controller\BookController',function($container){
+            //         return new BookController($container);
+            //     });
                 
-                return $this->container->get('Application\Controller\BookController')->list();
+            //     return $this->container->get('Application\Controller\BookController')->list();
+            // }
+
+            if ($request === 'book') {
+                dd($this->container);                
+                return $this->container->get('BookController')->list();
             }
 
             if (strpos($param,'/')) {
