@@ -36,7 +36,6 @@ abstract class Manager
                 $object->getId()
             )
         );
-
         if ($statement->execute()) {
             return true;
         } else {

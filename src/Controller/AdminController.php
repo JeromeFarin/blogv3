@@ -2,12 +2,19 @@
 namespace Application\Controller;
 
 use Framework\Controller;
-use Application\Handler\BookHandler;
-use Application\Form\Book\AddForm;
-use Application\Model\Book;
 
 class AdminController extends Controller
 {
+    private $model;
+    private $form;
+    private $handler;
+
+    public function __construct(\Application\Model\Book $model,\Application\Form\Book\AddForm $form,\Application\Handler\BookHandler $handler) {
+        $this->model = $model;
+        $this->form = $form;
+        $this->handler = $handler;
+    }
+
     public function panel()
     {   
         return $this->render('admin.twig', array(
@@ -16,36 +23,30 @@ class AdminController extends Controller
     }
 
     public function book($request)
-    {   
-        $book = new Book();
+    {        
+        $this->form->handle($request);
 
-        $form = new AddForm($book);
-
-        $handler = new BookHandler();
-        
-        $form->handle($request);
-
-        if ($form->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
-                $handler->delete($book);
+                $this->handler->delete($this->form->getData());
                 return $this->redirect('/blogv3/admin/book/');
             }
 
-            if ($form->isValid()) {
+            if ($this->form->isValid()) {
                 if (isset($request->getParsedBody()['edit'])) {
-                    $handler->edit($form->getData());
+                    $this->handler->edit($this->form->getData());
                     return $this->redirect('/blogv3/admin/book/');
                 }
 
-                $handler->add($form->getData());
+                $this->handler->add($this->form->getData());
                 return $this->redirect('/blogv3/admin/book/');
             }
         }
-        // dd($handler->list());
+        
         return $this->render('admin/book.twig', array(
             'title' => 'Manage Books',
-            'books' => $handler->list(),
-            'form' => $form
+            'books' => $this->handler->list(),
+            'form' => $this->form
         ));
     }
 }

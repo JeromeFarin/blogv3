@@ -1,19 +1,19 @@
 <?php
 namespace Application\Controller;
 
-use Application\Model\User;
-use Application\Handler\UserHandler;
 use Framework\Controller;
 use Application\Form\User\AddForm;
 
 class UserController extends Controller
 {
-    protected $model;
-    protected $handler;
+    private $model;
+    private $handler;
+    private $form;
 
-    public function __construct() {
-        $this->model = new User();
-        $this->handler = new UserHandler();
+    public function __construct(\Application\Model\User $model,\Application\Handler\UserHandler $handler, \Application\Form\User\AddForm $form) {
+        $this->model = $model;
+        $this->handler = $handler;
+        $this->form = $form;
     }
     public function login($request)
     {
@@ -24,19 +24,17 @@ class UserController extends Controller
 
             return $this->handler->login($this->model,$request);
         }
-        
-        $form = new AddForm($this->model);
 
-        $form->handle($request);
+        $this->form->handle($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->handler->login($form->getData(),$request);
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->handler->login($this->form->getData(),$request);
             return $this->redirect('/blogv3');
         }
 
         return $this->render('user/login.twig', array(
             'title' => 'Connection',
-            'form' => $form
+            'form' => $this->form
         ));
     }
 

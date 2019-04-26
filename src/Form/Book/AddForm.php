@@ -33,7 +33,7 @@ class AddForm extends Required implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(ModelInterface $model)
+    public function __construct(\Application\Model\Book $model)
     {
         $this->book = $model;
     }

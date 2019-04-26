@@ -12,12 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 interface FormInterface
 {
     /**
-     * FormInterface constructor.
-     * @param ModelInterface $model
-     */
-    public function __construct(ModelInterface $model);
-
-    /**
      * @param ServerRequestInterface $request
      * @return FormInterface
      */

@@ -39,13 +39,8 @@ $container->set('Framework\Router',function($container){
     return new Router($request,$container);
 });
 
-$container->set('BookController', function($container){
-    $handler = $container->get('Application\Handler\BookHandler');
-    $model = $container->get('Application\Model\Book');
-    return new BookController($container,$handler,$model);
-});
-
 $router = $container->get('Framework\Router');
+
 $response = $router->route();
 
 $emitter = new SapiEmitter();

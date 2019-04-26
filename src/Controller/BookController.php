@@ -3,7 +3,6 @@
 namespace Application\Controller;
 
 use Framework\Controller;
-use Framework\Container;
 
 /**
  * Class BookController
@@ -11,10 +10,12 @@ use Framework\Container;
  */
 class BookController extends Controller
 {
-    private $container;
+    private $handler;
+    private $model;
 
-    public function __construct($container) {
-        $this->container = $this->container->get('BookController');
+    public function __construct(\Application\Handler\BookHandler $handler,\Application\Model\Book $model) {
+        $this->handler = $handler;
+        $this->model = $model;
     }
     
     public function list()

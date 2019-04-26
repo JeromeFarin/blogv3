@@ -1,8 +1,6 @@
 <?php
 namespace Framework;
 
-use Application\Controller\BookController;
-
 class Router 
 {
     private $requestG;
@@ -29,7 +27,7 @@ class Router
                 if ($param === 'chapter') {
                     return $this->container->get('Application\Controller\AdminController')->chapter($this->requestG);
                 }
-
+        
                 return $this->container->get('Application\Controller\AdminController')->panel();
             }
             if ($request === 'logout') {
@@ -40,17 +38,8 @@ class Router
                 return $this->container->get('Application\Controller\UserController')->login($this->requestG);
             }
 
-            // if ($request === 'book') {
-            //     $this->container->set('Application\Controller\BookController',function($container){
-            //         return new BookController($container);
-            //     });
-                
-            //     return $this->container->get('Application\Controller\BookController')->list();
-            // }
-
-            if ($request === 'book') {
-                dd($this->container);                
-                return $this->container->get('BookController')->list();
+            if ($request === 'book') {              
+                return $this->container->get('Application\Controller\BookController')->list();
             }
 
             if (strpos($param,'/')) {
@@ -58,10 +47,6 @@ class Router
             }
 
             if (is_numeric($param)) {
-                $this->container->set('Application\Controller\BookController',function($container){
-                    return new BookController($container);
-                });
-
                 return $this->container->get('Application\Controller\BookController')->book($param);
             }
 

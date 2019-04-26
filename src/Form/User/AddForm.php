@@ -33,7 +33,7 @@ class AddForm implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(ModelInterface $model)
+    public function __construct(\Application\Model\User $model)
     {
         $this->user = $model;
     }
