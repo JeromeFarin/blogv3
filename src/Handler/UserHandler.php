@@ -7,6 +7,11 @@ use Application\Model\User;
 class UserHandler extends Controller
 {
     private $model;
+    private $manager;
+
+    public function __construct(\Application\Manager\UserManager $manager) {
+        $this->manager = $manager;
+    }
 
     public function login($model,$request)
     {
@@ -22,8 +27,7 @@ class UserHandler extends Controller
 
     public function check($model)
     {
-        $userManager = $this->getManager(User::class);
-        $check = $userManager->check($model);
+        $check = $this->manager->check($model);
         if ($check === false) {
             return 'mail';
         } else {
@@ -40,5 +44,10 @@ class UserHandler extends Controller
     public function logout()
     {
         return session_destroy();
+    }
+
+    public function list()
+    {
+        return $this->manager->findAll();
     }
 }

@@ -28,14 +28,16 @@ class AddForm implements FormInterface
      * @var array
      */
     private $errors = [];
+    private $handler;
 
     /**
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(\Application\Model\User $model)
+    public function __construct(\Application\Model\User $model, \Application\Handler\UserHandler $handler)
     {
         $this->user = $model;
+        $this->handler = $handler;
     }
 
     public function handle(ServerRequestInterface $request): FormInterface
@@ -62,12 +64,11 @@ class AddForm implements FormInterface
      */
     public function isValid(): bool
     {        
-        $handler = new UserHandler();
-        if ($this->user->getMail() === null || empty($this->user->getMail()) || $handler->check($this->user) === 'mail') {
+        if ($this->user->getMail() === null || empty($this->user->getMail()) || $this->handler->check($this->user) === 'mail') {
             $this->errors["mail"] = "Pas de compte trouvé.";
         }
 
-        if ($this->user->getPass() === null || empty($this->user->getPass()) || $handler->check($this->user) === 'pass') {
+        if ($this->user->getPass() === null || empty($this->user->getPass()) || $this->handler->check($this->user) === 'pass') {
             $this->errors["pass"] = "Mot de passe incorrect.";
         }
 

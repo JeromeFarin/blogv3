@@ -31,13 +31,20 @@
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" name="book[id]" value="{{book.id}}">
-    <input type="hidden" name="book[cover]" value="{{book.cover}}">
     <input type="text" name="book[name]" value="{{book.name}}">
     <input type="text" name="book[owner]" value="{{book.owner}}">
-    <input type="file" name="book_cover">
+
+    {% if book.cover != "null" %}
+        <input type="hidden" name="book[cover]" value="{{book.cover}}">
+        <img height="100px" src="../public/img/cover/{{book.cover}}" alt="Cover">
+    {% else %}
+        <input type="file" name="book_cover">
+    {% endif %}
+    
     <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
     <input type="submit" name="edit" value="Edit book">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
+    <a href="/blogv3/book/{{book.id}}">Go to book</a>
 </form>
     
 {% endfor %}

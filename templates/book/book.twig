@@ -6,16 +6,16 @@
 
 {% if book.cover != 'null' %}
 
-    <img height="200px" src= "../img/cover/{{book.cover}}" alt="Cover">
+    <img height="200px" src= "../public/img/cover/{{book.cover}}" alt="Cover">
 
 {% endif %}
-
-<p>Par {{book.owner}}</p>
 
 {% for chapter in chapters %}
 
     <li><a href="/blogv3/chapter/{{chapter.id}}">{{chapter.name}}</a></li>
 
 {% endfor %}
+
+<p>Par {{book.owner}}</p>
 
 {% endblock %}

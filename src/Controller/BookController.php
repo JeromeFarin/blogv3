@@ -10,19 +10,21 @@ use Framework\Controller;
  */
 class BookController extends Controller
 {
-    private $handler;
+    private $book_handler;
     private $model;
+    private $chapter_handler;
 
-    public function __construct(\Application\Handler\BookHandler $handler,\Application\Model\Book $model) {
-        $this->handler = $handler;
+    public function __construct(\Application\Handler\BookHandler $book_handler,\Application\Model\Book $model,\Application\Handler\ChapterHandler $chapter_handler) {
+        $this->book_handler = $book_handler;
         $this->model = $model;
+        $this->chapter_handler = $chapter_handler;
     }
     
     public function list()
     {
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $this->handler->list()
+            'books' => $this->book_handler->list()
         ));
     }
 
@@ -30,7 +32,8 @@ class BookController extends Controller
     {
         return $this->render('book/book.twig', array(
             'title' => 'Book',
-            'book' => $this->handler->one($id,$this->model)
+            'book' => $this->book_handler->one($id,$this->model),
+            'chapters' => $this->chapter_handler->listOne($id)
         ));
     }
 }

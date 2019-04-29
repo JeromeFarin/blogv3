@@ -106,7 +106,7 @@ abstract class Manager
         );
 
         if ($statement->execute()) {
-            return $statement->fetchAll(\PDO::FETCH_CLASS,$this->namespace);
+            return $statement->fetchAll(\PDO::FETCH_CLASS);
         } else {
             throw new \Exception("Error findAll()");
         }

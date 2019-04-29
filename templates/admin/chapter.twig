@@ -1,0 +1,53 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>Go back to <a href="/blogv3">Home Page</a></p>
+
+<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+
+<form method="post">
+    <select name="chapter[book]">
+        {% for book in books %}
+            <option value="{{book.id}}">{{book.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="number" name="chapter[number]" placeholder="number"/>
+    <input type="text" name="chapter[name]" placeholder="name"/>
+    <input type="hidden" name="chapter[content]" value="empty">
+    <button type="submit">Create chapter</button>
+</form>
+<br>
+
+{% if form.errors.number is defined %}
+    ERROR : {{ form.errors.number }}
+{% endif %}
+
+{% if form.errors.name is defined %}
+    ERROR : {{ form.errors.name }}
+{% endif %}
+
+{% for chapter in chapters %}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
+    <select name="chapter[book]">
+        {% for book in books %}
+            {% if book.id == chapter.book %}
+                <option value="{{book.id}}" selected>{{book.name}}</option>
+            {% else %}
+                <option value="{{book.id}}">{{book.name}}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <input type="number" name="chapter[number]" value="{{chapter.number}}">
+    <input type="text" name="chapter[name]" value="{{chapter.name}}">
+    <input type="submit" name="edit" value="Edit chapter">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter">
+</form>
+    
+{% endfor %}
+
+{% endblock %}

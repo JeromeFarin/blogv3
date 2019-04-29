@@ -1,0 +1,35 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>Go back to <a href="/blogv3">Home Page</a></p>
+
+<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+
+<form method="post">
+    <input type="text" name="user[username]" placeholder="username"/>
+    <input type="mail" name="user[mail]" placeholder="mail"/>
+    <button type="submit">Create user</button>
+</form>
+<br>
+
+{% if form.errors.name is defined %}
+    ERROR : {{ form.errors.name }}
+{% endif %}
+
+{% for user in users %}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="user[id]" value="{{user.id}}">
+    <input type="text" name="user[username]" value="{{user.username}}">
+    <input type="mail" name="user[mail]" value="{{user.mail}}">
+    <input type="submit" name="reset" value="Reset Password">
+    <input type="submit" name="edit" value="Edit user">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this user ?');" value="Delete user">
+</form>
+    
+{% endfor %}
+
+{% endblock %}
