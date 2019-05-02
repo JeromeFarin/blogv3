@@ -21,15 +21,15 @@ class Router
             
             if (isset($_SESSION['mail']) && strpos('/'.$request,'admin')) {
                 if ($param === 'book') {
-                    return $this->container->get('Application\Controller\AdminController')->book($this->requestG);
+                    return $this->container->get('Application\Controller\Manage\BookController')->book($this->requestG);
                 }
 
                 if ($param === 'chapter') {
-                    return $this->container->get('Application\Controller\AdminController')->chapter($this->requestG);
+                    return $this->container->get('Application\Controller\Manage\ChapterController')->chapter($this->requestG);
                 }
 
                 if ($param === 'user') {
-                    return $this->container->get('Application\Controller\AdminController')->user($this->requestG);
+                    return $this->container->get('Application\Controller\Manage\UserController')->user($this->requestG);
                 }
         
                 return $this->container->get('Application\Controller\AdminController')->panel();

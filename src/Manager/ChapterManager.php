@@ -2,12 +2,13 @@
 namespace Application\Manager;
 
 use Framework\Manager;
+use Application\Model\Chapter;
 
 class ChapterManager extends Manager
 {
     public $model;
 
-    public function __construct(\Application\Model\Chapter $model) {
+    public function __construct(Chapter $model) {
         $this->model = $model;
     }
 

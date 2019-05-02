@@ -2,14 +2,14 @@
 namespace Application\Handler;
 
 use Framework\Controller;
-use Application\Model\User;
+use Application\Manager\UserManager;
 
 class UserHandler extends Controller
 {
     private $model;
     private $manager;
 
-    public function __construct(\Application\Manager\UserManager $manager) {
+    public function __construct(UserManager $manager) {
         $this->manager = $manager;
     }
 

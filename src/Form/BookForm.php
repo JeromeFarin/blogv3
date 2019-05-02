@@ -1,18 +1,18 @@
 <?php
 
-namespace Application\Form\Book;
+namespace Application\Form;
 
 use Application\Model\Book;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Required;
+use Framework\Validator;
 
 /**
  * Class AddForm
  * @package Application\Form\Book
  */
-class AddForm extends Required implements FormInterface
+class BookForm implements FormInterface
 {
     /**
      * @var Book
@@ -33,7 +33,7 @@ class AddForm extends Required implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(\Application\Model\Book $model)
+    public function __construct(Book $model)
     {
         $this->book = $model;
     }
@@ -77,25 +77,14 @@ class AddForm extends Required implements FormInterface
      */
     public function isValid(): bool
     {
-        if ($this->book->getName() === null || empty($this->book->getName())) {
-            $this->errors["name"] = "Le nom ne doit pas être vide.";
+        $valid = new Validator($this->book);
+        
+        if (!empty($valid->valid())) {
+            $this->errors = $valid->valid();
+            return false;
         } else {
-            $required = $this->required($this->book,'name');
-            if ($required != "") {
-                $this->errors["name"] = $required;
-            }
+            return true;
         }
-
-        if ($this->book->getOwner() === null || empty($this->book->getOwner())) {
-            $this->errors["owner"] = "Le nom de l'auteur ne doit pas être vide.";
-        } else {
-            $required = $this->required($this->book,'owner');
-            if ($required != "") {
-                $this->errors["owner"] = $required;
-            }
-        }
-
-        return count($this->errors) === 0;
     }
 
     /**

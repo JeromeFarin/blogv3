@@ -1,18 +1,18 @@
 <?php
 
-namespace Application\Form\Chapter;
+namespace Application\Form;
 
 use Application\Model\Chapter;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Required;
+use Framework\Validator;
 
 /**
  * Class AddForm
  * @package Application\Form\Chapter
  */
-class AddForm extends Required implements FormInterface
+class ChapterForm implements FormInterface
 {
     /**
      * @var Chapter
@@ -33,7 +33,7 @@ class AddForm extends Required implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(\Application\Model\Chapter $model)
+    public function __construct(Chapter $model)
     {
         $this->chapter = $model;
     }
@@ -70,25 +70,14 @@ class AddForm extends Required implements FormInterface
      */
     public function isValid(): bool
     {
-        if ($this->chapter->getNumber() === null || empty($this->chapter->getNumber())) {
-            $this->errors["number"] = "Le numéro ne doit pas être vide.";
+        $valid = new Validator($this->chapter);
+        
+        if (!empty($valid->valid())) {
+            $this->errors = $valid->valid();
+            return false;
         } else {
-            $required = $this->required($this->chapter,'number');
-            if ($required != "") {
-                $this->errors["number"] = $required;
-            }
+            return true;
         }
-
-        if ($this->chapter->getName() === null || empty($this->chapter->getName())) {
-            $this->errors["name"] = "Le nom ne doit pas être vide.";
-        } else {
-            $required = $this->required($this->chapter,'name');
-            if ($required != "") {
-                $this->errors["name"] = $required;
-            }
-        }
-
-        return count($this->errors) === 0;
     }
 
     /**

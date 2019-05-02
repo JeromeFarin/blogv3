@@ -3,6 +3,7 @@ namespace Application\Model;
 
 use Application\Manager;
 use Framework\ModelInterface;
+use Framework\Constraints;
 
 class Chapter implements ModelInterface
 {
@@ -24,14 +25,16 @@ class Chapter implements ModelInterface
                 "name" => "name",
                 "content" => "content"
             ],
-            "required" => [
+            "constraints" => [
                 "number" => [
-                    "min-length" => "1",
-                    "max-length" => "10"
+                    new Constraints\Required('This field must not be empty'),
+                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum'),
+                    new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
                 ],
                 "name" => [
-                    "min-length" => "2",
-                    "max-length" => "255"
+                    new Constraints\Required('This field must not be empty'),
+                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum'),
+                    new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
                 ]
             ]
         ];

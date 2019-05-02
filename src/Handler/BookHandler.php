@@ -2,12 +2,13 @@
 namespace Application\Handler;
 
 use Framework\Controller;
+use Application\Manager\BookManager;
 
 class BookHandler extends Controller
 {
     private $manager;
 
-    public function __construct(\Application\Manager\BookManager $manager) {
+    public function __construct(BookManager $manager) {
         $this->manager = $manager;
     }
 

@@ -2,7 +2,9 @@
 namespace Application\Controller;
 
 use Framework\Controller;
-use Application\Form\User\AddForm;
+use Application\Model\User;
+use Application\Handler\UserHandler;
+use Application\Form\UserForm;
 
 class UserController extends Controller
 {
@@ -10,7 +12,7 @@ class UserController extends Controller
     private $handler;
     private $form;
 
-    public function __construct(\Application\Model\User $model,\Application\Handler\UserHandler $handler, \Application\Form\User\AddForm $form) {
+    public function __construct(User $model, UserHandler $handler, UserForm $form) {
         $this->model = $model;
         $this->handler = $handler;
         $this->form = $form;

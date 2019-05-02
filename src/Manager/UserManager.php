@@ -2,12 +2,13 @@
 namespace Application\Manager;
 
 use Framework\Manager;
+use Application\Model\User;
 
 class UserManager extends Manager
 {
     protected $model;
 
-    public function __construct(\Application\Model\User $model) {
+    public function __construct(User $model) {
         $this->model = $model;
     }
     public function check($user)

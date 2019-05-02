@@ -3,6 +3,9 @@
 namespace Application\Controller;
 
 use Framework\Controller;
+use Application\Handler\BookHandler;
+use Application\Model\Book;
+use Application\Handler\ChapterHandler;
 
 /**
  * Class BookController
@@ -14,7 +17,7 @@ class BookController extends Controller
     private $model;
     private $chapter_handler;
 
-    public function __construct(\Application\Handler\BookHandler $book_handler,\Application\Model\Book $model,\Application\Handler\ChapterHandler $chapter_handler) {
+    public function __construct(BookHandler $book_handler, Book $model, ChapterHandler $chapter_handler) {
         $this->book_handler = $book_handler;
         $this->model = $model;
         $this->chapter_handler = $chapter_handler;

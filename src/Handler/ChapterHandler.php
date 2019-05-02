@@ -2,12 +2,13 @@
 namespace Application\Handler;
 
 use Framework\Controller;
+use Application\Manager\ChapterManager;
 
 class ChapterHandler extends Controller
 {
     private $manager;
 
-    public function __construct(\Application\Manager\ChapterManager $manager) {
+    public function __construct(ChapterManager $manager) {
         $this->manager = $manager;
     }
 

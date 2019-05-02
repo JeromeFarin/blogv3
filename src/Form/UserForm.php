@@ -1,18 +1,19 @@
 <?php
 
-namespace Application\Form\User;
+namespace Application\Form;
 
 use Application\Model\User;
+use Application\Handler\UserHandler;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Application\Handler\UserHandler;
+use Framework\Validator;
 
 /**
  * Class AddForm
  * @package Application\Form\Book
  */
-class AddForm implements FormInterface
+class UserForm implements FormInterface
 {
     /**
      * @var User
@@ -34,7 +35,7 @@ class AddForm implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(\Application\Model\User $model, \Application\Handler\UserHandler $handler)
+    public function __construct(User $model, UserHandler $handler)
     {
         $this->user = $model;
         $this->handler = $handler;
@@ -64,15 +65,14 @@ class AddForm implements FormInterface
      */
     public function isValid(): bool
     {        
-        if ($this->user->getMail() === null || empty($this->user->getMail()) || $this->handler->check($this->user) === 'mail') {
-            $this->errors["mail"] = "Pas de compte trouvé.";
+        $valid = new Validator($this->user);
+        
+        if (!empty($valid->valid())) {
+            $this->errors = $valid->valid();
+            return false;
+        } else {
+            return true;
         }
-
-        if ($this->user->getPass() === null || empty($this->user->getPass()) || $this->handler->check($this->user) === 'pass') {
-            $this->errors["pass"] = "Mot de passe incorrect.";
-        }
-
-        return count($this->errors) === 0;
     }
 
     /**
