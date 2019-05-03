@@ -13,12 +13,12 @@
 {% endif %}
 
 <form method="post">
-    <input type="email" name="user[mail]" placeholder="Mail" required>
+    <input type="email" name="user[mail]" placeholder="Mail">
     {% if form.errors.mail is defined %}
         <br>
         ERROR : {{ form.errors.mail }}
     {% endif %}
-    <input type="password" name="user[pass]" placeholder="Password" required>
+    <input type="password" name="user[pass]" placeholder="Password">
     {% if form.errors.pass is defined %}
         <br>
         ERROR : {{ form.errors.pass }}

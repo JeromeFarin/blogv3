@@ -3,6 +3,7 @@ namespace Application\Model;
 
 use Application\Manager;
 use Framework\ModelInterface;
+use Framework\Constraints;
 
 class User implements ModelInterface
 {
@@ -21,6 +22,14 @@ class User implements ModelInterface
                 "username" => "username",
                 "mail" => "mail",
                 "pass" => "pass",
+            ],
+            "constraints" => [
+                "mail" => [
+                    new Constraints\Required('This field must not be empty')
+                ],
+                "pass" => [
+                    new Constraints\Required('This field must not be empty')
+                ]
             ]
         ];
     }

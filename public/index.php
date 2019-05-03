@@ -10,7 +10,6 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Framework\Container;
 use Framework\Router;
-use Application\Controller\BookController;
 
 require __DIR__ . '/../vendor/autoload.php';
 

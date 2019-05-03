@@ -6,38 +6,46 @@ use Application\Manager\UserManager;
 
 class UserHandler extends Controller
 {
-    private $model;
     private $manager;
+    public $form;
 
     public function __construct(UserManager $manager) {
         $this->manager = $manager;
     }
 
-    public function login($model,$request)
+    public function login($form)
     {
-        $this->model = $model;
+        $this->form = $form;
 
-        if ($request == null) {
-            $model->setMail($_SESSION['mail']);
-            $model->setPass($_SESSION['pass']);
+        if (isset($this->form->submitted)) {
+            $object = $this->form->getData();
+        } else {
+            $object = $this->form;
+        }
 
-            return $this->check($model);
-        }   
+        if ($this->checkMail($object)) {
+            return $this;
+        }
     }
 
-    public function check($model)
+    public function checkMail($object)
     {
-        $check = $this->manager->check($model);
-        if ($check === false) {
-            return 'mail';
+        $check = $this->manager->check($object);
+        if (!$check) {
+            return $this->form->errors = array('mail' => 'No profiles found');
         } else {
-            if (password_verify($model->getPass(),$check['pass'])) {
-                $_SESSION['mail'] = $check['mail'];
-                $_SESSION['pass'] = $model->getPass();
-                return true;
-            } else {
-                return 'pass';
-            }
+            return $this->checkPass($object,$check);
+        }
+    }
+
+    private function checkPass($object,$check)
+    {
+        if (password_verify($object->getPass(),$check['pass'])) {
+            $_SESSION['mail'] = $check['mail'];
+            $_SESSION['pass'] = $object->getPass();
+            return true;
+        } else {
+            return $this->form->errors = array('pass' => 'Bad password for this profile');
         }
     }
 

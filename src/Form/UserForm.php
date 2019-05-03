@@ -3,7 +3,6 @@
 namespace Application\Form;
 
 use Application\Model\User;
-use Application\Handler\UserHandler;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,22 +22,20 @@ class UserForm implements FormInterface
     /**
      * @var bool
      */
-    private $submitted = false;
+    public $submitted = false;
 
     /**
      * @var array
      */
-    private $errors = [];
-    private $handler;
+    public $errors = [];
 
     /**
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(User $model, UserHandler $handler)
+    public function __construct(User $model)
     {
         $this->user = $model;
-        $this->handler = $handler;
     }
 
     public function handle(ServerRequestInterface $request): FormInterface
