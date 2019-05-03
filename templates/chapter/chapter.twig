@@ -14,7 +14,41 @@
     <a href="/blogv3/chapter/{{next.id}}">Next Chapter</a>
 {% endif %}
 
+{% if session.mail is defined %}
 
-<p>{{chapter.content}}</p>
+<p><a href="/blogv3/chapter/content/{{chapter.id}}">Edit Chapter Content</a></p>
+
+{% endif %}
+
+{{chapter.content|raw}}
+
+{% if form.errors.owner is defined %}
+    ERROR : {{ form.errors.owner }}
+{% endif %}
+
+{% if form.errors.content is defined %}
+    ERROR : {{ form.errors.content }}
+{% endif %}
+
+<form method="post">
+    <input type="hidden" name="comment[chapter]" value="{{chapter.id}}">
+    <input type="text" name="comment[owner]" placeholder="Your name">
+    <textarea name="comment[content]" class="text_block" cols="30" rows="10"></textarea>
+    <input type="submit" value="Reply">
+</form>
+
+{% for comment in comments %}
+    {{comment.owner}}
+    {{comment.content|raw}}
+    {% if comment.likes is not null %}
+        {{comment.likes}}
+    {% endif %}
+    
+    <form method="post">
+        <input type="hidden" name="comment[id]">
+        <input type="submit" name="like" value="Like">
+        <input type="submit" name="report" value="Report">
+    </form>
+{% endfor %}
 
 {% endblock %}

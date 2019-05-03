@@ -48,4 +48,22 @@ class ChapterController extends Controller
             'form' => $this->form
         ));
     }
+
+
+
+    public function content($request)
+    {
+        $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
+        $this->form->handle($request);
+        
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->chapterHandler->edit($this->form->getData());
+            return $this->redirect('/blogv3/chapter/'.$param);
+        }
+
+        return $this->render('admin/content.twig', array(
+            'title' => 'Edit Chapter Content',
+            'chapter' => $this->chapterHandler->one($param)
+        ));
+    }
 }

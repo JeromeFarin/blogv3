@@ -52,7 +52,7 @@ abstract class Manager
             if ($value === null) {
                 $value = 'null';
             }
-            $parameters[$column] = $column."='".$value."'";
+            $parameters[$column] = $column."='".addslashes($value)."'";
         }
         
         $statement = $this->getPdo()->prepare(
@@ -77,7 +77,10 @@ abstract class Manager
 
         foreach ($object::getInfo()["columns"] as $column => $property) {
             $parameters[$column] = $object->{sprintf("get%s", ucfirst($property))}();
-        }        
+            if ($parameters[$column] === null) {
+                $parameters[$column] = 'null';
+            }
+        }
         
         $statement = $this->getPdo()->prepare(
             sprintf(

@@ -78,7 +78,7 @@ class BookForm implements FormInterface
     public function isValid(): bool
     {
         $valid = new Validator($this->book);
-        
+        // dd($valid->valid());
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
             return false;
@@ -110,7 +110,7 @@ class BookForm implements FormInterface
             
             $cover = $this->book->getId().'.'.$extension;
 
-            move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../../public/img/cover/$cover");
+            move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../public/img/cover/$cover");
 
             return $this->book->setCover($cover);
         }

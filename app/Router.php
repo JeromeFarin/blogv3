@@ -45,6 +45,10 @@ class Router
             if ($request === 'book') {              
                 return $this->container->get('Application\Controller\BookController')->list();
             }
+            
+            if (strpos('/'.$param,'content')) {
+                return $this->container->get('Application\Controller\Manage\ChapterController')->content($this->requestG);
+            }
 
             if (strpos($param,'/')) {
                 throw new \Exception("Not Valid Param");
@@ -53,9 +57,8 @@ class Router
             if (is_numeric($param) && strpos('/'.$request,'book')) {
                 return $this->container->get('Application\Controller\BookController')->book($param);
             }
-
             if (is_numeric($param) && strpos('/'.$request,'chapter')) {
-                return $this->container->get('Application\Controller\ChapterController')->chapter($param);
+                return $this->container->get('Application\Controller\ChapterController')->chapter($this->requestG);
             }
 
             throw new \Exception("Page not Found");

@@ -5,34 +5,33 @@ use Application\Manager;
 use Framework\ModelInterface;
 use Framework\Constraints;
 
-class Chapter implements ModelInterface
+class Comment implements ModelInterface
 {
     public $id;
-    public $book;
-    public $number;
-    public $name;
-    private $content;
+    public $chapter;
+    public $owner;
+    public $content;
 
     public static function getInfo(): array
     {
         return [
-            "table" => "chapter",
-            "manager" => Manager\ChapterManager::class,
+            "table" => "comment",
+            "manager" => Manager\CommentManager::class,
             "columns" => [
                 "id" => "id",
-                "book" => "book",
-                "number" => "number",
-                "name" => "name",
+                "chapter" => "chapter",
+                "owner" => "owner",
                 "content" => "content"
             ],
             "constraints" => [
-                "number" => [
-                    new Constraints\Required('This field must not be empty')
-                ],
-                "name" => [
+                "owner" => [
                     new Constraints\Required('This field must not be empty'),
                     new Constraints\MinLenght(2,'This field must contain 2 characters minimum'),
                     new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
+                ],
+                "content" => [
+                    new Constraints\Required('This field must not be empty'),
+                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum')
                 ]
             ]
         ];
@@ -59,61 +58,41 @@ class Chapter implements ModelInterface
     }
 
     /**
-     * Get the value of book
+     * Get the value of chapter
      */ 
-    public function getBook()
+    public function getChapter()
     {
-        return $this->book;
+        return $this->chapter;
     }
 
     /**
-     * Set the value of book
+     * Set the value of chapter
      *
      * @return  self
      */ 
-    public function setBook($book)
+    public function setChapter($chapter)
     {
-        $this->book = $book;
+        $this->chapter = $chapter;
 
         return $this;
     }
 
     /**
-     * Get the value of number
+     * Get the value of owner
      */ 
-    public function getNumber()
+    public function getOwner()
     {
-        return $this->number;
+        return $this->owner;
     }
 
     /**
-     * Set the value of number
+     * Set the value of owner
      *
      * @return  self
      */ 
-    public function setNumber($number)
+    public function setOwner($owner)
     {
-        $this->number = $number;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of name
-     */ 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */ 
-    public function setName($name)
-    {
-        $this->name = $name;
+        $this->owner = $owner;
 
         return $this;
     }

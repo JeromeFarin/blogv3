@@ -46,8 +46,10 @@
     <input type="text" name="chapter[name]" value="{{chapter.name}}">
     <input type="submit" name="edit" value="Edit chapter">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter">
+    <a href="/blogv3/chapter/content/{{chapter.id}}">Edit chapter content</a>
+    <a href="/blogv3/chapter/{{chapter.id}}">Go to chapter</a>
 </form>
-    
+
 {% endfor %}
 
 {% endblock %}

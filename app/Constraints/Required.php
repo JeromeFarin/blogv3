@@ -14,7 +14,6 @@ class Required implements ConstraintInterface
     {
         
         if (empty($object) || $object === null) {
-            dd($object);
             return false;
         } else {
             return true;
