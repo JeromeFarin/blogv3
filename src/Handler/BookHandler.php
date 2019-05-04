@@ -3,6 +3,7 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\BookManager;
+use Application\Model\Book;
 
 class BookHandler extends Controller
 {
@@ -32,9 +33,8 @@ class BookHandler extends Controller
         return $this->manager->update($book);
     }
 
-    public function one($id,$model)
+    public function one($id)
     {
-        $model->setId($id);
-        return $this->manager->find($model);
+        return $this->manager->find($id);
     }
 }

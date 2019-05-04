@@ -2,13 +2,15 @@
 namespace Application\Controller\Manage;
 
 use Framework\Controller;
+use Application\Form\BookForm;
+use Application\Handler\BookHandler;
 
 class BookController extends Controller
 {
     private $form;
     private $handler;
 
-    public function __construct(\Application\Form\BookForm $form, \Application\Handler\BookHandler $handler) {
+    public function __construct(BookForm $form, BookHandler $handler) {
         $this->form = $form;
         $this->handler = $handler;
     }
@@ -33,7 +35,6 @@ class BookController extends Controller
                 return $this->redirect('/blogv3/admin/book/');
             }
         }
-        // dd($this->form);
         
         return $this->render('admin/book.twig', array(
             'title' => 'Manage Books',

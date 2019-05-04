@@ -11,6 +11,8 @@ class Comment implements ModelInterface
     public $chapter;
     public $owner;
     public $content;
+    public $like;
+    public $report;
 
     public static function getInfo(): array
     {
@@ -113,6 +115,46 @@ class Comment implements ModelInterface
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of like
+     */ 
+    public function getLike()
+    {
+        return $this->like;
+    }
+
+    /**
+     * Set the value of like
+     *
+     * @return  self
+     */ 
+    public function setLike($like)
+    {
+        $this->like = $like;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of report
+     */ 
+    public function getReport()
+    {
+        return $this->report;
+    }
+
+    /**
+     * Set the value of report
+     *
+     * @return  self
+     */ 
+    public function setReport($report)
+    {
+        $this->report = $report;
 
         return $this;
     }

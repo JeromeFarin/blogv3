@@ -45,9 +45,10 @@
     {% endif %}
     
     <form method="post">
-        <input type="hidden" name="comment[id]">
-        <input type="submit" name="like" value="Like">
-        <input type="submit" name="report" value="Report">
+        <input type="hidden" name="comment[id]" value="{{comment.id}}">
+        <input type="hidden" name="comment[chapter]" value="{{comment.chapter}}">
+        <input type="submit" name="comment[like]" value="Like">
+        <input type="submit" name="comment[report]" value="Report">
     </form>
 {% endfor %}
 

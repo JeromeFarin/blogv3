@@ -7,6 +7,7 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
+use Application\Manager\CommentManager;
 
 /**
  * Class AddForm
@@ -44,11 +45,20 @@ class CommentForm implements FormInterface
             $this->submitted = true;
 
             $commentData = $request->getParsedBody()["comment"];
-            // dd($commentData);
-            $this->comment->setChapter($commentData["chapter"]);
-            $this->comment->setOwner($commentData["owner"]);
-            $this->comment->setContent($commentData["content"]);
             
+            if (isset($commentData['like']) && $commentData['like'] !== null) {
+                $this->comment->setId($commentData['id']);
+                $this->comment->setChapter($commentData['chapter']);
+                $this->comment->setLike(1);
+            }elseif (isset($commentData['report']) && $commentData['report'] !== null) {
+                $this->comment->setId($commentData['id']);
+                $this->comment->setChapter($commentData['chapter']);
+                $this->comment->setReport(1);
+            } else {
+                $this->comment->setChapter($commentData["chapter"]);
+                $this->comment->setOwner($commentData["owner"]);
+                $this->comment->setContent($commentData["content"]);
+            }            
         }
 
         return $this;
@@ -65,7 +75,7 @@ class CommentForm implements FormInterface
     public function isValid(): bool
     {
         $valid = new Validator($this->comment);
-        // dd($valid->valid());
+        
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
             return false;

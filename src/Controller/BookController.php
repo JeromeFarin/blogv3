@@ -4,7 +4,6 @@ namespace Application\Controller;
 
 use Framework\Controller;
 use Application\Handler\BookHandler;
-use Application\Model\Book;
 use Application\Handler\ChapterHandler;
 
 /**
@@ -14,12 +13,10 @@ use Application\Handler\ChapterHandler;
 class BookController extends Controller
 {
     private $book_handler;
-    private $model;
     private $chapter_handler;
 
-    public function __construct(BookHandler $book_handler, Book $model, ChapterHandler $chapter_handler) {
+    public function __construct(BookHandler $book_handler, ChapterHandler $chapter_handler) {
         $this->book_handler = $book_handler;
-        $this->model = $model;
         $this->chapter_handler = $chapter_handler;
     }
     
@@ -35,7 +32,7 @@ class BookController extends Controller
     {
         return $this->render('book/book.twig', array(
             'title' => 'Book',
-            'book' => $this->book_handler->one($id,$this->model),
+            'book' => $this->book_handler->one($id),
             'chapters' => $this->chapter_handler->listOne($id)
         ));
     }

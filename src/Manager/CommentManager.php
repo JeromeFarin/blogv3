@@ -29,8 +29,37 @@ class CommentManager extends Manager
         }
     }
 
-    public function like($param)
+    public function like($object)
     {
-        # code...
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "update %s set likes = likes + 1 where id = %s",
+                $this->model::getInfo()["table"],
+                $object->id
+            )
+        );
+
+        if ($statement->execute()) {
+            return true;
+        } else {
+            throw new \Exception("Error like()");
+        }
+    }
+
+    public function report($object)
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "update %s set report = report + 1 where id = %s",
+                $this->model::getInfo()["table"],
+                $object->id
+            )
+        );
+
+        if ($statement->execute()) {
+            return true;
+        } else {
+            throw new \Exception("Error report()");
+        }
     }
 }

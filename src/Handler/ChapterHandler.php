@@ -3,16 +3,13 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\ChapterManager;
-use Application\Model\Chapter;
 
 class ChapterHandler extends Controller
 {
     private $manager;
-    private $model;
 
-    public function __construct(ChapterManager $manager, Chapter $model) {
+    public function __construct(ChapterManager $manager) {
         $this->manager = $manager;
-        $this->model = $model;
     }
 
     public function add($chapter)
@@ -42,8 +39,7 @@ class ChapterHandler extends Controller
 
     public function one($id)
     {
-        $this->model->setId($id);
-        return $this->manager->find($this->model);
+        return $this->manager->find($id);
     }
 
     public function next($model)
@@ -61,7 +57,7 @@ class ChapterHandler extends Controller
     {
         $pos = $model->number;
         $list = $this->manager->findAllChapter($model->book);
-        foreach ($list as $value) {
+        foreach (array_reverse($list) as $value) {
             if ($value->number < $pos) {
                 return $value;
             }

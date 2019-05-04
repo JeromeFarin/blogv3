@@ -115,13 +115,13 @@ abstract class Manager
         }
     }
 
-    public function find($book)
+    public function find($id)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "select * from %s where id=%s",
-                $book::getInfo()["table"],
-                $book->getId()
+                $this->model::getInfo()["table"],
+                $id
             )
         );
 
