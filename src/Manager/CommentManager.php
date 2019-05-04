@@ -12,6 +12,22 @@ class CommentManager extends Manager
         $this->model = $model;
     }
 
+    public function findAllCommentAll()
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select * from %s order by report desc",
+                $this->model::getInfo()["table"]
+            )
+        );
+
+        if ($statement->execute()) {
+            return $statement->fetchAll(\PDO::FETCH_CLASS);
+        } else {
+            throw new \Exception("Error findAll()");
+        }
+    }
+
     public function findAllComment($param)
     {
         $statement = $this->getPdo()->prepare(

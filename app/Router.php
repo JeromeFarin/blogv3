@@ -31,6 +31,10 @@ class Router
                 if ($param === 'user') {
                     return $this->container->get('Application\Controller\Manage\UserController')->user($this->requestG);
                 }
+
+                if ($param === 'comment') {
+                    return $this->container->get('Application\Controller\Manage\CommentController')->comment($this->requestG);
+                }
         
                 return $this->container->get('Application\Controller\AdminController')->panel();
             }

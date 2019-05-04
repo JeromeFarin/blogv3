@@ -21,4 +21,9 @@ class CommentHandler extends Controller
     {
         return $this->manager->findAllComment($param);
     }
+
+    public function listAll()
+    {
+        return $this->manager->findAllCommentAll();
+    }
 }

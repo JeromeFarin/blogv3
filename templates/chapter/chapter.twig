@@ -14,11 +14,7 @@
     <a href="/blogv3/chapter/{{next.id}}">Next Chapter</a>
 {% endif %}
 
-{% if session.mail is defined %}
-
-<p><a href="/blogv3/chapter/content/{{chapter.id}}">Edit Chapter Content</a></p>
-
-{% endif %}
+<br>
 
 {{chapter.content|raw}}
 

@@ -1,0 +1,24 @@
+{% extends '/default.twig'%}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>Go back to <a href="/blogv3">Home Page</a></p>
+
+<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+
+{% for comment in comments %}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="comment[id]" value="{{comment.id}}">
+    <input type="text" name="comment[owner]" value="{{comment.owner}}">
+    <textarea name="comment[content]" cols="30" rows="5">{{comment.content}}</textarea>
+    <input type="number" name="comment[likes]" value="{{comment.likes}}">
+    <input type="number" name="comment[report]" value="{{comment.report}}">
+    <input type="submit" name="delete" value="Delete">
+</form>
+
+{% endfor %}
+
+{% endblock %}
