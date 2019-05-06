@@ -54,6 +54,7 @@ class ChapterController extends Controller
     public function content($request)
     {
         $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
+        
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {

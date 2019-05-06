@@ -55,6 +55,9 @@ class CommentForm implements FormInterface
                 $this->comment->setChapter($commentData['chapter']);
                 $this->comment->setReport(1);
             } else {
+                if (isset($commentData['id'])) {
+                    $this->comment->setId($commentData['id']);
+                }
                 $this->comment->setChapter($commentData["chapter"]);
                 $this->comment->setOwner($commentData["owner"]);
                 $this->comment->setContent($commentData["content"]);

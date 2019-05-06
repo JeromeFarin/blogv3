@@ -16,7 +16,7 @@ class ChapterManager extends Manager
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "select * from %s where book = %s",
+                "select * from %s where book = %s and content not like 'null'",
                 $this->model::getInfo()["table"],
                 $id
             )
@@ -24,6 +24,23 @@ class ChapterManager extends Manager
 
         if ($statement->execute()) {
             return $statement->fetchAll(\PDO::FETCH_CLASS);
+        } else {
+            throw new \Exception("Error findAll(chapter)");
+        }
+    }
+
+    public function chapterNumber($book)
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select max(number) as number from %s where book = %s",
+                $this->model::getInfo()["table"],
+                $book
+            )
+        );
+
+        if ($statement->execute()) {
+            return $statement->fetch(\PDO::FETCH_ASSOC);
         } else {
             throw new \Exception("Error findAll(chapter)");
         }

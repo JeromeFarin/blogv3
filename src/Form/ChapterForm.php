@@ -7,6 +7,7 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
+use Application\Handler\ChapterHandler;
 
 /**
  * Class AddForm
@@ -18,6 +19,8 @@ class ChapterForm implements FormInterface
      * @var Chapter
      */
     private $chapter;
+
+    private $handler;
 
     /**
      * @var bool
@@ -33,9 +36,10 @@ class ChapterForm implements FormInterface
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(Chapter $model)
+    public function __construct(Chapter $model, ChapterHandler $handler)
     {
         $this->chapter = $model;
+        $this->handler = $handler;
     }
 
     public function handle(ServerRequestInterface $request): FormInterface
@@ -51,7 +55,13 @@ class ChapterForm implements FormInterface
 
             $this->chapter->setBook($chapterData["book"]);
             $this->chapter->setName($chapterData["name"]);
-            $this->chapter->setnumber($chapterData["number"]); 
+
+            if (isset($chapterData["number"])) {
+                $this->chapter->setnumber($chapterData["number"]); 
+            } else {
+                $this->chapter->setnumber($this->handler->findChapterNumber($chapterData["book"]));
+            }
+            
             if (isset($chapterData["content"])) {
                 $this->chapter->setContent($chapterData["content"]);
             }

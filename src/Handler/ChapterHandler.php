@@ -63,4 +63,15 @@ class ChapterHandler extends Controller
             }
         }
     }
+
+    public function findChapterNumber($book)
+    {
+        $number = $this->manager->chapterNumber($book);
+        
+        if ($number === null) {
+            return 1;
+        } else {
+            return $number['number'] + 1;
+        }
+    }
 }

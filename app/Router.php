@@ -35,6 +35,10 @@ class Router
                 if ($param === 'comment') {
                     return $this->container->get('Application\Controller\Manage\CommentController')->comment($this->requestG);
                 }
+                
+                if (strpos('/'.$request,'content')) {
+                    return $this->container->get('Application\Controller\Manage\ChapterController')->content($this->requestG);
+                }
         
                 return $this->container->get('Application\Controller\AdminController')->panel();
             }
@@ -48,10 +52,6 @@ class Router
 
             if ($request === 'book') {              
                 return $this->container->get('Application\Controller\BookController')->list();
-            }
-            
-            if (strpos('/'.$param,'content')) {
-                return $this->container->get('Application\Controller\Manage\ChapterController')->content($this->requestG);
             }
 
             if (strpos($param,'/')) {

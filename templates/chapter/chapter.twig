@@ -35,8 +35,9 @@
 
 {% for comment in comments %}
     {{comment.owner}}
+    
     {{comment.content|raw}}
-    {% if comment.likes is not null %}
+    {% if comment.likes != 0 %}
         {{comment.likes}}
     {% endif %}
     
