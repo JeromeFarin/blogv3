@@ -3,7 +3,6 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\BookManager;
-use Application\Model\Book;
 
 class BookHandler extends Controller
 {

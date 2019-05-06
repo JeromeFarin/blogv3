@@ -42,7 +42,7 @@ class UserController extends Controller
         ));
     }
 
-    public function logout()
+    public function logout($request)
     {
         $result = $this->handler->logout();
         if ($result) {

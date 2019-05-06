@@ -28,12 +28,14 @@ class BookController extends Controller
         ));
     }
 
-    public function book($id)
+    public function book($request)
     {
+        $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
+
         return $this->render('book/book.twig', array(
             'title' => 'Book',
-            'book' => $this->book_handler->one($id),
-            'chapters' => $this->chapter_handler->listOne($id)
+            'book' => $this->book_handler->one($param),
+            'chapters' => $this->chapter_handler->listOne($param)
         ));
     }
 }

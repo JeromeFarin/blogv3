@@ -12,61 +12,56 @@ class Router
     }
     public function route()
     {
-        $request = trim($this->requestG->getUri()->getPath(),'/');
-
-        if (strpos($request,'/')) {
-            $request = substr($request,strpos($request,'/')+1);
-
-            $param = substr($request,strpos($request,'/')+1);
-            
-            if (isset($_SESSION['mail']) && strpos('/'.$request,'admin')) {
-                if ($param === 'book') {
-                    return $this->container->get('Application\Controller\Manage\BookController')->book($this->requestG);
-                }
-
-                if ($param === 'chapter') {
-                    return $this->container->get('Application\Controller\Manage\ChapterController')->chapter($this->requestG);
-                }
-
-                if ($param === 'user') {
-                    return $this->container->get('Application\Controller\Manage\UserController')->user($this->requestG);
-                }
-
-                if ($param === 'comment') {
-                    return $this->container->get('Application\Controller\Manage\CommentController')->comment($this->requestG);
-                }
-                
-                if (strpos('/'.$request,'content')) {
-                    return $this->container->get('Application\Controller\Manage\ChapterController')->content($this->requestG);
-                }
+        $request = $this->requestG->getUri()->getPath();
         
-                return $this->container->get('Application\Controller\AdminController')->panel();
-            }
-            if ($request === 'logout') {
-                return $this->container->get('Application\Controller\UserController')->logout();
-            }
-            
-            if ($request === 'login') {
-                return $this->container->get('Application\Controller\UserController')->login($this->requestG);
-            }
-
-            if ($request === 'book') {              
-                return $this->container->get('Application\Controller\BookController')->list();
-            }
-
-            if (strpos($param,'/')) {
-                throw new \Exception("Not Valid Param");
-            }
-
-            if (is_numeric($param) && strpos('/'.$request,'book')) {
-                return $this->container->get('Application\Controller\BookController')->book($param);
-            }
-            if (is_numeric($param) && strpos('/'.$request,'chapter')) {
-                return $this->container->get('Application\Controller\ChapterController')->chapter($this->requestG);
-            }
-
-            throw new \Exception("Page not Found");
+        if (substr($request,-1) !== '/') {
+            $request = $request.'/';
         }
-        return $this->container->get('Application\Controller\DefaultController')->home();
+
+        $parameters = [];
+
+        while ($request) {
+            if (strpos($request,'/')) {
+                array_push($parameters,substr($request,0,strpos($request,'/')));
+            } else {
+                array_push($parameters,$request);
+            }
+            $request = substr($request,strpos($request,'/')+1);
+        }
+        if (!isset($parameters[2])) {
+            return $this->container->get("Application\Controller\DefaultController")->home();
+        }
+
+        if ($parameters[2] === 'admin') {
+            if (isset($parameters[3])) {
+                if ($parameters[3] === 'content') {
+                    $action = $parameters[3];
+                    return $this->container->get("Application\Controller\Manage\ChapterController")->$action($this->requestG);
+                }
+
+                $action = $parameters[3];
+                return $this->container->get("Application\Controller\Manage\\".ucfirst($parameters[3])."Controller")->$action($this->requestG);
+            } else {
+                $action = 'panel';
+                return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action($this->requestG);
+            }
+        }
+
+        if ($parameters[2] === 'logout' || $parameters[2] === 'login') {
+            $action = $parameters[2];
+            return $this->container->get("Application\Controller\UserController")->$action($this->requestG);
+        }
+
+        if (isset($parameters[3])) {
+            if (is_numeric($parameters[3])) {
+                $action = $parameters[2];
+                return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action($this->requestG);
+            }
+        } else {
+            $action = 'list';
+            return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action();
+        }
+
+        throw new \Exception("Page not Found");
     }
 }
