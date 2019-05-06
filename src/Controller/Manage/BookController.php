@@ -39,6 +39,7 @@ class BookController extends Controller
         return $this->render('admin/book.twig', array(
             'title' => 'Manage Books',
             'books' => $this->handler->list(),
+            'chapters' => $this->handler->listDone(),
             'form' => $this->form
         ));
     }

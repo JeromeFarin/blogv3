@@ -24,7 +24,7 @@ class BookController extends Controller
     {
         return $this->render('book/book_list.twig', array(
             'title' => 'Book List',
-            'books' => $this->book_handler->list()
+            'books' => $this->book_handler->listDone()
         ));
     }
 

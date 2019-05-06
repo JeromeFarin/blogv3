@@ -44,7 +44,12 @@
     <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
     <input type="submit" name="edit" value="Edit book">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
-    <a href="/blogv3/book/{{book.id}}">Go to book</a>
+
+    {% for chapter in chapters %}
+        {% if chapter.id == book.id %}
+            <a href="/blogv3/book/{{book.id}}">Go to book</a>
+        {% endif %}
+    {% endfor %}
 </form>
     
 {% endfor %}

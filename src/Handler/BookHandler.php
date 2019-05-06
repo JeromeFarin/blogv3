@@ -27,6 +27,11 @@ class BookHandler extends Controller
         return $this->manager->findAll();
     }
 
+    public function listDone()
+    {
+        return $this->manager->findAllDone();
+    }
+
     public function edit($book)
     {        
         return $this->manager->update($book);
