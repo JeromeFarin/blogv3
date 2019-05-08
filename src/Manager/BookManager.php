@@ -8,8 +8,8 @@ class BookManager extends Manager
 {
     public $model;
 
-    public function __construct(Book $model) {
-        $this->model = $model;
+    public function __construct() {
+        $this->model = new Book();
     }
 
     public function findAllDone()

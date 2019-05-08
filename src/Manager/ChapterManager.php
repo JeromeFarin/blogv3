@@ -8,8 +8,8 @@ class ChapterManager extends Manager
 {
     public $model;
 
-    public function __construct(Chapter $model) {
-        $this->model = $model;
+    public function __construct() {
+        $this->model = new Chapter();
     }
 
     public function findAllChapter($id)

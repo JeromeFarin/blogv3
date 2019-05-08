@@ -29,16 +29,11 @@ if (getenv("APP_ENV") === "dev") {
     ExceptionHandler::register();
     DebugClassLoader::enable();
 }
-
 $container = new Container();
 
-$container->set('Framework\Router',function($container){
-    $request = ServerRequestFactory::fromGlobals();
-    
-    return new Router($request,$container);
-});
+$request = ServerRequestFactory::fromGlobals();
 
-$router = $container->get('Framework\Router');
+$router = new Router($request,$container);
 
 $response = $router->route();
 

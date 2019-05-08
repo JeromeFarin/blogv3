@@ -1,15 +1,29 @@
 <?php
 namespace Framework;
 
+use Zend\Diactoros\ServerRequest;
+
 class Router 
 {
     private $requestG;
     private $container;
 
-    public function __construct($requestG,$container) {
+    /**
+     * Contructor
+     *
+     * @param ServerRequest $requestG
+     * @param Container $container
+     */
+    public function __construct(ServerRequest $requestG, Container $container) {
         $this->requestG = $requestG;
         $this->container = $container;
     }
+
+    /**
+     * Route
+     *
+     * @return void
+     */
     public function route()
     {
         $request = $this->requestG->getUri()->getPath();
@@ -55,13 +69,12 @@ class Router
         if (isset($parameters[3])) {
             if (is_numeric($parameters[3])) {
                 $action = $parameters[2];
-                return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action($this->requestG);
+                return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action($this->requestG,$this->container);
             }
         } else {
             $action = 'list';
             return $this->container->get("Application\Controller\\".ucfirst($parameters[2])."Controller")->$action();
         }
-
         throw new \Exception("Page not Found");
     }
 }

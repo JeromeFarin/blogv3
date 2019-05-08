@@ -3,28 +3,21 @@ namespace Framework;
 
 class Container
 {
-    private $registry = [];
     private $instances= [];
 
-    public function set($key, Callable $resolver){
-        $this->registry[$key] = $resolver;
+    public function set(string $key, Callable $resolver){
+        $this->instances[$key] = $resolver;
     }
 
-    public function get($key){
-        if(isset($this->factories[$key])){
-           return $this->factories[$key]();
-        }
+    public function get(string $key){
         if(!isset($this->instances[$key])){
-            if(isset($this->registry[$key])){
-                $this->instances[$key] = $this->registry[$key]($this);
-            } else {
-                return $this->resolve($key);
-            }
+            $this->instances[$key] = $this->resolve($key);
         }
+        
         return $this->instances[$key];
     }
 
-    private function resolve($key){
+    private function resolve(string $key){
         $reflected_class = new \ReflectionClass($key);
         if($reflected_class->isInstantiable()){
             $constructor = $reflected_class->getConstructor();

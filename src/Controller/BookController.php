@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Framework\Controller;
 use Application\Handler\BookHandler;
 use Application\Handler\ChapterHandler;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Class BookController
@@ -15,11 +16,22 @@ class BookController extends Controller
     private $book_handler;
     private $chapter_handler;
 
+    /**
+     * Constructor
+     *
+     * @param BookHandler $book_handler
+     * @param ChapterHandler $chapter_handler
+     */
     public function __construct(BookHandler $book_handler, ChapterHandler $chapter_handler) {
         $this->book_handler = $book_handler;
         $this->chapter_handler = $chapter_handler;
     }
     
+    /**
+     * List of books
+     *
+     * @return void
+     */
     public function list()
     {
         return $this->render('book/book_list.twig', array(
@@ -28,7 +40,13 @@ class BookController extends Controller
         ));
     }
 
-    public function book($request)
+    /**
+     * Book
+     *
+     * @param ServerRequest $request
+     * @return void
+     */
+    public function book(ServerRequest $request)
     {
         $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
 

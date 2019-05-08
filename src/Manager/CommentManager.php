@@ -8,8 +8,8 @@ class CommentManager extends Manager
 {
     public $model;
 
-    public function __construct(Comment $model) {
-        $this->model = $model;
+    public function __construct() {
+        $this->model = new Comment();
     }
 
     public function findAllCommentAll()

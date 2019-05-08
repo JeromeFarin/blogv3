@@ -8,8 +8,8 @@ class UserManager extends Manager
 {
     protected $model;
 
-    public function __construct(User $model) {
-        $this->model = $model;
+    public function __construct() {
+        $this->model = new User();
     }
     public function check($user)
     {
