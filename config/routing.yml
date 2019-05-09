@@ -43,3 +43,18 @@ adminChapter:
   parameters: {}
   controller: Application\Controller\Manage\ChapterController
   action: chapter
+adminComment:
+  path: /admin/comment
+  parameters: {}
+  controller: Application\Controller\Manage\CommentController
+  action: comment
+adminUser:
+  path: /admin/user
+  parameters: {}
+  controller: Application\Controller\Manage\UserController
+  action: user
+adminContent:
+  path: /admin/content/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\ChapterController
+  action: content
