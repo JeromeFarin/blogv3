@@ -7,6 +7,7 @@ use Application\Handler\ChapterHandler;
 use Application\Handler\CommentHandler;
 use Application\Form\CommentForm;
 use Application\Manager\CommentManager;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Class BookController
@@ -26,10 +27,8 @@ class ChapterController extends Controller
         $this->manager = $manager;
     }
 
-    public function chapter($request)
+    public function chapter(ServerRequest $request,string $param)
     {
-        $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
-
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->getData()->like !== null) {

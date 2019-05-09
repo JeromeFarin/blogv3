@@ -9,7 +9,8 @@ use Symfony\Component\Debug\DebugClassLoader;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Framework\Container;
-use Framework\Router;
+// use Framework\Router;
+use Framework\Router\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -33,10 +34,19 @@ $container = new Container();
 
 $request = ServerRequestFactory::fromGlobals();
 
-$router = new Router($request,$container);
+$router = new Router($request);
+$router->loadYaml(__DIR__."/../config/routing.yml");
 
-$response = $router->route();
+try{
+    $route = $router->getRouteByRequest();
+    
+    $response = $route->call($request,$container);
 
-$emitter = new SapiEmitter();
+    $emitter = new SapiEmitter();
 
-$emitter->emit($response);
+    $emitter->emit($response);
+}catch (\Exception $e) {
+    echo $e->getMessage();
+}
+
+

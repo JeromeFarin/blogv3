@@ -1,0 +1,45 @@
+home:
+  path: /
+  parameters: {}
+  controller: Application\Controller\DefaultController
+  action: home
+bookList:
+  path: /book
+  parameters: {}
+  controller: Application\Controller\BookController
+  action: list
+book:
+  path: /book/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\BookController
+  action: book
+chapter:
+  path: /chapter/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\ChapterController
+  action: chapter
+login:
+  path: /login
+  parameters: {}
+  controller: Application\Controller\UserController
+  action: login
+logout:
+  path: /logout
+  parameters: {}
+  controller: Application\Controller\UserController
+  action: logout
+admin:
+  path: /admin
+  parameters: {}
+  controller: Application\Controller\AdminController
+  action: panel
+adminBook:
+  path: /admin/book
+  parameters: {}
+  controller: Application\Controller\Manage\BookController
+  action: book
+adminChapter:
+  path: /admin/chapter
+  parameters: {}
+  controller: Application\Controller\Manage\ChapterController
+  action: chapter

@@ -46,10 +46,8 @@ class BookController extends Controller
      * @param ServerRequest $request
      * @return void
      */
-    public function book(ServerRequest $request)
+    public function book(ServerRequest $request,string $param)
     {
-        $param = substr($request->getUri()->getPath(),strrpos($request->getUri()->getPath(),'/')+1);
-
         return $this->render('book/book.twig', array(
             'title' => 'Book',
             'book' => $this->book_handler->one($param),
