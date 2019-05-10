@@ -32,15 +32,8 @@ class Router
 
     public function getRouteByRequest()
     {
-        $request = $this->request->getUri()->getPath();
-        $request = substr($request,strpos($request,'/',1));
-        if ($request[strlen($request) - 1] === "/") {
-            $request = substr($request,0,strlen($request) - 1);
-            if (empty($request)) {
-                $request = '/';
-            }
-        }
-
+        $request = preg_replace('/^(\/).*?(\/)/i','/',$this->request->getUri()->getPath());
+        
         foreach($this->routes as $route) {
             if($route->match($request)) {
                 return $route;
