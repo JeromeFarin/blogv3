@@ -5,6 +5,7 @@ namespace Application\Controller\Manage;
 use Framework\Controller;
 use Application\Form\UserForm;
 use Application\Handler\UserHandler;
+use Zend\Diactoros\ServerRequest;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
         $this->form = $form;
         $this->handler = $handler;
     }
-    public function user($request)
+    public function user(ServerRequest $request)
     {
         $this->form->handle($request);
 
@@ -31,11 +32,16 @@ class UserController extends Controller
                     return $this->redirect('/blogv3/admin/user/');
                 }
 
+                if (isset($request->getParsedBody()['reset'])) {
+                    $this->handler->sendResetPass($this->form->getData());
+                    return $this->redirect('/blogv3/admin/user/');
+                }
+
                 $this->handler->add($this->form->getData());
                 return $this->redirect('/blogv3/admin/user/');
             }
         }
-
+        
         return $this->render('admin/user.twig', array(
             'title' => 'Manage Users',
             'users' => $this->handler->list(),

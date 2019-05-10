@@ -26,9 +26,6 @@ class User implements ModelInterface
             "constraints" => [
                 "mail" => [
                     new Constraints\Required('This field must not be empty')
-                ],
-                "pass" => [
-                    new Constraints\Required('This field must not be empty')
                 ]
             ]
         ];

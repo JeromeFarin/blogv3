@@ -7,6 +7,7 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
+use Application\Handler\UserHandler;
 
 /**
  * Class AddForm
@@ -29,13 +30,16 @@ class UserForm implements FormInterface
      */
     public $errors = [];
 
+    private $handler;
+
     /**
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(User $model)
+    public function __construct(UserHandler $handler)
     {
-        $this->user = $model;
+        $this->user = new User();
+        $this->handler = $handler;
     }
 
     public function handle(ServerRequestInterface $request): FormInterface
@@ -45,8 +49,18 @@ class UserForm implements FormInterface
 
             $userData = $request->getParsedBody()["user"];
 
-            $this->user->setMail($userData["mail"]);
-            $this->user->setPass($userData["pass"]);
+            if (isset($userData["id"])) {
+                $this->user->setId($userData["id"]);
+                $this->user->setPass($this->handler->getPass($this->user)['pass']);
+                $this->user->setUsername($userData["username"]);
+                $this->user->setMail($userData["mail"]);
+            } elseif (!isset($userData["pass"])) {
+                $this->user->setUsername($userData["username"]);
+                $this->user->setMail($userData["mail"]);
+            } else {
+                $this->user->setPass($userData["pass"]);
+                $this->user->setMail($userData["mail"]);
+            }
         }
 
         return $this;
@@ -66,6 +80,7 @@ class UserForm implements FormInterface
         
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
+            // dd($this->errors);
             return false;
         } else {
             return true;
