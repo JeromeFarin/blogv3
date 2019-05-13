@@ -16,6 +16,7 @@ class UserController extends Controller
         $this->form = $form;
         $this->handler = $handler;
     }
+
     public function user(ServerRequest $request)
     {
         $this->form->handle($request);
@@ -31,10 +32,14 @@ class UserController extends Controller
                     $this->handler->edit($this->form->getData());
                     return $this->redirect('/blogv3/admin/user/');
                 }
-
+                
                 if (isset($request->getParsedBody()['reset'])) {
                     $this->handler->sendResetPass($this->form->getData());
-                    return $this->redirect('/blogv3/admin/user/');
+                    return $this->render('admin/user.twig', array(
+                        'title' => 'Manage Users',
+                        'users' => $this->handler->list(),
+                        'form' => $this->form
+                    ));
                 }
 
                 $this->handler->add($this->form->getData());
@@ -45,6 +50,21 @@ class UserController extends Controller
         return $this->render('admin/user.twig', array(
             'title' => 'Manage Users',
             'users' => $this->handler->list(),
+            'form' => $this->form
+        ));
+    }
+
+    public function pass(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->handler->delete($this->form->getData());
+            return $this->redirect('/blogv3');
+        }
+        
+        return $this->render('admin/password.twig', array(
+            'title' => 'Change Password',
             'form' => $this->form
         ));
     }

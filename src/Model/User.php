@@ -10,7 +10,9 @@ class User implements ModelInterface
     public $id;
     public $username;
     public $mail;
-    public $pass;  
+    public $pass; 
+    public $code; 
+    public $codevalidity;
 
     public static function getInfo(): array
     {
@@ -22,10 +24,13 @@ class User implements ModelInterface
                 "username" => "username",
                 "mail" => "mail",
                 "pass" => "pass",
+                "code" => "code",
+                "codevalidity" => "codevalidity"
             ],
             "constraints" => [
                 "mail" => [
-                    new Constraints\Required('This field must not be empty')
+                    new Constraints\Required('This field must not be empty'),
+                    new Constraints\IsMail('This field must be contain an "@"')
                 ]
             ]
         ];
@@ -107,6 +112,46 @@ class User implements ModelInterface
     public function setPass($pass)
     {
         $this->pass = $pass;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of code
+     */ 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set the value of code
+     *
+     * @return  self
+     */ 
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of codevalidity
+     */ 
+    public function getCodeValidity()
+    {
+        return $this->codevalidity;
+    }
+
+    /**
+     * Set the value of codevalidity
+     *
+     * @return  self
+     */ 
+    public function setCodeValidity($codevalidity)
+    {
+        $this->codevalidity = $codevalidity;
 
         return $this;
     }

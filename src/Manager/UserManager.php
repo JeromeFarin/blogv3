@@ -29,14 +29,32 @@ class UserManager extends Manager
         }
     }
 
-    public function pass(User $user)
+    public function user(User $user)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "select pass from %s where %s = '%s'",
+                "select * from %s where id = %s",
                 $user::getInfo()['table'],
-                'id',
                 $user->getId()
+            )
+        );
+        
+        if ($statement->execute()) {
+            return $statement->fetchAll(\PDO::FETCH_CLASS, 'Application\Model\User');
+        } else {
+            return false;
+        }
+    }
+
+    public function code(User $object)
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "update %s set code = '%s', code_validity = '%s' where id = %s",
+                $object::getInfo()['table'],
+                addslashes($object->getCode()),
+                addslashes($object->getCodeValidity()),
+                $object->getId()
             )
         );
         

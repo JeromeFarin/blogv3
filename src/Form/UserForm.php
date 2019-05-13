@@ -48,10 +48,10 @@ class UserForm implements FormInterface
             $this->submitted = true;
 
             $userData = $request->getParsedBody()["user"];
-
+            
             if (isset($userData["id"])) {
                 $this->user->setId($userData["id"]);
-                $this->user->setPass($this->handler->getPass($this->user)['pass']);
+                $this->user = $this->handler->getUser($this->user)[0];
                 $this->user->setUsername($userData["username"]);
                 $this->user->setMail($userData["mail"]);
             } elseif (!isset($userData["pass"])) {
@@ -79,8 +79,7 @@ class UserForm implements FormInterface
         $valid = new Validator($this->user);
         
         if (!empty($valid->valid())) {
-            $this->errors = $valid->valid();
-            // dd($this->errors);
+            $this->errors += $valid->valid();
             return false;
         } else {
             return true;

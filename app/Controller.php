@@ -20,9 +20,9 @@ class Controller
     /**
      * @param string $view
      * @param array $data
-     * @return HtmlResponse
+     * @return mixed
      */
-    public function render(string $view, array $data = []): HtmlResponse
+    public function render(string $view, array $data = [], bool $call = false)
     {
 
         $loader = new \Twig_Loader_Filesystem('../templates');
@@ -38,6 +38,11 @@ class Controller
         }
 
         $htmlContent = $twig->render($view, $data);
+        
+        if ($call) {
+            return $htmlContent;
+        }
+
         return new HtmlResponse($htmlContent);
     }
 

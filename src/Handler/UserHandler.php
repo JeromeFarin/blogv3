@@ -5,13 +5,15 @@ use Framework\Controller;
 use Application\Manager\UserManager;
 use Application\Model\User;
 
-class UserHandler extends Controller
+class UserHandler
 {
     private $manager;
     public $form;
+    private $controller;
 
-    public function __construct(UserManager $manager) {
+    public function __construct(UserManager $manager, Controller $controller) {
         $this->manager = $manager;
+        $this->controller = $controller;
     }
 
     public function login($form)
@@ -50,9 +52,9 @@ class UserHandler extends Controller
         }
     }
 
-    public function getPass(User $object)
+    public function getUser(User $object)
     {
-        return $this->manager->pass($object);
+        return $this->manager->user($object);
     }
 
     public function logout()
@@ -82,26 +84,40 @@ class UserHandler extends Controller
 
     public function sendResetPass(User $object)
     {
-        $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587));
-        $transport->setUsername('j.farin38@gmail.com');
-        $transport->setPassword('BUbuse38');
+        $transport = (new \Swift_SmtpTransport(getenv("SWIFT_SMTP"), getenv("SWIFT_PORT"), getenv("SWIFT_TYPE")))->setUsername(getenv("SWIFT_USER"))->setPassword(getenv("SWIFT_PASS"));
 
         $mailer = new \Swift_Mailer($transport);
 
-        $message = new \Swift_Message('Hello Email');
-        $message->setFrom('blog@gmail.com');
-        $message->setTo($object->getMail());
+        $message = new \Swift_Message('Change password of Blog');
+        $message->setFrom(array('blog@blog.com' => 'Support'));
+        $message->setTo(array($object->getMail() => $object->getMail()));
         $message->setBody(
-            $this->render(
-                'user/mail_change_pass.twig',
-                [
-                    'name' => $object->getUsername(),
-                    'title' => 'Change Password'
-                ]
-            ),
+            $this->controller->render('mail/mail_change_pass.twig', array(
+                'title' => 'Change Password',
+                'name' => $object->getUsername(),
+                'id' => $object->getId(),
+                'code' => $this->setCode($object)
+            ),true),
             'text/html'
         );
+        
+        if ($mailer->send($message)) {
+            return "An mail was send to ".$object->getMail();
+        } else {
+            return "An error was up, please contact administrator";
+        }
+    }
 
-        $mailer->send($message);
+    private function setCode(User $object)
+    {
+        $code = substr(rand(),0,4);
+        $codeValidity = time()+300;
+
+        $object->setCode(password_hash($code,PASSWORD_BCRYPT));
+        $object->setCodeValidity(password_hash($codeValidity,PASSWORD_BCRYPT));
+
+        $this->manager->code($object);
+        
+        return $code;
     }
 }

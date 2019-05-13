@@ -58,3 +58,8 @@ adminContent:
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\ChapterController
   action: content
+password:
+  path: /password/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\UserController
+  action: pass

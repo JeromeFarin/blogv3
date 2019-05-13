@@ -8,6 +8,16 @@
 
 <p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
 
+
+{% if form.errors.send is defined %}
+    <em id="send_mail">{{form.errors.send}}</em>
+    <script>
+        var x= setTimeout(function(){
+            $('#send_mail').remove();
+        }, 5000)
+    </script>
+{% endif %}
+
 <form method="post">
     <input type="text" name="user[username]" placeholder="username"/>
     <input type="mail" name="user[mail]" placeholder="mail"/>
@@ -17,6 +27,10 @@
 
 {% if form.errors.name is defined %}
     ERROR : {{ form.errors.name }}
+{% endif %}
+
+{% if form.errors.mail is defined %}
+    ERROR : {{ form.errors.mail }}
 {% endif %}
 
 {% for user in users %}
