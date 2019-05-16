@@ -33,17 +33,17 @@ class ChapterController extends Controller
 
         if ($this->form->isSubmitted() && $this->form->getData()->like !== null) {
             $this->manager->like($this->form->getData());
-            return $this->redirect('/blogv3/chapter/'.$this->form->getData()->chapter);
+            return $this->redirect('/chapter/'.$this->form->getData()->chapter);
         }
 
         if ($this->form->isSubmitted() && $this->form->getData()->report !== null) {
             $this->manager->report($this->form->getData());
-            return $this->redirect('/blogv3/chapter/'.$this->form->getData()->chapter);
+            return $this->redirect('/chapter/'.$this->form->getData()->chapter);
         }
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->commentHandler->add($this->form->getData());
-            return $this->redirect('/blogv3/chapter/'.$this->form->getData()->chapter);
+            return $this->redirect('/chapter/'.$this->form->getData()->chapter);
         }
 
         $chapter = $this->chapterHandler->one($param);

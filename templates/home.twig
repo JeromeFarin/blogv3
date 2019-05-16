@@ -6,15 +6,15 @@
 
 <p>It's home page</p>
 
-<p>You find book list just <a href="/blogv3/book">HERE</a></p>
+<p>You find book list just <a href="/book">HERE</a></p>
 
 {% if session.mail is not defined %}
 
-<a href="/blogv3/login">Login</a>
+<a href="/login">Login</a>
 
 {% else %}
 
-<p><a href="/blogv3/admin">Admin Panel</a> | <a href="/blogv3/logout">Logout</a></p>
+<p><a href="/admin">Admin Panel</a> | <a href="/logout">Logout</a></p>
 
 {% endif %}
 

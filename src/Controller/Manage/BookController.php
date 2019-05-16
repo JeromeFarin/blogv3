@@ -22,17 +22,17 @@ class BookController extends Controller
         if ($this->form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
                 $this->handler->delete($this->form->getData());
-                return $this->redirect('/blogv3/admin/book/');
+                return $this->redirect('/admin/book/');
             }
             
             if ($this->form->isValid()) {
                 if (isset($request->getParsedBody()['edit'])) {
                     $this->handler->edit($this->form->getData());
-                    return $this->redirect('/blogv3/admin/book/');
+                    return $this->redirect('/admin/book/');
                 }
 
                 $this->handler->add($this->form->getData());
-                return $this->redirect('/blogv3/admin/book/');
+                return $this->redirect('/admin/book/');
             }
         }
         

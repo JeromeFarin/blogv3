@@ -2,16 +2,16 @@
 
 {% block content %}
 
-<h1><a href="/blogv3/book/{{chapter.book}}">Chapter {{chapter.number}}</a></h1>
+<h1><a href="/book/{{chapter.book}}">Chapter {{chapter.number}}</a></h1>
 
 <h2>{{chapter.name}}</h2>
 
 {% if previous.id is defined %}
-    <a href="/blogv3/chapter/{{previous.id}}">Previous Chapter</a>
+    <a href="/chapter/{{previous.id}}">Previous Chapter</a>
 {% endif %}
 
 {% if next.id is defined %}
-    <a href="/blogv3/chapter/{{next.id}}">Next Chapter</a>
+    <a href="/chapter/{{next.id}}">Next Chapter</a>
 {% endif %}
 
 <br>

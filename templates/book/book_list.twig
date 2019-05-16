@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h1><a href="/blogv3/">{{title}}</a></h1>
+<h1><a href="/">{{title}}</a></h1>
 
 {% for book in books %}
 
-<li><a href="/blogv3/book/{{book.id}}">{{book.name}}</a></li>
+<li><a href="/book/{{book.id}}">{{book.name}}</a></li>
     
 {% endfor %}
 

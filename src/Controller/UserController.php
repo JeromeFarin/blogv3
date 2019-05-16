@@ -25,14 +25,14 @@ class UserController extends Controller
 
             $this->handler->login($this->model);
 
-            return $this->redirect('/blogv3');
+            return $this->redirect('/');
         }
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->handler->login($this->form);
             if (empty($this->form->errors)) {
-                return $this->redirect('/blogv3');
+                return $this->redirect('/');
             }
         }
         
@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $result = $this->handler->logout();
         if ($result) {
-            return $this->redirect('/blogv3');
+            return $this->redirect('/');
         }
     }
 }

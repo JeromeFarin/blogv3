@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1><a href="/blogv3/book">{{book.name}}</a></h1>
+<h1><a href="/book">{{book.name}}</a></h1>
 
 {% if book.cover != 'null' %}
 
@@ -12,7 +12,7 @@
 
 {% for chapter in chapters %}
 
-    <li><a href="/blogv3/chapter/{{chapter.id}}">{{chapter.name}}</a></li>
+    <li><a href="/chapter/{{chapter.id}}">{{chapter.name}}</a></li>
 
 {% endfor %}
 

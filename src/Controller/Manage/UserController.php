@@ -24,13 +24,13 @@ class UserController extends Controller
         if ($this->form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
                 $this->handler->delete($this->form->getData());
-                return $this->redirect('/blogv3/admin/user/');
+                return $this->redirect('/admin/user/');
             }
 
             if ($this->form->isValid()) {
                 if (isset($request->getParsedBody()['edit'])) {
                     $this->handler->edit($this->form->getData());
-                    return $this->redirect('/blogv3/admin/user/');
+                    return $this->redirect('/admin/user/');
                 }
                 
                 if (isset($request->getParsedBody()['reset'])) {
@@ -43,7 +43,7 @@ class UserController extends Controller
                 }
 
                 $this->handler->add($this->form->getData());
-                return $this->redirect('/blogv3/admin/user/');
+                return $this->redirect('/admin/user/');
             }
         }
         
@@ -60,7 +60,7 @@ class UserController extends Controller
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->handler->delete($this->form->getData());
-            return $this->redirect('/blogv3');
+            return $this->redirect('/');
         }
         
         return $this->render('admin/password.twig', array(

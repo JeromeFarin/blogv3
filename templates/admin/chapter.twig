@@ -4,9 +4,9 @@
 
 <h1>{{title}}</h1>
 
-<p>Go back to <a href="/blogv3">Home Page</a></p>
+<p>Go back to <a href="/">Home Page</a></p>
 
-<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+<p>Go back to <a href="/admin">Panel Admin</a></p>
 
 <form method="post">
     <select name="chapter[book]">
@@ -45,9 +45,9 @@
     <input type="text" name="chapter[name]" value="{{chapter.name}}">
     <input type="submit" name="edit" value="Edit chapter">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter">
-    <a href="/blogv3/admin/content/{{chapter.id}}">Edit chapter content</a>
+    <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
     {% if chapter.content != 'null' %}
-        <a href="/blogv3/chapter/{{chapter.id}}">Go to chapter</a>
+        <a href="/chapter/{{chapter.id}}">Go to chapter</a>
     {% endif %}
 </form>
 

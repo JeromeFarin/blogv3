@@ -4,9 +4,9 @@
 
 <h1>{{title}}</h1>
 
-<p>Go back to <a href="/blogv3">Home Page</a></p>
+<p>Go back to <a href="/">Home Page</a></p>
 
-<p>Go back to <a href="/blogv3/admin">Panel Admin</a></p>
+<p>Go back to <a href="/admin">Panel Admin</a></p>
 
 <form method="post">
     <input type="text" name="book[name]" placeholder="name"/>
@@ -47,7 +47,7 @@
 
     {% for chapter in chapters %}
         {% if chapter.id == book.id %}
-            <a href="/blogv3/book/{{book.id}}">Go to book</a>
+            <a href="/book/{{book.id}}">Go to book</a>
         {% endif %}
     {% endfor %}
 </form>

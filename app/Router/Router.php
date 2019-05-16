@@ -32,10 +32,12 @@ class Router
 
     public function getRouteByRequest()
     {
-        $request = preg_replace('/^(\/).*?(\/)/i','/',$this->request->getUri()->getPath());
-        if (strlen($request) > 1) {
-            $request = preg_replace('/(\/)$/i','',$request);
-        }
+        // $request = preg_replace('/^(\/).*?(\/)/i','/',$this->request->getUri()->getPath());
+        // if (strlen($request) > 1) {
+        //     $request = preg_replace('/(\/)$/i','',$request);
+        // }
+
+        $request = $this->request->getUri()->getPath();
         
         foreach($this->routes as $route) {
             if($route->match($request)) {

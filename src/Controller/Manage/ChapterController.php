@@ -27,17 +27,17 @@ class ChapterController extends Controller
         if ($this->form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
                 $this->chapterHandler->delete($this->form->getData());
-                return $this->redirect('/blogv3/admin/chapter/');
+                return $this->redirect('/admin/chapter/');
             }
 
             if ($this->form->isValid()) {
                 if (isset($request->getParsedBody()['edit'])) {
                     $this->chapterHandler->edit($this->form->getData());
-                    return $this->redirect('/blogv3/admin/chapter/');
+                    return $this->redirect('/admin/chapter/');
                 }
 
                 $this->chapterHandler->add($this->form->getData());
-                return $this->redirect('/blogv3/admin/chapter/');
+                return $this->redirect('/admin/chapter/');
             }
         }
 
@@ -59,7 +59,7 @@ class ChapterController extends Controller
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->chapterHandler->edit($this->form->getData());
-            return $this->redirect('/blogv3/chapter/'.$param);
+            return $this->redirect('/chapter/'.$param);
         }
 
         return $this->render('admin/content.twig', array(

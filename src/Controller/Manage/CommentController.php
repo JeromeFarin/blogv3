@@ -25,12 +25,12 @@ class CommentController extends Controller
         if ($this->form->isSubmitted()) {
             if (isset($request->getParsedBody()['delete'])) {
                 $this->manager->delete($this->form->getData());
-                return $this->redirect('/blogv3/admin/comment/');
+                return $this->redirect('/admin/comment/');
             }
             
             if ($this->form->isValid()) {
                 $this->handler->add($this->form->getData());
-                return $this->redirect('/blogv3/admin/comment/');
+                return $this->redirect('/admin/comment/');
             }
         }
         
