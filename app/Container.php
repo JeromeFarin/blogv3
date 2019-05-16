@@ -5,8 +5,8 @@ class Container
 {
     private $instances= [];
 
-    public function set(string $key, Callable $resolver){
-        $this->instances[$key] = $resolver;
+    public function set(string $key){
+        $this->instances[$key] = $this->resolve($key);
     }
 
     public function get(string $key){

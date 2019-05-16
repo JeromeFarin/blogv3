@@ -9,7 +9,6 @@ use Symfony\Component\Debug\DebugClassLoader;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Framework\Container;
-// use Framework\Router;
 use Framework\Router\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -45,6 +44,13 @@ try{
     $emitter = new SapiEmitter();
 
     $emitter->emit($response);
+
+    $flash = $container->get('Framework\FlashBag');
+    
+    if (isset($_SESSION['flash']) and !empty($_SESSION['flash'])) {
+        $flash->getFlash();
+    }
+
 }catch (\Exception $e) {
     echo $e->getMessage();
 }

@@ -8,7 +8,7 @@
 
 <p>Go back to <a href="/admin">Panel Admin</a></p>
 
-<form method="post">
+<form action="/admin/book/create" method="post">
     <input type="text" name="book[name]" placeholder="name"/>
     <input type="text" name="book[owner]" placeholder="owner"/>
     <button type="submit">Create Book</button>
@@ -36,7 +36,7 @@
 
     {% if book.cover != "null" %}
         <input type="hidden" name="book[cover]" value="{{book.cover}}">
-        <img height="100px" src="../public/img/cover/{{book.cover}}" alt="Cover">
+        <img height="100px" src="/img/cover/{{book.cover}}" alt="Cover">
     {% else %}
         <input type="file" name="book_cover">
     {% endif %}

@@ -63,3 +63,8 @@ password:
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\UserController
   action: pass
+addBook:
+  path: /admin/book/create
+  parameters: {}
+  controller: Application\Controller\Manage\BookController
+  action: create

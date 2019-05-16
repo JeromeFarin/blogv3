@@ -27,14 +27,14 @@ class Book implements ModelInterface
             ],
             "constraints" => [
                 "name" => [
-                    new Constraints\Required('This field must not be empty'),
-                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum'),
-                    new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
+                    new Constraints\Required('The title must not be empty'),
+                    new Constraints\MinLenght(2,'The title must contain 2 characters minimum'),
+                    new Constraints\MaxLenght(255,'The title must contain 255 characters maximum')
                 ],
                 "owner" => [
-                    new Constraints\Required('This field must not be empty'),
-                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum'),
-                    new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
+                    new Constraints\Required('The owner must not be empty'),
+                    new Constraints\MinLenght(2,'The owner must contain 2 characters minimum'),
+                    new Constraints\MaxLenght(255,'The owner must contain 255 characters maximum')
                 ]
             ]
         ];

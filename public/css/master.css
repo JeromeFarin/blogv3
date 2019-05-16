@@ -1,0 +1,17 @@
+#flash {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+.flash {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    border-radius: 10px;
+    background-color: #ffc04a;
+    text-align: center;
+}

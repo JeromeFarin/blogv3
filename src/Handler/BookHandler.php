@@ -3,23 +3,35 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\BookManager;
+use Zend\Diactoros\ServerRequest;
+use Application\Form\BookForm;
 
 class BookHandler extends Controller
 {
     private $manager;
+    private $form;
 
-    public function __construct(BookManager $manager) {
+    public function __construct(BookManager $manager, BookForm $form) {
         $this->manager = $manager;
+        $this->form = $form;
     }
 
-    public function add($book)
+    public function add(ServerRequest $request)
     {
-        return $this->manager->insert($book);
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->manager->insert($this->form->getData());
+            return $this->redirect('/admin/book/');
+        }
+        // dd($this->form);
+        return $this->form;
+        
     }
 
-    public function delete($model)
+    public function delete($book)
     {
-        return $this->manager->delete($model);
+        return $this->manager->delete($book);
     }
 
     public function list()
