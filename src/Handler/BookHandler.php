@@ -16,22 +16,9 @@ class BookHandler extends Controller
         $this->form = $form;
     }
 
-    public function add(ServerRequest $request)
+    public function one($id)
     {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->manager->insert($this->form->getData());
-            return $this->redirect('/admin/book/');
-        }
-        // dd($this->form);
-        return $this->form;
-        
-    }
-
-    public function delete($book)
-    {
-        return $this->manager->delete($book);
+        return $this->manager->find($id);
     }
 
     public function list()
@@ -44,13 +31,37 @@ class BookHandler extends Controller
         return $this->manager->findAllDone();
     }
 
-    public function edit($book)
-    {        
-        return $this->manager->update($book);
+    public function add(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->insert($this->form->getData());
+        }
+        
+        return $this->form;
+        
     }
 
-    public function one($id)
+    public function edit(ServerRequest $request)
+    {        
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->update($this->form->getData());
+        }
+        
+        return $this->form;
+    }
+
+    public function delete(ServerRequest $request)
     {
-        return $this->manager->find($id);
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted()) {
+            return $this->manager->delete($this->form->getData());
+        }
+        
+        return $this->form;
     }
 }

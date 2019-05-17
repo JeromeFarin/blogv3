@@ -14,9 +14,8 @@
             <option value="{{book.id}}">{{book.name}}</option>
         {% endfor %}
     </select>
-    {# <input type="number" name="chapter[number]" placeholder="number"/> #}
     <input type="text" name="chapter[name]" placeholder="name"/>
-    <button type="submit">Create chapter</button>
+    <button type="submit" formaction="/admin/chapter/create">Create chapter</button>
 </form>
 <br>
 
@@ -43,8 +42,8 @@
     </select>
     <input type="number" name="chapter[number]" value="{{chapter.number}}">
     <input type="text" name="chapter[name]" value="{{chapter.name}}">
-    <input type="submit" name="edit" value="Edit chapter">
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter">
+    <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/edit">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
     <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
     {% if chapter.content != 'null' %}
         <a href="/chapter/{{chapter.id}}">Go to chapter</a>

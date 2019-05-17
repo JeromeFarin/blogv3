@@ -28,7 +28,7 @@ class CommentManager extends Manager
         }
     }
 
-    public function findAllComment($param)
+    public function findAllComment(int $param)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
@@ -45,13 +45,13 @@ class CommentManager extends Manager
         }
     }
 
-    public function like($object)
+    public function like(int $param)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "update %s set likes = likes + 1 where id = %s",
                 $this->model::getInfo()["table"],
-                $object->id
+                $param
             )
         );
 
@@ -62,13 +62,13 @@ class CommentManager extends Manager
         }
     }
 
-    public function report($object)
+    public function report(int $param)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "update %s set report = report + 1 where id = %s",
                 $this->model::getInfo()["table"],
-                $object->id
+                $param
             )
         );
 

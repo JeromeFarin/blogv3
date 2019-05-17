@@ -14,8 +14,7 @@ class FlashBag
                 'newFlash(\'',$value,'\');',
                 '</script>';
         }
-        $_SESSION['flash'] = '';
-        dd($this->flash);
+        // $_SESSION['flash'] = '';
         echo '<script type="text/javascript">',
             'flash();',
             '</script>';

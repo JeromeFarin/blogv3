@@ -3,23 +3,50 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\ChapterManager;
+use Zend\Diactoros\ServerRequest;
+use Application\Form\ChapterForm;
 
 class ChapterHandler extends Controller
 {
     private $manager;
+    private $form;
 
-    public function __construct(ChapterManager $manager) {
+    public function __construct(ChapterManager $manager, ChapterForm $form) {
         $this->manager = $manager;
+        $this->form = $form;
     }
 
-    public function add($chapter)
+    public function add(ServerRequest $request)
     {
-        return $this->manager->insert($chapter);
+        $this->form->handle($request);
+        
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->insert($this->form->getData());
+        }
+
+        return $this->form;
     }
 
-    public function delete($model)
+    public function edit(ServerRequest $request)
+    {        
+        $this->form->handle($request);
+        
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->update($this->form->getData());
+        }
+
+        return $this->form;
+    }
+
+    public function delete(ServerRequest $request)
     {
-        return $this->manager->delete($model);
+        $this->form->handle($request);
+        
+        if ($this->form->isSubmitted()) {
+            return $this->manager->delete($this->form->getData());
+        }
+
+        return $this->form;
     }
 
     public function list()
@@ -30,11 +57,6 @@ class ChapterHandler extends Controller
     public function listOne($id)
     {
         return $this->manager->findAllChapter($id);
-    }
-
-    public function edit($chapter)
-    {        
-        return $this->manager->update($chapter);
     }
 
     public function one($id)
@@ -64,14 +86,12 @@ class ChapterHandler extends Controller
         }
     }
 
-    public function findChapterNumber($book)
+    public function content(ServerRequest $request)
     {
-        $number = $this->manager->chapterNumber($book);
+        $this->form->handle($request);
         
-        if ($number === null) {
-            return 1;
-        } else {
-            return $number['number'] + 1;
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->update($this->form->getData());
         }
     }
 }

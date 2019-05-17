@@ -4,31 +4,28 @@ namespace Application\Handler;
 use Framework\Controller;
 use Application\Manager\UserManager;
 use Application\Model\User;
+use Application\Form\UserForm;
+use Zend\Diactoros\ServerRequest;
 
-class UserHandler
+class UserHandler extends Controller
 {
     private $manager;
     public $form;
-    private $controller;
 
-    public function __construct(UserManager $manager, Controller $controller) {
+    public function __construct(UserManager $manager, UserForm $form) {
         $this->manager = $manager;
-        $this->controller = $controller;
+        $this->form = $form;
     }
 
-    public function login($form)
+    public function login(ServerRequest $request)
     {
-        $this->form = $form;
+        $this->form->handle($request);
 
-        if (isset($this->form->submitted)) {
-            $object = $this->form->getData();
-        } else {
-            $object = $this->form;
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->checkMail($this->form->getData());
         }
-
-        if ($this->checkMail($object)) {
-            return $this;
-        }
+        
+        return $this->form;
     }
 
     public function checkMail(User $object)
@@ -50,11 +47,6 @@ class UserHandler
         } else {
             return $this->form->errors = array('pass' => 'Bad password for this profile');
         }
-    }
-
-    public function getUser(User $object)
-    {
-        return $this->manager->user($object);
     }
 
     public function logout()
@@ -92,7 +84,7 @@ class UserHandler
         $message->setFrom(array('blog@blog.com' => 'Support'));
         $message->setTo(array($object->getMail() => $object->getMail()));
         $message->setBody(
-            $this->controller->render('mail/mail_change_pass.twig', array(
+            $this->render('mail/mail_change_pass.twig', array(
                 'title' => 'Change Password',
                 'name' => $object->getUsername(),
                 'id' => $object->getId(),

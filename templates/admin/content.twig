@@ -16,7 +16,7 @@
     <input type="hidden" name="chapter[number]" value="{{chapter.number}}">
     <input type="hidden" name="chapter[name]" value="{{chapter.name}}">
     <textarea name="chapter[content]" class="text_block" cols="30" rows="10">{{chapter.content}}</textarea>
-    <input type="submit" value="Validate">
+    <input type="submit" value="Validate" formaction="/admin/content/update/{{chapter.id}}">
 </form>
 
 {% endblock %}

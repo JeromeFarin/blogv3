@@ -68,3 +68,58 @@ addBook:
   parameters: {}
   controller: Application\Controller\Manage\BookController
   action: create
+editBook:
+  path: /admin/book/edit
+  parameters: {}
+  controller: Application\Controller\Manage\BookController
+  action: edit
+removeBook:
+  path: /admin/book/remove
+  parameters: {}
+  controller: Application\Controller\Manage\BookController
+  action: delete
+addChapter:
+  path: /admin/chapter/create
+  parameters: {}
+  controller: Application\Controller\Manage\ChapterController
+  action: create
+editChapter:
+  path: /admin/chapter/edit
+  parameters: {}
+  controller: Application\Controller\Manage\ChapterController
+  action: edit
+removeChapter:
+  path: /admin/chapter/remove
+  parameters: {}
+  controller: Application\Controller\Manage\ChapterController
+  action: delete
+updateContent:
+  path: /admin/content/update/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\ChapterController
+  action: contentUpdate
+createComment:
+  path: /comment/create/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\CommentController
+  action: commentCreate
+removeComment:
+  path: /admin/comment/remove/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\CommentController
+  action: commentRemove
+likeComment:
+  path: /comment/like/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\CommentController
+  action: commentLike
+reportComment:
+  path: /comment/report/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\CommentController
+  action: commentReport
+loginSend:
+  path: /login/send
+  parameters: {}
+  controller: Application\Controller\UserController
+  action: loginSend

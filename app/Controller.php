@@ -31,7 +31,7 @@ class Controller
         ));
         $twig->addGlobal('session', $_SESSION);
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
-            $check = (new Container())->get('Application\Controller\UserController')->login(null);
+            $check = (new Container())->get('Application\Controller\UserController')->loginAuto();
             if ($check === true) {
                 $twig->addGlobal('check',true);
             }

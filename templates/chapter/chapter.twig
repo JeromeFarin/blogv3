@@ -30,7 +30,7 @@
     <input type="hidden" name="comment[chapter]" value="{{chapter.id}}">
     <input type="text" name="comment[owner]" placeholder="Your name">
     <textarea name="comment[content]" class="text_block" cols="30" rows="10"></textarea>
-    <input type="submit" value="Reply">
+    <input type="submit" value="Reply" formaction="/comment/create/{{chapter.id}}">
 </form>
 
 {% for comment in comments %}
@@ -44,8 +44,8 @@
     <form method="post">
         <input type="hidden" name="comment[id]" value="{{comment.id}}">
         <input type="hidden" name="comment[chapter]" value="{{comment.chapter}}">
-        <input type="submit" name="comment[like]" value="Like">
-        <input type="submit" name="comment[report]" value="Report">
+        <input type="submit" name="comment[like]" value="Like" formaction="/comment/like/{{comment.id}}">
+        <input type="submit" name="comment[report]" value="Report" formaction="/comment/report/{{comment.id}}">
     </form>
 {% endfor %}
 

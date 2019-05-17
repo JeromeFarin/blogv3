@@ -40,7 +40,13 @@ class ChapterManager extends Manager
         );
 
         if ($statement->execute()) {
-            return $statement->fetch(\PDO::FETCH_ASSOC);
+            $number = $statement->fetch(\PDO::FETCH_ASSOC);
+            
+            if ($number === null) {
+                return 1;
+            } else {
+                return $number['number'] + 1;
+            }
         } else {
             throw new \Exception("Error findAll(chapter)");
         }

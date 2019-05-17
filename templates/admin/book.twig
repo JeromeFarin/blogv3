@@ -42,8 +42,8 @@
     {% endif %}
     
     <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
-    <input type="submit" name="edit" value="Edit book">
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book">
+    <input type="submit" name="edit" value="Edit book" formaction="/admin/book/edit">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book" formaction="/admin/book/remove">
 
     {% for chapter in chapters %}
         {% if chapter.id == book.id %}

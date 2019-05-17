@@ -7,7 +7,6 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
-use Framework\FlashBag;
 
 /**
  * Class AddForm
@@ -45,7 +44,7 @@ class BookForm implements FormInterface
             $this->submitted = true;
 
             $bookData = $request->getParsedBody()["book"];
-            // dd($bookData);
+            
             if (isset($bookData["id"])) {
                 $this->book->setId($bookData["id"]);
             }
@@ -81,7 +80,7 @@ class BookForm implements FormInterface
         $valid = new Validator($this->book);
 
         if (!empty($valid->valid())) {
-            $_SESSION['flash'] = $valid->valid();
+            $this->errors = $valid->valid();
             return false;
         } else {
             return true;

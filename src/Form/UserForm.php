@@ -7,7 +7,7 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
-use Application\Handler\UserHandler;
+use Application\Manager\UserManager;
 
 /**
  * Class AddForm
@@ -30,16 +30,16 @@ class UserForm implements FormInterface
      */
     public $errors = [];
 
-    private $handler;
+    private $manager;
 
     /**
      * AddForm constructor.
      * @param ModelInterface $model
      */
-    public function __construct(UserHandler $handler)
+    public function __construct(UserManager $manager)
     {
         $this->user = new User();
-        $this->handler = $handler;
+        $this->manager = $manager;
     }
 
     public function handle(ServerRequestInterface $request): FormInterface
@@ -51,7 +51,7 @@ class UserForm implements FormInterface
             
             if (isset($userData["id"])) {
                 $this->user->setId($userData["id"]);
-                $this->user = $this->handler->getUser($this->user)[0];
+                $this->user = $this->manager->user($this->user)[0];
                 $this->user->setUsername($userData["username"]);
                 $this->user->setMail($userData["mail"]);
             } elseif (!isset($userData["pass"])) {
