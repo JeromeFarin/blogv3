@@ -135,7 +135,7 @@ class UserHandler extends Controller
         $codeValidity = time()+1800;
 
         $object->setCode(password_hash($code,PASSWORD_BCRYPT));
-        $object->setCodeValidity(password_hash($codeValidity,PASSWORD_BCRYPT));
+        $object->setCodeValidity($codeValidity);
 
         $this->manager->code($object);
         
@@ -149,8 +149,16 @@ class UserHandler extends Controller
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $oldUser = $this->manager->user($this->form->getData())[0];
             $newUser = $this->form->getData();
-            dd($this->form->getData(),$this->manager->user($this->form->getData())[0]);
-            // return $this->handler->delete($this->form->getData());
+            
+            if (password_verify($newUser->code,$oldUser->code)) {
+                if ($oldUser->codevalidity >= time()) {
+                    $newUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
+                    $newUser->setCode(null);
+                    $newUser->setCodeValidity(null);
+                }
+            }
+
+            return $this->manager->update($newUser);
         }
 
         return $this->form;

@@ -50,7 +50,7 @@ class UserManager extends Manager
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "update %s set code = '%s', code_validity = '%s' where id = %s",
+                "update %s set code = '%s', codevalidity = '%s' where id = %s",
                 $object::getInfo()['table'],
                 addslashes($object->getCode()),
                 addslashes($object->getCodeValidity()),
