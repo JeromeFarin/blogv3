@@ -63,6 +63,11 @@ password:
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\UserController
   action: pass
+passwordChange:
+  path: /password/change/:id
+  parameters: {id: '[\d]+'}
+  controller: Application\Controller\Manage\UserController
+  action: passChange
 addBook:
   path: /admin/book/create
   parameters: {}
@@ -123,3 +128,23 @@ loginSend:
   parameters: {}
   controller: Application\Controller\UserController
   action: loginSend
+userAdd:
+  path: /admin/user/create
+  parameters: {}
+  controller: Application\Controller\Manage\UserController
+  action: add
+userEdit:
+  path: /admin/user/edit
+  parameters: {}
+  controller: Application\Controller\Manage\UserController
+  action: edit
+userRemove:
+  path: /admin/user/remove
+  parameters: {}
+  controller: Application\Controller\Manage\UserController
+  action: remove
+userReset:
+  path: /admin/user/reset
+  parameters: {}
+  controller: Application\Controller\Manage\UserController
+  action: reset

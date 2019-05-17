@@ -9,63 +9,57 @@ use Zend\Diactoros\ServerRequest;
 
 class UserController extends Controller
 {
-    private $form;
     private $handler;
 
-    public function __construct(UserForm $form, UserHandler $handler) {
-        $this->form = $form;
+    public function __construct(UserHandler $handler) {
         $this->handler = $handler;
     }
 
-    public function user(ServerRequest $request)
+    public function user()
     {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted()) {
-            if (isset($request->getParsedBody()['delete'])) {
-                $this->handler->delete($this->form->getData());
-                return $this->redirect('/admin/user/');
-            }
-
-            if ($this->form->isValid()) {
-                if (isset($request->getParsedBody()['edit'])) {
-                    $this->handler->edit($this->form->getData());
-                    return $this->redirect('/admin/user/');
-                }
-                
-                if (isset($request->getParsedBody()['reset'])) {
-                    $this->handler->sendResetPass($this->form->getData());
-                    return $this->render('admin/user.twig', array(
-                        'title' => 'Manage Users',
-                        'users' => $this->handler->list(),
-                        'form' => $this->form
-                    ));
-                }
-
-                $this->handler->add($this->form->getData());
-                return $this->redirect('/admin/user/');
-            }
-        }
-        
         return $this->render('admin/user.twig', array(
             'title' => 'Manage Users',
-            'users' => $this->handler->list(),
-            'form' => $this->form
+            'users' => $this->handler->list()
         ));
+    }
+
+    public function add(ServerRequest $request)
+    {
+        $this->handler->add($request);
+        return $this->redirect('/admin/user');
+    }
+
+    public function edit(ServerRequest $request)
+    {
+        $this->handler->edit($request);
+        return $this->redirect('/admin/user');
+    }
+
+    public function remove(ServerRequest $request)
+    {
+        $this->handler->delete($request);
+        return $this->redirect('/admin/user');
+    }
+
+    public function reset(ServerRequest $request)
+    {
+        $this->handler->reset($request);
+        return $this->redirect('/admin/user');
     }
 
     public function pass(ServerRequest $request)
     {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->handler->delete($this->form->getData());
-            return $this->redirect('/');
-        }
+        preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
         
         return $this->render('admin/password.twig', array(
             'title' => 'Change Password',
-            'form' => $this->form
+            'id' => $matches[0]
         ));
+    }
+
+    public function passChange(ServerRequest $request)
+    {
+        $this->handler->passUpdate($request);
+        return $this->redirect('/');
     }
 }

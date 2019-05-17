@@ -52,8 +52,9 @@ class UserForm implements FormInterface
             if (isset($userData["id"])) {
                 $this->user->setId($userData["id"]);
                 $this->user = $this->manager->user($this->user)[0];
-                $this->user->setUsername($userData["username"]);
-                $this->user->setMail($userData["mail"]);
+                foreach ($userData as $key => $property) {
+                    $this->user->{sprintf("set%s", ucfirst($key))}($property);
+                }
             } elseif (!isset($userData["pass"])) {
                 $this->user->setUsername($userData["username"]);
                 $this->user->setMail($userData["mail"]);
@@ -62,7 +63,7 @@ class UserForm implements FormInterface
                 $this->user->setMail($userData["mail"]);
             }
         }
-
+        
         return $this;
     }
 

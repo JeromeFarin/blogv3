@@ -59,22 +59,51 @@ class UserHandler extends Controller
         return $this->manager->findAll();
     }
 
-    public function add(User $object)
+    public function add(ServerRequest $request)
     {
-        return $this->manager->insert($object);
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->insert($this->form->getData());
+        }
+
+        return $this->form;
     }
 
-    public function edit(User $object)
+    public function edit(ServerRequest $request)
     {        
-        return $this->manager->update($object);
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->manager->update($this->form->getData());
+        }
+
+        return $this->form;
     }
 
-    public function delete(User $object)
+    public function delete(ServerRequest $request)
     {
-        return $this->manager->delete($object);
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted()) {
+            return $this->manager->delete($this->form->getData());
+        }
+
+        return $this->form;
     }
 
-    public function sendResetPass(User $object)
+    public function reset(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            return $this->sendResetPass($this->form->getData());
+        }
+
+        return $this->form;
+    }
+
+    private function sendResetPass(User $object)
     {
         $transport = (new \Swift_SmtpTransport(getenv("SWIFT_SMTP"), getenv("SWIFT_PORT"), getenv("SWIFT_TYPE")))->setUsername(getenv("SWIFT_USER"))->setPassword(getenv("SWIFT_PASS"));
 
@@ -103,7 +132,7 @@ class UserHandler extends Controller
     private function setCode(User $object)
     {
         $code = substr(rand(),0,4);
-        $codeValidity = time()+300;
+        $codeValidity = time()+1800;
 
         $object->setCode(password_hash($code,PASSWORD_BCRYPT));
         $object->setCodeValidity(password_hash($codeValidity,PASSWORD_BCRYPT));
@@ -111,5 +140,19 @@ class UserHandler extends Controller
         $this->manager->code($object);
         
         return $code;
+    }
+
+    public function passUpdate(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $oldUser = $this->manager->user($this->form->getData())[0];
+            $newUser = $this->form->getData();
+            dd($this->form->getData(),$this->manager->user($this->form->getData())[0]);
+            // return $this->handler->delete($this->form->getData());
+        }
+
+        return $this->form;
     }
 }

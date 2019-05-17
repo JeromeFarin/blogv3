@@ -21,7 +21,7 @@
 <form method="post">
     <input type="text" name="user[username]" placeholder="username"/>
     <input type="mail" name="user[mail]" placeholder="mail"/>
-    <button type="submit">Create user</button>
+    <button type="submit" formaction="/admin/user/create">Create user</button>
 </form>
 <br>
 
@@ -39,9 +39,9 @@
     <input type="hidden" name="user[id]" value="{{user.id}}">
     <input type="text" name="user[username]" value="{{user.username}}">
     <input type="mail" name="user[mail]" value="{{user.mail}}">
-    <input type="submit" name="reset" value="Reset Password">
-    <input type="submit" name="edit" value="Edit user">
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this user ?');" value="Delete user">
+    <input type="submit" name="reset" value="Reset Password" formaction="/admin/user/reset">
+    <input type="submit" name="edit" value="Edit user" formaction="/admin/user/edit">
+    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this user ?');" value="Delete user" formaction="/admin/user/remove">
 </form>
     
 {% endfor %}
