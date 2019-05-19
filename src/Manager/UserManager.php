@@ -4,13 +4,32 @@ namespace Application\Manager;
 use Framework\Manager;
 use Application\Model\User;
 
+/**
+ * Class UserManager
+ * @package Application\Manager
+ */
 class UserManager extends Manager
 {
+    /**
+     * @var User
+     */
     protected $model;
 
+    /**
+     * Constructor
+     *
+     * @param User $model
+     */
     public function __construct(User $model) {
         $this->model = $model;
     }
+ 
+    /**
+     * Check mail in DB
+     *
+     * @param User $user
+     * @return mixed
+     */
     public function check(User $user)
     {
         $statement = $this->getPdo()->prepare(
@@ -29,6 +48,12 @@ class UserManager extends Manager
         }
     }
 
+    /**
+     * Get user by id
+     *
+     * @param User $user
+     * @return mixed
+     */
     public function user(User $user)
     {
         $statement = $this->getPdo()->prepare(
@@ -46,6 +71,12 @@ class UserManager extends Manager
         }
     }
 
+    /**
+     * Set code and codevalidity
+     *
+     * @param User $object
+     * @return mixed
+     */
     public function code(User $object)
     {
         $statement = $this->getPdo()->prepare(

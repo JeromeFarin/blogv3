@@ -4,6 +4,10 @@ namespace Framework;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 
+/**
+ * Controller class
+ * @package Framework
+ */
 class Controller
 {
     /**

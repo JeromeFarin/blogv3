@@ -5,14 +5,42 @@ use Application\Manager;
 use Framework\ModelInterface;
 use Framework\Constraints;
 
+/**
+ * Class Chapter
+ * @package Application\Model
+ */
 class Chapter implements ModelInterface
 {
-    public $id;
-    public $book;
-    public $number;
-    public $name;
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $book;
+
+    /**
+     * @var int
+     */
+    private $number;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
     private $content;
 
+    /**
+     * Get model info 
+     *
+     * @return array
+     */
     public static function getInfo(): array
     {
         return [

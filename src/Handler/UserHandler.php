@@ -6,17 +6,48 @@ use Application\Manager\UserManager;
 use Application\Model\User;
 use Application\Form\UserForm;
 use Zend\Diactoros\ServerRequest;
+use Framework\FlashBag;
 
+/**
+ * Class UserHandler
+ * @package Application\Handler
+ */
 class UserHandler extends Controller
 {
+    /**
+     * @var UserManager
+     */ 
     private $manager;
+
+    /**
+     * @var UserForm
+     */
     public $form;
 
-    public function __construct(UserManager $manager, UserForm $form) {
+    /**
+     * @var FlashBag
+     */
+    private $flash;
+
+    /**
+     * Constructor
+     *
+     * @param UserManager $manager
+     * @param UserForm $form
+     * @param FlashBag $flash
+     */ 
+    public function __construct(UserManager $manager, UserForm $form, FlashBag $flash) {
         $this->manager = $manager;
         $this->form = $form;
+        $this->flash = $flash;
     }
 
+    /**
+     * Login
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function login(ServerRequest $request)
     {
         $this->form->handle($request);
@@ -28,6 +59,12 @@ class UserHandler extends Controller
         return $this->flash->setFlash($this->form->getErrors());
     }
 
+    /**
+     * Check account with mail
+     *
+     * @param User $object
+     * @return mixed
+     */ 
     public function checkMail(User $object)
     {
         $check = $this->manager->check($object);
@@ -38,6 +75,13 @@ class UserHandler extends Controller
         }
     }
 
+    /**
+     * Check pass
+     *
+     * @param User $object
+     * @param User $check
+     * @return mixed
+     */
     private function checkPass(User $object,$check)
     {
         if (password_verify($object->getPass(),$check['pass'])) {
@@ -49,16 +93,32 @@ class UserHandler extends Controller
         }
     }
 
+    /**
+     * Logout
+     *
+     * @return mixed
+     */
     public function logout()
     {
         return session_destroy();
     }
 
+    /**
+     * User list
+     *
+     * @return mixed
+     */
     public function list()
     {
         return $this->manager->findAll();
     }
 
+    /**
+     * Create user
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function add(ServerRequest $request)
     {
         $this->form->handle($request);
@@ -71,6 +131,12 @@ class UserHandler extends Controller
         return $this->flash->setFlash($this->form->getErrors());
     }
 
+    /**
+     * Modify user
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function edit(ServerRequest $request)
     {        
         $this->form->handle($request);
@@ -83,6 +149,12 @@ class UserHandler extends Controller
         return $this->flash->setFlash($this->form->getErrors());
     }
 
+    /**
+     * Delete user
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function delete(ServerRequest $request)
     {
         $this->form->handle($request);
@@ -95,6 +167,12 @@ class UserHandler extends Controller
         return $this->flash->setFlash($this->form->getErrors());
     }
 
+    /**
+     * Reset pass action
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function reset(ServerRequest $request)
     {
         $this->form->handle($request);
@@ -107,6 +185,12 @@ class UserHandler extends Controller
         return $this->flash->setFlash($this->form->getErrors());
     }
 
+    /**
+     * Send mail for change pass
+     *
+     * @param User $object
+     * @return mixed
+     */
     private function sendResetPass(User $object)
     {
         $transport = (new \Swift_SmtpTransport(getenv("SWIFT_SMTP"), getenv("SWIFT_PORT"), getenv("SWIFT_TYPE")))->setUsername(getenv("SWIFT_USER"))->setPassword(getenv("SWIFT_PASS"));
@@ -133,6 +217,12 @@ class UserHandler extends Controller
         }
     }
 
+    /**
+     * Set personal code and vilidty time
+     *
+     * @param User $object
+     * @return mixed
+     */
     private function setCode(User $object)
     {
         $code = substr(rand(),0,4);
@@ -146,6 +236,12 @@ class UserHandler extends Controller
         return $code;
     }
 
+    /**
+     * Change pass
+     *
+     * @param ServerRequest $request
+     * @return mixed
+     */
     public function passUpdate(ServerRequest $request)
     {
         $this->form->handle($request);

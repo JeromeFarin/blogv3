@@ -30,7 +30,7 @@ class BookController extends Controller
     /**
      * List of books
      *
-     * @return void
+     * @return render
      */
     public function list()
     {
@@ -44,14 +44,14 @@ class BookController extends Controller
      * Book
      *
      * @param ServerRequest $request
-     * @return void
+     * @return render
      */
-    public function book(ServerRequest $request,string $param)
+    public function book(ServerRequest $request)
     {
         return $this->render('book/book.twig', array(
             'title' => 'Book',
-            'book' => $this->book_handler->one($param),
-            'chapters' => $this->chapter_handler->listOne($param)
+            'book' => $this->book_handler->one($request),
+            'chapters' => $this->chapter_handler->listOne($request)
         ));
     }
 }

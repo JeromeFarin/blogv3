@@ -10,7 +10,7 @@ use Framework\Validator;
 
 /**
  * Class AddForm
- * @package Application\Form\Book
+ * @package Application\Form
  */
 class BookForm implements FormInterface
 {
@@ -31,13 +31,19 @@ class BookForm implements FormInterface
 
     /**
      * AddForm constructor.
-     * @param ModelInterface $model
+     * @param Book $model
      */
     public function __construct(Book $model)
     {
         $this->book = $model;
     }
 
+    /**
+     * Generate form
+     *
+     * @param ServerRequestInterface $request
+     * @return FormInterface
+     */
     public function handle(ServerRequestInterface $request): FormInterface
     {
         if ($request->getMethod() === "POST" && isset($request->getParsedBody()["book"])) {
@@ -67,13 +73,16 @@ class BookForm implements FormInterface
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSubmitted(): bool
     {
         return $this->submitted;
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isValid(): bool
     {
@@ -103,6 +112,11 @@ class BookForm implements FormInterface
         return $this->book;
     }
 
+    /**
+     * Upload file for book cover
+     *
+     * @return mixed
+     */
     private function uploadFile()
     {
         if ($_FILES['book_cover']['size'] < 5000000) {

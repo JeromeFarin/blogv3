@@ -2,10 +2,24 @@
 
 namespace Framework;
 
+/**
+ * FlashBag class
+ * @package Framework
+ */
 class FlashBag
 {
+    /**
+     * Flash element
+     *
+     * @var array
+     */
     private $flash = [];
 
+    /**
+     * Get flash in SESSION and run JS for show flash
+     *
+     * @return void
+     */
     public function getFlash()
     {
         if (isset($_SESSION['flash']) && !empty($_SESSION['flash'])) {
@@ -29,6 +43,12 @@ class FlashBag
             '</script>';
     }
 
+    /**
+     * Set flash in SESSION
+     *
+     * @param array $values
+     * @return void
+     */
     public function setFlash(array $values)
     {
         unset($_SESSION['flash']);

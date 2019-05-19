@@ -6,15 +6,35 @@ use Symfony\Component\Yaml\Yaml;
 use Zend\Diactoros\ServerRequest;
 use Framework\Router\Route;
 
+/**
+ * Router class
+ * @package Framework\Router
+ */
 class Router
 {
+    /**
+     * Undocumented variable
+     *
+     * @var ServerRequest
+     */
     private $request;
 
+    /**
+     * Constructor
+     *
+     * @param ServerRequest $request
+     */
     public function __construct(ServerRequest $request) {
         $this->request = $request;
     }
 
-    public function loadYaml($file)
+    /**
+     * Load .yml file
+     *
+     * @param string $file
+     * @return void
+     */
+    public function loadYaml(string $file)
     {
         $routes = Yaml::parseFile($file);
         foreach ($routes as $name => $route) {
@@ -22,6 +42,12 @@ class Router
         }
     }
 
+    /**
+     * Create new route
+     *
+     * @param Route $route
+     * @return void
+     */
     public function addRoute(Route $route)
     {
         if(isset($this->routes[$route->getName()])) {
@@ -30,6 +56,11 @@ class Router
         $this->routes[$route->getName()] = $route;
     }
 
+    /**
+     * Get route by request send
+     *
+     * @return route
+     */
     public function getRouteByRequest()
     {
         $request = preg_replace('/(\/)$/i','',$this->request->getUri()->getPath());

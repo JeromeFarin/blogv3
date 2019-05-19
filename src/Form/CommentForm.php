@@ -7,7 +7,6 @@ use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Validator;
-use Application\Manager\CommentManager;
 
 /**
  * Class AddForm
@@ -39,6 +38,10 @@ class CommentForm implements FormInterface
         $this->comment = $model;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return FormInterface
+     */
     public function handle(ServerRequestInterface $request): FormInterface
     {
         if ($request->getMethod() === "POST" && isset($request->getParsedBody()["comment"])) {
@@ -67,6 +70,9 @@ class CommentForm implements FormInterface
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSubmitted(): bool
     {
         return $this->submitted;

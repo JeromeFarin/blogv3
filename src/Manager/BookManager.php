@@ -4,14 +4,31 @@ namespace Application\Manager;
 use Framework\Manager;
 use Application\Model\Book;
 
+/**
+ * Class BookManager
+ * @package Application\Manager
+ */
 class BookManager extends Manager
 {
+    /**
+     * Book Model
+     *
+     * @var Book
+     */
     public $model;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->model = new Book();
     }
 
+    /**
+     * Find all book not empty
+     *
+     * @return mixed
+     */
     public function findAllDone()
     {
         $statement = $this->getPdo()->prepare(

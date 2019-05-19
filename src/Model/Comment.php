@@ -5,15 +5,47 @@ use Application\Manager;
 use Framework\ModelInterface;
 use Framework\Constraints;
 
+/**
+ * Class Comment
+ * @package Application\Model
+ */
 class Comment implements ModelInterface
 {
-    public $id;
-    public $chapter;
-    public $owner;
-    public $content;
-    public $like;
-    public $report;
+    /**
+     * @var int
+     */
+    private $id;
 
+    /**
+     * @var int
+     */
+    private $chapter;
+
+    /**
+     * @var string
+     */
+    private $owner;
+
+    /**
+     * @var string
+     */
+    private $content;
+
+    /**
+     * @var int
+     */
+    private $like;
+
+    /**
+     * @var int
+     */
+    private $report;
+
+    /**
+     * Get model info
+     *
+     * @return array
+     */
     public static function getInfo(): array
     {
         return [

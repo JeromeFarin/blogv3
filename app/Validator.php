@@ -1,15 +1,40 @@
 <?php
 namespace Framework;
 
+/**
+ * Class Validator
+ * @package Framework
+ */
 class Validator
 {
+    /**
+     * Object send to validation
+     *
+     * @var mixed
+     */
     protected $object;
+
+    /**
+     * Errors Message
+     *
+     * @var array
+     */
     protected $message = [];
 
+    /**
+     * Constructor
+     *
+     * @param mixed $object
+     */
     public function __construct($object) {
         $this->object = $object;
     }
 
+    /**
+     * Call Constraint  
+     *
+     * @return array
+     */
     public function valid()
     {
         foreach ($this->object::getInfo()["constraints"] as $key => $property) {

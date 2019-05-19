@@ -6,14 +6,33 @@ use Application\Model\User;
 use Application\Handler\UserHandler;
 use Zend\Diactoros\ServerRequest;
 
+/**
+ * Class UserController
+ * @package Application\Controller
+ */
 class UserController extends Controller
 {
+    /**
+     * Handler
+     *
+     * @var UserHandler
+     */
     private $handler;
 
+    /**
+     * Constructor
+     *
+     * @param UserHandler $handler
+     */
     public function __construct(UserHandler $handler) {
         $this->handler = $handler;
     }
 
+    /**
+     * Login page
+     *
+     * @return render
+     */
     public function login()
     {
         return $this->render('user/login.twig', array(
@@ -21,6 +40,11 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * Auto login with SESSION
+     *
+     * @return redirect
+     */
     public function loginAuto()
     {
         $user = new User();
@@ -32,12 +56,23 @@ class UserController extends Controller
         return $this->redirect('/');
     }
 
+    /**
+     * Login has been sent
+     *
+     * @param ServerRequest $request
+     * @return redirect
+     */
     public function loginSend(ServerRequest $request)
     {
         $this->handler->login($request);
         return $this->redirect('/');
     }
 
+    /**
+     * Logout
+     *
+     * @return redirect
+     */
     public function logout()
     {
         $this->handler->logout();

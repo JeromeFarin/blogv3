@@ -30,6 +30,9 @@ class UserForm implements FormInterface
      */
     public $errors = [];
 
+    /**
+     * @var UserManager
+     */
     private $manager;
 
     /**
@@ -42,6 +45,10 @@ class UserForm implements FormInterface
         $this->manager = $manager;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return FormInterface
+     */
     public function handle(ServerRequestInterface $request): FormInterface
     {
         if ($request->getMethod() === "POST" && isset($request->getParsedBody()["user"])) {
@@ -67,6 +74,9 @@ class UserForm implements FormInterface
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSubmitted(): bool
     {
         return $this->submitted;

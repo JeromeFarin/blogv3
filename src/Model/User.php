@@ -5,15 +5,47 @@ use Application\Manager;
 use Framework\ModelInterface;
 use Framework\Constraints;
 
+/**
+ * Class User
+ * @package Application\Model
+ */
 class User implements ModelInterface
 {
+    /**
+     * @var int
+     */
     public $id;
+
+    /**
+     * @var string
+     */
     public $username;
+
+    /**
+     * @var string
+     */
     public $mail;
+
+    /**
+     * @var string
+     */
     public $pass; 
+
+    /**
+     * @var string
+     */
     public $code; 
+
+    /**
+     * @var string
+     */
     public $codevalidity;
 
+    /**
+     * Get model info
+     *
+     * @return array
+     */
     public static function getInfo(): array
     {
         return [

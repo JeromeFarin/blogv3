@@ -4,14 +4,30 @@ namespace Application\Manager;
 use Framework\Manager;
 use Application\Model\Chapter;
 
+/**
+ * Class ChapterManager
+ * @package Application\Manager
+ */
 class ChapterManager extends Manager
 {
+    /**
+     * @var Chapter
+     */
     public $model;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->model = new Chapter();
     }
 
+    /**
+     * Find all chapter with id book
+     *
+     * @param int $id
+     * @return mixed
+     */
     public function findAllChapter($id)
     {
         $statement = $this->getPdo()->prepare(
@@ -29,13 +45,19 @@ class ChapterManager extends Manager
         }
     }
 
-    public function chapterNumber($book)
+    /**
+     * Get chapter number
+     *
+     * @param int $id
+     * @return void
+     */
+    public function chapterNumber($id)
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
                 "select max(number) as number from %s where book = %s",
                 $this->model::getInfo()["table"],
-                $book
+                $id
             )
         );
 

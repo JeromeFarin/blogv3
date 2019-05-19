@@ -27,6 +27,12 @@ abstract class Manager
         return self::$pdo;
     }
 
+    /**
+     * Delete
+     *
+     * @param mixed $object
+     * @return mixed
+     */
     public function delete($object)
     {
         $statement = $this->getPdo()->prepare(
@@ -43,6 +49,12 @@ abstract class Manager
         }
     }
 
+    /**
+     * Update
+     *
+     * @param mixed $object
+     * @return mixed
+     */
     public function update($object)
     {
         $parameters = [];
@@ -71,6 +83,12 @@ abstract class Manager
         }
     }
 
+    /**
+     * Insert
+     *
+     * @param mixed $object
+     * @return mixed
+     */
     public function insert($object)
     {
         $parameters = [];
@@ -99,6 +117,11 @@ abstract class Manager
         }
     }
 
+    /**
+     * Find all
+     *
+     * @return mixed
+     */
     public function findAll()
     {
         $statement = $this->getPdo()->prepare(
@@ -115,6 +138,12 @@ abstract class Manager
         }
     }
 
+    /**
+     * Find one with id
+     *
+     * @param mixed $id
+     * @return mixed
+     */
     public function find($id)
     {
         $statement = $this->getPdo()->prepare(

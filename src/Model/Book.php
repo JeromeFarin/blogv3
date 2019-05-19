@@ -5,14 +5,42 @@ use Application\Manager;
 use Framework\ModelInterface;
 use Framework\Constraints;
 
+/**
+ * Class Book
+ * @package Application\Book
+ */
 class Book implements ModelInterface
 {
-    public $id;
-    public $name;
-    public $owner;
-    public $cover;
-    public $finished_date;
+    /**
+     * @var int
+     */
+    private $id;
 
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $owner;
+
+    /**
+     * @var string
+     */
+    private $cover;
+
+    /**
+     * @var string
+     */
+    private $finished_date;
+
+    /**
+     * Get model info
+     *
+     * @return array
+     */
     public static function getInfo(): array
     {
         return [
@@ -40,46 +68,86 @@ class Book implements ModelInterface
         ];
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
+    /**
+     * Get the value of id
+     */ 
     public function getId()
     {
         return $this->id;
     }
 
-    public function setName($name)
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
     {
-        $this->name = $name;
+        $this->id = $id;
+
+        return $this;
     }
 
+    /**
+     * Get the value of name
+     */ 
     public function getName()
     {
         return $this->name;
     }
 
-    public function setOwner($owner)
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
     {
-        $this->owner = $owner;
-    }
+        $this->name = $name;
 
+        return $this;
+    }
+    
+    /**
+     * Get the value of owner
+     */ 
     public function getOwner()
     {
         return $this->owner;
     }
 
-    public function setCover($cover)
+    /**
+     * Set the value of owner
+     *
+     * @return  self
+     */ 
+    public function setOwner($owner)
     {
-        $this->cover = $cover;
+        $this->owner = $owner;
+
+        return $this;
     }
 
+    /**
+     * Get the value of cover
+     */ 
     public function getCover()
     {
         return $this->cover;
     }
-    
+
+    /**
+     * Set the value of cover
+     *
+     * @return  self
+     */ 
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
     /**
      * Get the value of finished_date
      */ 

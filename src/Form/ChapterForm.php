@@ -19,6 +19,10 @@ class ChapterForm implements FormInterface
      * @var Chapter
      */
     private $chapter;
+
+    /** 
+     * @var ChapterManager
+     */
     private $manager;
 
     /**
@@ -41,6 +45,10 @@ class ChapterForm implements FormInterface
         $this->manager = $manager;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return FormInterface
+     */
     public function handle(ServerRequestInterface $request): FormInterface
     {
         if ($request->getMethod() === "POST" && isset($request->getParsedBody()["chapter"])) {
@@ -69,6 +77,9 @@ class ChapterForm implements FormInterface
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSubmitted(): bool
     {
         return $this->submitted;
