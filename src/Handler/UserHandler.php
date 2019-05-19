@@ -25,7 +25,7 @@ class UserHandler extends Controller
             return $this->checkMail($this->form->getData());
         }
         
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function checkMail(User $object)
@@ -64,10 +64,11 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(array('done' => 'User was created'));
             return $this->manager->insert($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function edit(ServerRequest $request)
@@ -75,10 +76,11 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(array('done' => 'User was modified'));
             return $this->manager->update($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function delete(ServerRequest $request)
@@ -86,10 +88,11 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted()) {
+            $this->flash->setFlash(array('done' => 'User was deleted'));
             return $this->manager->delete($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function reset(ServerRequest $request)
@@ -97,10 +100,11 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(array('done' => 'An mail has been sent'));
             return $this->sendResetPass($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     private function sendResetPass(User $object)
@@ -155,12 +159,12 @@ class UserHandler extends Controller
                     $newUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
                     $newUser->setCode(null);
                     $newUser->setCodeValidity(null);
+                    $this->flash->setFlash(array('done' => 'Password has been changed'));
+                    return $this->manager->update($newUser);
                 }
             }
-
-            return $this->manager->update($newUser);
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 }

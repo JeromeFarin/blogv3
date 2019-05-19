@@ -21,10 +21,11 @@ class CommentHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(array('done' => 'Comment was created'));
             return $this->manager->insert($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function delete(ServerRequest $request)
@@ -32,10 +33,11 @@ class CommentHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted()) {
+            $this->flash->setFlash(array('done' => 'Comment was deleted'));
             return $this->manager->delete($this->form->getData());
         }
 
-        return $this->form;
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     public function list($param)

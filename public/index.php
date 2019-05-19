@@ -10,6 +10,7 @@ use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Framework\Container;
 use Framework\Router\Router;
+use Framework\FlashBag;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -38,20 +39,13 @@ $router->loadYaml(__DIR__."/../config/routing.yml");
 
 try{
     $route = $router->getRouteByRequest();
-    
     $response = $route->call($request,$container);
-
     $emitter = new SapiEmitter();
-
     $emitter->emit($response);
 
-    $flash = $container->get('Framework\FlashBag');
-    
-    if (isset($_SESSION['flash']) and !empty($_SESSION['flash'])) {
-        $flash->getFlash();
-    }
-
-}catch (\Exception $e) {
+    $flash = new FlashBag();
+    $flash->getFlash();
+} catch (\Exception $e) {
     echo $e->getMessage();
 }
 
