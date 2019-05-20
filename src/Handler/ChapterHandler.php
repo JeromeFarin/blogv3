@@ -52,11 +52,9 @@ class ChapterHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'Chapter was created'));
-            return $this->manager->insert($this->form->getData());
+            $this->manager->insert($this->form->getData());
+            return $this->flash->setFlash(array('done' => 'Chapter was created'));
         }
-
-        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**
@@ -70,11 +68,9 @@ class ChapterHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'Chapter was modified'));
-            return $this->manager->update($this->form->getData());
+            $this->manager->update($this->form->getData());
+            return $this->flash->setFlash(array('done' => 'Chapter was modified'));
         }
-
-        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**
@@ -88,11 +84,9 @@ class ChapterHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(array('done' => 'Chapter was deleted'));
-            return $this->manager->delete($this->form->getData());
+            $this->manager->delete($this->form->getData());
+            return $this->flash->setFlash(array('done' => 'Chapter was deleted'));
         }
-
-        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**
@@ -137,10 +131,8 @@ class ChapterHandler extends Controller
      */
     public function next($model)
     {
-        $pos = $model->number;
-        $list = $this->manager->findAllChapter($model->book);
-        foreach ($list as $value) {
-            if ($value->number > $pos) {
+        foreach ($this->manager->findAllChapter($model->book) as $value) {
+            if ($value->number > $model->number) {
                 return $value;
             }
         }
@@ -154,10 +146,8 @@ class ChapterHandler extends Controller
      */
     public function previous($model)
     {
-        $pos = $model->number;
-        $list = $this->manager->findAllChapter($model->book);
-        foreach (array_reverse($list) as $value) {
-            if ($value->number < $pos) {
+        foreach (array_reverse($this->manager->findAllChapter($model->book)) as $value) {
+            if ($value->number < $model->number) {
                 return $value;
             }
         }
