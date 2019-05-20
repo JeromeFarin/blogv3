@@ -64,8 +64,13 @@ class UserController extends Controller
      */
     public function loginSend(ServerRequest $request)
     {
-        $this->handler->login($request);
-        return $this->redirect('/');
+        $login = $this->handler->login($request);
+
+        if ($login) {
+            return $this->redirect('/');
+        } else {
+            return $this->redirect('/login');
+        }
     }
 
     /**

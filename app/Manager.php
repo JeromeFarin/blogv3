@@ -141,7 +141,7 @@ abstract class Manager
     /**
      * Find one with id
      *
-     * @param mixed $id
+     * @param int $id
      * @return mixed
      */
     public function find($id)

@@ -69,7 +69,7 @@ class UserHandler extends Controller
     {
         $check = $this->manager->check($object);
         if (!$check) {
-            return $this->form->errors = array('mail' => 'No profiles found');
+            return $this->flash->setFlash(array('done' => 'No profiles found'));
         } else {
             return $this->checkPass($object,$check);
         }
@@ -79,17 +79,17 @@ class UserHandler extends Controller
      * Check pass
      *
      * @param User $object
-     * @param User $check
+     * @param array $check
      * @return mixed
      */
-    private function checkPass(User $object,$check)
+    private function checkPass(User $object, array $check)
     {
         if (password_verify($object->getPass(),$check['pass'])) {
             $_SESSION['mail'] = $check['mail'];
             $_SESSION['pass'] = $object->getPass();
             return true;
         } else {
-            return $this->form->errors = array('pass' => 'Bad password for this profile');
+            return $this->flash->setFlash(array('done' => 'Bad password for this profile'));
         }
     }
 
@@ -246,21 +246,21 @@ class UserHandler extends Controller
     {
         $this->form->handle($request);
 
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
+        if ($this->form->isSubmitted()) {
             $oldUser = $this->manager->user($this->form->getData())[0];
             $newUser = $this->form->getData();
             
             if (password_verify($newUser->code,$oldUser->code)) {
                 if ($oldUser->codevalidity >= time()) {
-                    $newUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
-                    $newUser->setCode(null);
-                    $newUser->setCodeValidity(null);
+                    $oldUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
+                    $oldUser->setCode(null);
+                    $oldUser->setCodeValidity(null);
                     $this->flash->setFlash(array('done' => 'Password has been changed'));
-                    return $this->manager->update($newUser);
+                    return $this->manager->update($oldUser);
                 }
             }
         }
 
-        return $this->flash->setFlash($this->form->getErrors());
+        return $this->flash->setFlash(array('done' => 'Error, please contact admin'));
     }
 }

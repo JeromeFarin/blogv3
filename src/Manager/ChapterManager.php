@@ -46,6 +46,29 @@ class ChapterManager extends Manager
     }
 
     /**
+     * Check if chapter content is null with id 
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function checkChapter($id)
+    {
+        $statement = $this->getPdo()->prepare(
+            sprintf(
+                "select * from %s where id = %s and content not like 'null'",
+                $this->model::getInfo()["table"],
+                $id
+            )
+        );
+
+        if ($statement->execute()) {
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } else {
+            throw new \Exception("Error findAll(chapter)");
+        }
+    }
+
+    /**
      * Get chapter number
      *
      * @param int $id

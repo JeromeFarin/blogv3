@@ -49,22 +49,9 @@ class CommentForm implements FormInterface
 
             $commentData = $request->getParsedBody()["comment"];
             
-            if (isset($commentData['like']) && $commentData['like'] !== null) {
-                $this->comment->setId($commentData['id']);
-                $this->comment->setChapter($commentData['chapter']);
-                $this->comment->setLike(1);
-            }elseif (isset($commentData['report']) && $commentData['report'] !== null) {
-                $this->comment->setId($commentData['id']);
-                $this->comment->setChapter($commentData['chapter']);
-                $this->comment->setReport(1);
-            } else {
-                if (isset($commentData['id'])) {
-                    $this->comment->setId($commentData['id']);
-                }
-                $this->comment->setChapter($commentData["chapter"]);
-                $this->comment->setOwner($commentData["owner"]);
-                $this->comment->setContent($commentData["content"]);
-            }            
+            foreach ($commentData as $property => $value) {
+                $this->comment->{sprintf("set%s", ucfirst($property))}($value);
+            }          
         }
 
         return $this;

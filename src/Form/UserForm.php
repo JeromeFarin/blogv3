@@ -56,18 +56,8 @@ class UserForm implements FormInterface
 
             $userData = $request->getParsedBody()["user"];
             
-            if (isset($userData["id"])) {
-                $this->user->setId($userData["id"]);
-                $this->user = $this->manager->user($this->user)[0];
-                foreach ($userData as $key => $property) {
-                    $this->user->{sprintf("set%s", ucfirst($key))}($property);
-                }
-            } elseif (!isset($userData["pass"])) {
-                $this->user->setUsername($userData["username"]);
-                $this->user->setMail($userData["mail"]);
-            } else {
-                $this->user->setPass($userData["pass"]);
-                $this->user->setMail($userData["mail"]);
+            foreach ($userData as $property => $value) {
+                $this->user->{sprintf("set%s", ucfirst($property))}($value);
             }
         }
         
