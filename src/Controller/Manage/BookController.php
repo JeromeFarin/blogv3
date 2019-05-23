@@ -42,26 +42,14 @@ class BookController extends Controller
     }
 
     /**
-     * Book Created
+     * Chapter create or modifie
      *
      * @param ServerRequest $request
      * @return redirect
      */
-    public function create(ServerRequest $request)
+    public function persist(ServerRequest $request)
     {
-        $this->handler->add($request);
-        return $this->redirect('/admin/book/');
-    }
-
-    /**
-     * Book Modified
-     *
-     * @param ServerRequest $request
-     * @return redirect
-     */
-    public function edit(ServerRequest $request)
-    {
-        $this->handler->edit($request);
+        $this->handler->persist($request);
         return $this->redirect('/admin/book/');
     }
 

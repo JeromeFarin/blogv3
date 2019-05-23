@@ -62,36 +62,23 @@ class Controller
     }
 
     /**
-     * Create
+     * Create or modifie
      *
      * @param ServerRequest $request
      * @return mixed
      */
-    public function add(ServerRequest $request)
+    public function persist(ServerRequest $request)
     {
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->manager->insert($this->form->getData());
-            return $this->flash->setFlash(['Chapter was created']);
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Modifie
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function edit(ServerRequest $request)
-    {        
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->manager->update($this->form->getData());
-            return $this->flash->setFlash(['Chapter was modified']);
+            if ($this->form->getData()->getId() == null) {
+                $this->manager->insert($this->form->getData());
+                return $this->flash->setFlash(['Chapter was created']);
+            } else {
+                $this->manager->update($this->form->getData());
+                return $this->flash->setFlash(['Chapter was modified']);
+            }
         }
 
         return $this->flash->setFlash($this->form->getErrors());

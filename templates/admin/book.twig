@@ -8,7 +8,7 @@
 
 <p>Go back to <a href="/admin">Panel Admin</a></p>
 
-<form action="/admin/book/create" method="post">
+<form action="/admin/book/persist" method="post">
     <input type="text" name="book[name]" placeholder="name"/>
     <input type="text" name="book[owner]" placeholder="owner"/>
     <button type="submit">Create Book</button>
@@ -30,7 +30,7 @@
     {% endif %}
     
     <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
-    <input type="submit" name="edit" value="Edit book" formaction="/admin/book/edit">
+    <input type="submit" name="edit" value="Edit book" formaction="/admin/book/persist">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book" formaction="/admin/book/remove">
 
     {% for chapter in chapters %}

@@ -68,16 +68,11 @@ passwordChange:
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\UserController
   action: passChange
-addBook:
-  path: /admin/book/create
+persistBook:
+  path: /admin/book/persist
   parameters: {}
   controller: Application\Controller\Manage\BookController
-  action: create
-editBook:
-  path: /admin/book/edit
-  parameters: {}
-  controller: Application\Controller\Manage\BookController
-  action: edit
+  action: persist
 removeBook:
   path: /admin/book/remove
   parameters: {}
