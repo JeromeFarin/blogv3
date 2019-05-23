@@ -41,6 +41,7 @@ class CommentHandler extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * Create Comment
      *
      * @param ServerRequest $request
@@ -77,6 +78,8 @@ class CommentHandler extends Controller
     }
 
     /**
+=======
+>>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
      * Comment list with chapter id
      *
      * @param int $param

@@ -114,6 +114,7 @@ class UserHandler extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * Create user
      *
      * @param ServerRequest $request
@@ -168,6 +169,8 @@ class UserHandler extends Controller
     }
 
     /**
+=======
+>>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
      * Reset pass action
      *
      * @param ServerRequest $request

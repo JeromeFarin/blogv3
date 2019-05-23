@@ -16,17 +16,17 @@ class BookHandler extends Controller
     /**
      * @var BookManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * @var BookForm
      */
-    private $form;
+    protected $form;
 
     /**
      * @var FlashBag
      */
-    private $flash;
+    protected $flash;
 
     /**
      * Constructor 
@@ -67,6 +67,7 @@ class BookHandler extends Controller
     {
         return $this->manager->findAllDone();
     }
+<<<<<<< HEAD
 
     /**
      * @param ServerRequest $request
@@ -116,4 +117,6 @@ class BookHandler extends Controller
         
         return $this->flash->setFlash($this->form->getErrors());
     }
+=======
+>>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
 }

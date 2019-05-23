@@ -3,6 +3,7 @@ namespace Framework;
 
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Controller class
@@ -58,5 +59,54 @@ class Controller
     public function redirect(string $url): RedirectResponse
     {
         return new RedirectResponse($url);
+    }
+
+    /**
+     * @param ServerRequest $request
+     * @return mixed
+     */
+    public function add(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(['Book was created']);
+            return $this->manager->insert($this->form->getData());
+        }
+
+        return $this->flash->setFlash($this->form->getErrors());
+        
+    }
+
+    /**
+     * @param ServerRequest $request
+     * @return mixed
+     */
+    public function edit(ServerRequest $request)
+    {        
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->flash->setFlash(['Book was modified']);
+            return $this->manager->update($this->form->getData());
+        }
+        
+        return $this->flash->setFlash($this->form->getErrors());
+    }
+
+    /**
+     * @param ServerRequest $request
+     * @return mixed
+     */
+    public function delete(ServerRequest $request)
+    {
+        $this->form->handle($request);
+
+        if ($this->form->isSubmitted()) {
+            $this->flash->setFlash(['Book was deleted']);
+            return $this->manager->delete($this->form->getData());
+        }
+        
+        return $this->flash->setFlash($this->form->getErrors());
     }
 }

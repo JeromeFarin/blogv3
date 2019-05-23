@@ -42,6 +42,7 @@ class ChapterHandler extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * Create Chapter
      *
      * @param ServerRequest $request
@@ -96,6 +97,8 @@ class ChapterHandler extends Controller
     }
 
     /**
+=======
+>>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
      * Find all chapter
      *
      * @return mixed
