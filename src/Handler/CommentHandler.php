@@ -15,17 +15,17 @@ class CommentHandler extends Controller
     /**
      * @var CommentManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * @var CommentForm
      */
-    private $form;
+    protected $form;
 
     /**
      * @var FlashBag
      */
-    private $flash;
+    protected $flash;
 
     /**
      * Constructor
@@ -41,45 +41,6 @@ class CommentHandler extends Controller
     }
 
     /**
-<<<<<<< HEAD
-     * Create Comment
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function add(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['Comment was created']);
-            return $this->manager->insert($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Delete Comment
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(['Comment was deleted']);
-            return $this->manager->delete($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-=======
->>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
      * Comment list with chapter id
      *
      * @param int $param

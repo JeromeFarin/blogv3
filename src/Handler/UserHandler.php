@@ -17,17 +17,17 @@ class UserHandler extends Controller
     /**
      * @var UserManager
      */ 
-    private $manager;
+    protected $manager;
 
     /**
      * @var UserForm
      */
-    public $form;
+    protected $form;
 
     /**
      * @var FlashBag
      */
-    private $flash;
+    protected $flash;
 
     /**
      * Constructor
@@ -114,63 +114,6 @@ class UserHandler extends Controller
     }
 
     /**
-<<<<<<< HEAD
-     * Create user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function add(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['User was created']);
-            return $this->manager->insert($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Modify user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function edit(ServerRequest $request)
-    {        
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['User was modified']);
-            return $this->manager->update($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Delete user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(['User was deleted']);
-            return $this->manager->delete($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-=======
->>>>>>> 27c5c0c27d3ec5ebc00dded83f0a41c6627b8737
      * Reset pass action
      *
      * @param ServerRequest $request

@@ -64,7 +64,7 @@ class ChapterManager extends Manager
         if ($statement->execute()) {
             return $statement->fetchAll(\PDO::FETCH_ASSOC);
         } else {
-            throw new \Exception("Error findAll(chapter)");
+            throw new \Exception("Error findAll(checkChapter)");
         }
     }
 
@@ -93,7 +93,7 @@ class ChapterManager extends Manager
                 return $number['number'] + 1;
             }
         } else {
-            throw new \Exception("Error findAll(chapter)");
+            throw new \Exception("Error findAll(chapterNumber)");
         }
     }
 }

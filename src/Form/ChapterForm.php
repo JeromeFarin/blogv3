@@ -62,12 +62,16 @@ class ChapterForm implements FormInterface
 
             if (!isset($chapterData["number"])) {
                 $this->chapter->setnumber($this->manager->chapterNumber($chapterData["book"]));
-            }
-
-            $content = $this->manager->checkChapter($this->chapter->getId());
-
-            if (!empty($content)) {
-                $this->chapter->setContent($content[0]['content']);
+            } else {
+                $content = $this->manager->checkChapter($this->chapter->getId());
+    
+                if (!empty($content)) {
+                    if (!empty($chapterData['content'])) {
+                        $this->chapter->setContent($chapterData['content']);
+                    } else {
+                        $this->chapter->setContent($content[0]['content']);
+                    }
+                }
             }
         }
 

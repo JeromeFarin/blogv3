@@ -5,6 +5,7 @@ use Framework\Controller;
 use Application\Handler\CommentHandler;
 use Application\Manager\CommentManager;
 use Zend\Diactoros\ServerRequest;
+use Framework\FlashBag;
 
 /**
  * Class CommentController
@@ -27,14 +28,20 @@ class CommentController extends Controller
     private $manager;
 
     /**
+     * @var FlashBag
+     */
+    private $flash;
+
+    /**
      * Constructor
      *
      * @param CommentHandler $handler
      * @param CommentManager $manager
      */
-    public function __construct(CommentHandler $handler, CommentManager $manager) {
+    public function __construct(CommentHandler $handler, CommentManager $manager, FlashBag $flash) {
         $this->handler = $handler;
         $this->manager = $manager;
+        $this->flash = $flash;
     }
 
     /**
@@ -87,6 +94,7 @@ class CommentController extends Controller
         preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
 
         $this->manager->like($matches[0]);
+        $this->flash->setFlash(['Comment liked']);
         return $this->redirect('/chapter/'.$request->getParsedBody()['comment']['chapter']);
     }
 
@@ -101,6 +109,7 @@ class CommentController extends Controller
         preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
 
         $this->manager->report($matches[0]);
+        $this->flash->setFlash(['Comment reported']);
         return $this->redirect('/chapter/'.$request->getParsedBody()['comment']['chapter']);
     }
 }
