@@ -84,32 +84,25 @@ class CommentController extends Controller
     }
 
     /**
-     * Comment liked
+     * Comment like or report
      *
      * @param ServerRequest $request
      * @return redirect
      */
-    public function commentLike(ServerRequest $request)
+    public function commentLikeReport(ServerRequest $request)
     {
-        preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
+        preg_match('/(\w+)(\/)(\d)$/i', $request->getUri()->getPath(), $matches);
 
-        $this->manager->like($matches[0]);
-        $this->flash->setFlash(['Comment liked']);
-        return $this->redirect('/chapter/'.$request->getParsedBody()['comment']['chapter']);
-    }
+        if ($matches[1] === 'like') {
+            $this->manager->like($matches[3]);
+            $this->flash->setFlash(['Comment liked']);
+        }
 
-    /**
-     * Comment reported
-     *
-     * @param ServerRequest $request
-     * @return redirect
-     */
-    public function commentReport(ServerRequest $request)
-    {
-        preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
+        if ($matches[1] === 'report') {
+            $this->manager->report($matches[3]);
+            $this->flash->setFlash(['Comment reported']);
+        }
 
-        $this->manager->report($matches[0]);
-        $this->flash->setFlash(['Comment reported']);
         return $this->redirect('/chapter/'.$request->getParsedBody()['comment']['chapter']);
     }
 }

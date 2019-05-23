@@ -117,12 +117,12 @@ likeComment:
   path: /comment/like/:id
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\CommentController
-  action: commentLike
+  action: commentLikeReport
 reportComment:
   path: /comment/report/:id
   parameters: {id: '[\d]+'}
   controller: Application\Controller\Manage\CommentController
-  action: commentReport
+  action: commentLikeReport
 loginSend:
   path: /login/send
   parameters: {}
