@@ -49,7 +49,7 @@ class BookController extends Controller
      */
     public function create(ServerRequest $request)
     {
-        $this->handler->add($request);
+        $this->handler->createBook($request);
         return $this->redirect('/admin/book/');
     }
 

@@ -72,7 +72,7 @@ class BookHandler extends Controller
      * @param ServerRequest $request
      * @return mixed
      */
-    public function add(ServerRequest $request)
+    public function createBook(ServerRequest $request)
     {
         $this->form->handle($request);
 
