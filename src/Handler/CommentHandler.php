@@ -41,42 +41,6 @@ class CommentHandler extends Controller
     }
 
     /**
-     * Create Comment
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function add(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['Comment was created']);
-            return $this->manager->insert($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Delete Comment
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(['Comment was deleted']);
-            return $this->manager->delete($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
      * Comment list with chapter id
      *
      * @param int $param

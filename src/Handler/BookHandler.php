@@ -16,17 +16,17 @@ class BookHandler extends Controller
     /**
      * @var BookManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * @var BookForm
      */
-    private $form;
+    protected $form;
 
     /**
      * @var FlashBag
      */
-    private $flash;
+    protected $flash;
 
     /**
      * Constructor 
@@ -66,54 +66,5 @@ class BookHandler extends Controller
     public function listDone()
     {
         return $this->manager->findAllDone();
-    }
-
-    /**
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function createBook(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['Book was created']);
-            return $this->manager->insert($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-        
-    }
-
-    /**
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function edit(ServerRequest $request)
-    {        
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['Book was modified']);
-            return $this->manager->update($this->form->getData());
-        }
-        
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(['Book was deleted']);
-            return $this->manager->delete($this->form->getData());
-        }
-        
-        return $this->flash->setFlash($this->form->getErrors());
     }
 }

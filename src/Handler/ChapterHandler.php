@@ -42,60 +42,6 @@ class ChapterHandler extends Controller
     }
 
     /**
-     * Create Chapter
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function add(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->manager->insert($this->form->getData());
-            return $this->flash->setFlash(['Chapter was created']);
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Modified Chapter
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function edit(ServerRequest $request)
-    {        
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->manager->update($this->form->getData());
-            return $this->flash->setFlash(['Chapter was modified']);
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Delete Chapter
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-        
-        if ($this->form->isSubmitted()) {
-            $this->manager->delete($this->form->getData());
-            return $this->flash->setFlash(['Chapter was deleted']);
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
      * Find all chapter
      *
      * @return mixed

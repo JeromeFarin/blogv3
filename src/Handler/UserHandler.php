@@ -114,60 +114,6 @@ class UserHandler extends Controller
     }
 
     /**
-     * Create user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function add(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['User was created']);
-            return $this->manager->insert($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Modify user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function edit(ServerRequest $request)
-    {        
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(['User was modified']);
-            return $this->manager->update($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
-     * Delete user
-     *
-     * @param ServerRequest $request
-     * @return mixed
-     */
-    public function delete(ServerRequest $request)
-    {
-        $this->form->handle($request);
-
-        if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(['User was deleted']);
-            return $this->manager->delete($this->form->getData());
-        }
-
-        return $this->flash->setFlash($this->form->getErrors());
-    }
-
-    /**
      * Reset pass action
      *
      * @param ServerRequest $request
