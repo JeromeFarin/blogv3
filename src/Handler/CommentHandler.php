@@ -51,7 +51,7 @@ class CommentHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'Comment was created'));
+            $this->flash->setFlash(['Comment was created']);
             return $this->manager->insert($this->form->getData());
         }
 
@@ -69,7 +69,7 @@ class CommentHandler extends Controller
         $this->form->handle($request);
         
         if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(array('done' => 'Comment was deleted'));
+            $this->flash->setFlash(['Comment was deleted']);
             return $this->manager->delete($this->form->getData());
         }
 

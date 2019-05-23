@@ -28,14 +28,15 @@ class Controller
      */
     public function render(string $view, array $data = [], bool $call = false)
     {
-
+        $container = new Container();
         $loader = new \Twig_Loader_Filesystem('../templates');
         $twig = new \Twig_Environment($loader, array(
             'cache' => false
         ));
         $twig->addGlobal('session', $_SESSION);
+        $twig->addGlobal('messages', $container->get('Framework\FlashBag')->getFlash());
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
-            $check = (new Container())->get('Application\Controller\UserController')->loginAuto();
+            $check = $container->get('Application\Controller\UserController')->loginAuto();
             if ($check === true) {
                 $twig->addGlobal('check',true);
             }

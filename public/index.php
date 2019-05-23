@@ -42,9 +42,6 @@ try{
     $response = $route->call($request,$container);
     $emitter = new SapiEmitter();
     $emitter->emit($response);
-
-    $flash = new FlashBag();
-    $flash->getFlash();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

@@ -77,7 +77,7 @@ class BookHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'Book was created'));
+            $this->flash->setFlash(['Book was created']);
             return $this->manager->insert($this->form->getData());
         }
 
@@ -94,7 +94,7 @@ class BookHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'Book was modified'));
+            $this->flash->setFlash(['Book was modified']);
             return $this->manager->update($this->form->getData());
         }
         
@@ -110,7 +110,7 @@ class BookHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(array('done' => 'Book was deleted'));
+            $this->flash->setFlash(['Book was deleted']);
             return $this->manager->delete($this->form->getData());
         }
         
