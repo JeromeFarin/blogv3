@@ -53,8 +53,10 @@ class ChapterHandler extends Controller
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->manager->insert($this->form->getData());
-            return $this->flash->setFlash(array('done' => 'Chapter was created'));
+            return $this->flash->setFlash(['Chapter was created']);
         }
+
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**
@@ -69,8 +71,10 @@ class ChapterHandler extends Controller
         
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->manager->update($this->form->getData());
-            return $this->flash->setFlash(array('done' => 'Chapter was modified'));
+            return $this->flash->setFlash(['Chapter was modified']);
         }
+
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**
@@ -85,8 +89,10 @@ class ChapterHandler extends Controller
         
         if ($this->form->isSubmitted()) {
             $this->manager->delete($this->form->getData());
-            return $this->flash->setFlash(array('done' => 'Chapter was deleted'));
+            return $this->flash->setFlash(['Chapter was deleted']);
         }
+
+        return $this->flash->setFlash($this->form->getErrors());
     }
 
     /**

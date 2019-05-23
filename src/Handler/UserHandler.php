@@ -56,7 +56,7 @@ class UserHandler extends Controller
             return $this->checkMail($this->form->getData());
         }
         
-        return $this->flash->setFlash($this->form->getErrors());
+        return $this->form->getErrors();
     }
 
     /**
@@ -69,7 +69,7 @@ class UserHandler extends Controller
     {
         $check = $this->manager->check($object);
         if (!$check) {
-            return $this->flash->setFlash(array('done' => 'No profiles found'));
+            return $this->flash->setFlash(['No profiles found']);
         } else {
             return $this->checkPass($object,$check);
         }
@@ -89,7 +89,7 @@ class UserHandler extends Controller
             $_SESSION['pass'] = $object->getPass();
             return true;
         } else {
-            return $this->flash->setFlash(array('done' => 'Bad password for this profile'));
+            return $this->flash->setFlash(['Bad password for this profile']);
         }
     }
 
@@ -124,7 +124,7 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'User was created'));
+            $this->flash->setFlash(['User was created']);
             return $this->manager->insert($this->form->getData());
         }
 
@@ -142,7 +142,7 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'User was modified'));
+            $this->flash->setFlash(['User was modified']);
             return $this->manager->update($this->form->getData());
         }
 
@@ -160,7 +160,7 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted()) {
-            $this->flash->setFlash(array('done' => 'User was deleted'));
+            $this->flash->setFlash(['User was deleted']);
             return $this->manager->delete($this->form->getData());
         }
 
@@ -178,7 +178,7 @@ class UserHandler extends Controller
         $this->form->handle($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->flash->setFlash(array('done' => 'An mail has been sent'));
+            $this->flash->setFlash(['An mail has been sent']);
             return $this->sendResetPass($this->form->getData());
         }
 
@@ -255,12 +255,12 @@ class UserHandler extends Controller
                     $oldUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
                     $oldUser->setCode(null);
                     $oldUser->setCodeValidity(null);
-                    $this->flash->setFlash(array('done' => 'Password has been changed'));
+                    $this->flash->setFlash(['Password has been changed']);
                     return $this->manager->update($oldUser);
                 }
             }
         }
 
-        return $this->flash->setFlash(array('done' => 'Error, please contact admin'));
+        return $this->flash->setFlash(['Error, please contact admin']);
     }
 }
