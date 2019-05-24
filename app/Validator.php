@@ -38,16 +38,29 @@ class Validator
     public function valid()
     {
         foreach ($this->object::getInfo()["constraints"] as $key => $property) {
-            $value = $this->object->{sprintf("get%s", ucfirst($key))}();        
-            foreach ($property as $property) {
-                if ($property->valid($value) === false) {
-                    if (!isset($this->message[$key])) {
-                        $this->message[$key] = $property->getMessage();
-                    }
-                }
-            }
+            $this->verify($key,$property);            
         }
         
         return $this->message;
+    }
+
+    /**
+     * Check constraint
+     *
+     * @param string $key
+     * @param array $property
+     * @return void
+     */
+    private function verify(string $key, array $property)
+    {
+        $value = $this->object->{sprintf("get%s", ucfirst($key))}();
+
+        foreach ($property as $constraint) {
+            if ($constraint->valid($value) === false) {
+                if (!isset($this->message[$key])) {
+                    $this->message[$key] = $constraint->getMessage();
+                }
+            }
+        }
     }
 }
