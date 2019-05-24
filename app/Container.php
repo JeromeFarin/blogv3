@@ -49,21 +49,26 @@ class Container
         if($reflected_class->isInstantiable()){
             $constructor = $reflected_class->getConstructor();
             if($constructor){
-                $parameters = $constructor->getParameters();
-                $constructor_parameters = [];
-                foreach($parameters as $parameter){
-                    if( $parameter->getClass() ){
-                        $constructor_parameters[] = $this->get($parameter->getClass()->getName());
-                    } else {
-                        $constructor_parameters[] = $parameter->getDefaultValue();
-                    }
-                }
-                return $reflected_class->newInstanceArgs($constructor_parameters);
+                return $reflected_class->newInstanceArgs($this->hasConstructor($constructor));
             } else {
                 return $reflected_class->newInstance();
             }
         } else {
             throw new \Exception($key . " is not an instanciable");
         }
+    }
+
+    private function hasConstructor(\ReflectionMethod $constructor)
+    {
+        $parameters = $constructor->getParameters();
+        $constructor_parameters = [];
+        foreach($parameters as $parameter){
+            if( $parameter->getClass() ){
+                $constructor_parameters[] = $this->get($parameter->getClass()->getName());
+            } else {
+                $constructor_parameters[] = $parameter->getDefaultValue();
+            }
+        }
+        return $constructor_parameters;
     }
 }
