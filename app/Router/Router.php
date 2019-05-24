@@ -38,7 +38,9 @@ class Router
     {
         $routes = Yaml::parseFile($file);
         foreach ($routes as $name => $route) {
-            $this->addRoute(new Route($name, $route["path"], $route["parameters"], $route["controller"], $route["action"], $route["defaults"] ?? []));
+            $route = new Route($name);
+            $route->setRoute($route["path"], $route["parameters"], $route["controller"], $route["action"], $route["defaults"] ?? []);
+            $this->addRoute($route);
         }
     }
 

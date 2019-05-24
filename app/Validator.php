@@ -31,7 +31,7 @@ class Validator
     }
 
     /**
-     * Call Constraint  
+     * Call constraint  
      *
      * @return array
      */
@@ -47,6 +47,7 @@ class Validator
                 }
             }
         }
+        
         return $this->message;
     }
 }
