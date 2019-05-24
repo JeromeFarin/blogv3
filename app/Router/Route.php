@@ -51,23 +51,11 @@ class Route
     private $defaults = [];
 
     /**
-     * Constructor
-     *
      * @param string $name
-     * @param string $path
-     * @param array $parameters
-     * @param string $controller
-     * @param string $action
-     * @param array $defaults
      */
-    public function __construct(string $name, string $path, array $parameters, string $controller, string $action, array $defaults = [])
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->path = $path;
-        $this->parameters = $parameters;
-        $this->controller = $controller;
-        $this->action = $action;
-        $this->defaults = $defaults;
     }
 
     /**
@@ -142,5 +130,75 @@ class Route
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set path
+     *
+     * @param  string  $path  Path
+     *
+     * @return  self
+     */ 
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Set parameters
+     *
+     * @param  array  $parameters  Parameters
+     *
+     * @return  self
+     */ 
+    public function setParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Set controller
+     *
+     * @param  string  $controller  Controller
+     *
+     * @return  self
+     */ 
+    public function setController(string $controller)
+    {
+        $this->controller = $controller;
+
+        return $this;
+    }
+
+    /**
+     * Set action
+     *
+     * @param  string  $action  Action
+     *
+     * @return  self
+     */ 
+    public function setAction(string $action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Set default value
+     *
+     * @param  array  $defaults  Default value
+     *
+     * @return  self
+     */ 
+    public function setDefaults(array $defaults)
+    {
+        $this->defaults = $defaults;
+
+        return $this;
     }
 }

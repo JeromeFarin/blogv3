@@ -38,7 +38,13 @@ class Router
     {
         $routes = Yaml::parseFile($file);
         foreach ($routes as $name => $route) {
-            $this->addRoute(new Route($name, $route["path"], $route["parameters"], $route["controller"], $route["action"], $route["defaults"] ?? []));
+            $routeClass = new Route($name, $route["path"], $route["parameters"], $route["controller"], $route["action"], $route["defaults"] ?? []);
+
+            foreach ($route as $property => $value) {
+                $routeClass->{sprintf("set%s", ucfirst($property))}($value);
+            }
+            
+            $this->addRoute($routeClass);
         }
     }
 
