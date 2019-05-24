@@ -54,24 +54,15 @@ class Route
      * Constructor
      *
      * @param string $name
-     */
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Set route parameters
-     *
      * @param string $path
      * @param array $parameters
      * @param string $controller
      * @param string $action
      * @param array $defaults
-     * @return void
      */
-    public function setRoute(string $path, array $parameters, string $controller, string $action, array $defaults = [])
+    public function __construct(string $name, string $path, array $parameters, string $controller, string $action, array $defaults = [])
     {
+        $this->name = $name;
         $this->path = $path;
         $this->parameters = $parameters;
         $this->controller = $controller;

@@ -197,16 +197,21 @@ class UserHandler extends Controller
             $newUser = $this->form->getData();
             
             if (password_verify($newUser->code,$oldUser->code)) {
-                if ($oldUser->codevalidity >= time()) {
-                    $oldUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
-                    $oldUser->setCode(null);
-                    $oldUser->setCodeValidity(null);
-                    $this->flash->setFlash(['Password has been changed']);
-                    return $this->manager->update($oldUser);
-                }
+                return $this->passVerify($oldUser,$newUser);
             }
         }
 
         return $this->flash->setFlash(['Error, please contact admin']);
+    }
+
+    private function passVerify($oldUser,$newUser)
+    {
+        if ($oldUser->codevalidity >= time()) {
+            $oldUser->setPass(password_hash($newUser->pass,PASSWORD_BCRYPT));
+            $oldUser->setCode(null);
+            $oldUser->setCodeValidity(null);
+            $this->flash->setFlash(['Password has been changed']);
+            return $this->manager->update($oldUser);
+        }
     }
 }
