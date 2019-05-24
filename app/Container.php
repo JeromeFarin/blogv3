@@ -44,7 +44,8 @@ class Container
      * @param string $key
      * @return void
      */
-    private function resolve(string $key){
+    private function resolve(string $key)
+    {
         $reflected_class = new \ReflectionClass($key);
         if($reflected_class->isInstantiable()){
             $constructor = $reflected_class->getConstructor();
@@ -58,7 +59,13 @@ class Container
         }
     }
 
-    private function hasConstructor(\ReflectionMethod $constructor)
+    /**
+     * Get contructor parameters
+     *
+     * @param \ReflectionMethod $constructor
+     * @return array
+     */
+    private function hasConstructor(\ReflectionMethod $constructor): array
     {
         $parameters = $constructor->getParameters();
         $constructor_parameters = [];

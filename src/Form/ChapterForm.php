@@ -61,19 +61,24 @@ class ChapterForm extends Form implements FormInterface
             if (!isset($chapterData["number"])) {
                 $this->model->setnumber($this->manager->chapterNumber($chapterData["book"]));
             } else {
-                $content = $this->manager->checkChapter($this->model->getId());
-    
-                if (!empty($content)) {
-                    if (!empty($chapterData['content'])) {
-                        $this->model->setContent($chapterData['content']);
-                    } else {
-                        $this->model->setContent($content[0]['content']);
-                    }
-                }
+                $this->notNew($chapterData);
             }
         }
 
         return $this;
+    }
+
+    private function notNew(array $data)
+    {
+        $content = $this->manager->checkChapter($this->model->getId());
+    
+        if (!empty($content)) {
+            if (!empty($data['content'])) {
+                $this->model->setContent($data['content']);
+            } else {
+                $this->model->setContent($content[0]['content']);
+            }
+        }
     }
 
     /**
