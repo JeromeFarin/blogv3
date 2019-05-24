@@ -8,14 +8,4 @@
 
 <p>You find book list just <a href="/book">HERE</a></p>
 
-{% if session.mail is not defined %}
-
-<a href="/login">Login</a>
-
-{% else %}
-
-<p><a href="/admin">Admin Panel</a> | <a href="/logout">Logout</a></p>
-
-{% endif %}
-
 {% endblock %}
