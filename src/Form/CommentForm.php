@@ -12,12 +12,12 @@ use Framework\Validator;
  * Class AddForm
  * @package Application\Form\Comment
  */
-class CommentForm implements FormInterface
+class CommentForm extends Form implements FormInterface
 {
     /**
      * @var Comment
      */
-    private $comment;
+    private $model;
 
     /**
      * @var bool
@@ -35,7 +35,7 @@ class CommentForm implements FormInterface
      */
     public function __construct(Comment $model)
     {
-        $this->comment = $model;
+        $this->model = $model;
     }
 
     /**
@@ -49,9 +49,7 @@ class CommentForm implements FormInterface
 
             $commentData = $request->getParsedBody()["comment"];
             
-            foreach ($commentData as $property => $value) {
-                $this->comment->{sprintf("set%s", ucfirst($property))}($value);
-            }          
+            $this->getSetter($commentData);      
         }
 
         return $this;
@@ -70,7 +68,7 @@ class CommentForm implements FormInterface
      */
     public function isValid(): bool
     {
-        $valid = new Validator($this->comment);
+        $valid = new Validator($this->model);
         
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
@@ -93,6 +91,6 @@ class CommentForm implements FormInterface
      */
     public function getData(): ModelInterface
     {
-        return $this->comment;
+        return $this->model;
     }
 }

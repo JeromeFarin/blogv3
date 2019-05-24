@@ -13,12 +13,12 @@ use Application\Manager\ChapterManager;
  * Class AddForm
  * @package Application\Form\Chapter
  */
-class ChapterForm implements FormInterface
+class ChapterForm extends Form implements FormInterface
 {
     /**
      * @var Chapter
      */
-    private $chapter;
+    protected $model;
 
     /** 
      * @var ChapterManager
@@ -41,7 +41,7 @@ class ChapterForm implements FormInterface
      */
     public function __construct(Chapter $model, ChapterManager $manager)
     {
-        $this->chapter = $model;
+        $this->model = $model;
         $this->manager = $manager;
     }
 
@@ -56,20 +56,18 @@ class ChapterForm implements FormInterface
 
             $chapterData = $request->getParsedBody()["chapter"];
 
-            foreach ($chapterData as $property => $value) {
-                $this->chapter->{sprintf("set%s", ucfirst($property))}($value);
-            }
+            $this->getSetter($chapterData);
 
             if (!isset($chapterData["number"])) {
-                $this->chapter->setnumber($this->manager->chapterNumber($chapterData["book"]));
+                $this->model->setnumber($this->manager->chapterNumber($chapterData["book"]));
             } else {
-                $content = $this->manager->checkChapter($this->chapter->getId());
+                $content = $this->manager->checkChapter($this->model->getId());
     
                 if (!empty($content)) {
                     if (!empty($chapterData['content'])) {
-                        $this->chapter->setContent($chapterData['content']);
+                        $this->model->setContent($chapterData['content']);
                     } else {
-                        $this->chapter->setContent($content[0]['content']);
+                        $this->model->setContent($content[0]['content']);
                     }
                 }
             }
@@ -91,7 +89,7 @@ class ChapterForm implements FormInterface
      */
     public function isValid(): bool
     {
-        $valid = new Validator($this->chapter);
+        $valid = new Validator($this->model);
         
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
@@ -114,6 +112,6 @@ class ChapterForm implements FormInterface
      */
     public function getData(): ModelInterface
     {
-        return $this->chapter;
+        return $this->model;
     }
 }

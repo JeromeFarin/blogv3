@@ -13,12 +13,12 @@ use Application\Manager\UserManager;
  * Class AddForm
  * @package Application\Form\Book
  */
-class UserForm implements FormInterface
+class UserForm extends Form implements FormInterface
 {
     /**
      * @var User
      */
-    private $user;
+    protected $model;
 
     /**
      * @var bool
@@ -41,7 +41,7 @@ class UserForm implements FormInterface
      */
     public function __construct(UserManager $manager)
     {
-        $this->user = new User();
+        $this->model = new User();
         $this->manager = $manager;
     }
 
@@ -56,9 +56,7 @@ class UserForm implements FormInterface
 
             $userData = $request->getParsedBody()["user"];
             
-            foreach ($userData as $property => $value) {
-                $this->user->{sprintf("set%s", ucfirst($property))}($value);
-            }
+            $this->getSetter($userData);
         }
         
         return $this;
@@ -77,7 +75,7 @@ class UserForm implements FormInterface
      */
     public function isValid(): bool
     {        
-        $valid = new Validator($this->user);
+        $valid = new Validator($this->model);
         
         if (!empty($valid->valid())) {
             $this->errors += $valid->valid();
@@ -100,6 +98,6 @@ class UserForm implements FormInterface
      */
     public function getData(): ModelInterface
     {
-        return $this->user;
+        return $this->model;
     }
 }

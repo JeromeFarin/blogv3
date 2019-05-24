@@ -12,12 +12,12 @@ use Framework\Validator;
  * Class AddForm
  * @package Application\Form
  */
-class BookForm implements FormInterface
+class BookForm extends Form implements FormInterface
 {
     /**
      * @var Book
      */
-    private $book;
+    protected $model;
 
     /**
      * @var bool
@@ -35,7 +35,7 @@ class BookForm implements FormInterface
      */
     public function __construct(Book $model)
     {
-        $this->book = $model;
+        $this->model = $model;
     }
 
     /**
@@ -51,12 +51,10 @@ class BookForm implements FormInterface
 
             $bookData = $request->getParsedBody()["book"];
 
-            foreach ($bookData as $property => $value) {
-                $this->book->{sprintf("set%s", ucfirst($property))}($value);
-            }
+            $this->getSetter($bookData);
 
             if (isset($_FILES['book_cover']) && $_FILES['book_cover']['size'] > 0) {
-                $this->book->setCover($this->uploadFile());
+                $this->model->setCover($this->uploadFile());
             }
         }
 
@@ -76,7 +74,7 @@ class BookForm implements FormInterface
      */
     public function isValid(): bool
     {
-        $valid = new Validator($this->book);
+        $valid = new Validator($this->model);
 
         if (!empty($valid->valid())) {
             $this->errors = $valid->valid();
@@ -99,7 +97,7 @@ class BookForm implements FormInterface
      */
     public function getData(): ModelInterface
     {
-        return $this->book;
+        return $this->model;
     }
 
     /**
@@ -111,7 +109,7 @@ class BookForm implements FormInterface
     {
         $extension = strtolower(pathinfo($_FILES['book_cover']['name'], PATHINFO_EXTENSION));
             
-        $cover = $this->book->getId().'.'.$extension;
+        $cover = $this->model->getId().'.'.$extension;
 
         move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../public/img/cover/$cover");
 
