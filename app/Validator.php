@@ -57,10 +57,15 @@ class Validator
 
         foreach ($property as $constraint) {
             if ($constraint->valid($value) === false) {
-                if (!isset($this->message[$key])) {
-                    $this->message[$key] = $constraint->getMessage();
-                }
+                $this->setMessage($key,$constraint);
             }
+        }
+    }
+
+    private function setMessage(string $key, array $constraint)
+    {
+        if (!isset($this->message[$key])) {
+            $this->message[$key] = $constraint->getMessage();
         }
     }
 }
