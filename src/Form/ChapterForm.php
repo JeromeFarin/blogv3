@@ -68,6 +68,12 @@ class ChapterForm extends Form implements FormInterface
         return $this;
     }
 
+    /**
+     * If chapter not created
+     *
+     * @param array $data
+     * @return void
+     */
     private function notNew(array $data)
     {
         $content = $this->manager->checkChapter($this->model->getId());

@@ -78,16 +78,11 @@ removeBook:
   parameters: {}
   controller: Application\Controller\Manage\BookController
   action: delete
-addChapter:
-  path: /admin/chapter/create
+persistChapter:
+  path: /admin/chapter/persist
   parameters: {}
   controller: Application\Controller\Manage\ChapterController
-  action: create
-editChapter:
-  path: /admin/chapter/edit
-  parameters: {}
-  controller: Application\Controller\Manage\ChapterController
-  action: edit
+  action: persist
 removeChapter:
   path: /admin/chapter/remove
   parameters: {}
@@ -123,16 +118,11 @@ loginSend:
   parameters: {}
   controller: Application\Controller\UserController
   action: loginSend
-userAdd:
-  path: /admin/user/create
+persistUser:
+  path: /admin/user/persist
   parameters: {}
   controller: Application\Controller\Manage\UserController
-  action: add
-userEdit:
-  path: /admin/user/edit
-  parameters: {}
-  controller: Application\Controller\Manage\UserController
-  action: edit
+  action: persist
 userRemove:
   path: /admin/user/remove
   parameters: {}

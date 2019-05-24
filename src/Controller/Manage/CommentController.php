@@ -56,7 +56,7 @@ class CommentController extends Controller
             'comments' => $this->handler->listAll()
         ));
     }
-
+    
     /**
      * Comment created
      *
@@ -67,7 +67,7 @@ class CommentController extends Controller
     {
         preg_match('/(\d+)/i', $request->getUri()->getPath(), $matches);
 
-        $this->handler->add($request);
+        $this->handler->persist($request);
         return $this->redirect('/chapter/'.$matches[0]);
     }
 
@@ -91,8 +91,8 @@ class CommentController extends Controller
      */
     public function commentLikeReport(ServerRequest $request)
     {
-        preg_match('/(\w+)(\/)(\d)$/i', $request->getUri()->getPath(), $matches);
-
+        preg_match('/(\w+)(\/)(\d+)$/i', $request->getUri()->getPath(), $matches);
+        
         if ($matches[1] === 'like') {
             $this->manager->like($matches[3]);
             $this->flash->setFlash(['Comment liked']);

@@ -42,27 +42,15 @@ class UserController extends Controller
     }
 
     /**
-     * New user
+     * User create or modifie
      *
      * @param ServerRequest $request
      * @return redirect
      */
-    public function add(ServerRequest $request)
+    public function persist(ServerRequest $request)
     {
-        $this->handler->add($request);
-        return $this->redirect('/admin/user');
-    }
-
-    /**
-     * modified user
-     *
-     * @param ServerRequest $request
-     * @return redirect
-     */
-    public function edit(ServerRequest $request)
-    {
-        $this->handler->edit($request);
-        return $this->redirect('/admin/user');
+        $this->handler->persist($request);
+        return $this->redirect('/admin/user/');
     }
 
     /**

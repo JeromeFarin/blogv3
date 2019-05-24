@@ -15,17 +15,9 @@
         {% endfor %}
     </select>
     <input type="text" name="chapter[name]" placeholder="name"/>
-    <button type="submit" formaction="/admin/chapter/create">Create chapter</button>
+    <button type="submit" formaction="/admin/chapter/persist">Create chapter</button>
 </form>
 <br>
-
-{% if form.errors.number is defined %}
-    ERROR : {{ form.errors.number }}
-{% endif %}
-
-{% if form.errors.name is defined %}
-    ERROR : {{ form.errors.name }}
-{% endif %}
 
 {% for chapter in chapters %}
 
@@ -42,7 +34,7 @@
     </select>
     <input type="number" name="chapter[number]" value="{{chapter.number}}">
     <input type="text" name="chapter[name]" value="{{chapter.name}}">
-    <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/edit">
+    <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/persist">
     <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
     <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
     {% if chapter.content != 'null' %}

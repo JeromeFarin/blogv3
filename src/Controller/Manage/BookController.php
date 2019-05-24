@@ -42,7 +42,7 @@ class BookController extends Controller
     }
 
     /**
-     * Chapter create or modifie
+     * Book create or modifie
      *
      * @param ServerRequest $request
      * @return redirect

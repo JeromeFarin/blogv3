@@ -17,17 +17,17 @@ class CommentForm extends Form implements FormInterface
     /**
      * @var Comment
      */
-    private $model;
+    protected $model;
 
     /**
      * @var bool
      */
-    private $submitted = false;
+    protected $submitted = false;
 
     /**
      * @var array
      */
-    private $errors = [];
+    protected $errors = [];
 
     /**
      * AddForm constructor.

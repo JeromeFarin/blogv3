@@ -52,26 +52,14 @@ class ChapterController extends Controller
     }
 
     /**
-     * Chapter created
+     * Chapter create or modifie
      *
      * @param ServerRequest $request
      * @return redirect
      */
-    public function create(ServerRequest $request)
+    public function persist(ServerRequest $request)
     {
-        $this->chapter_handler->add($request);
-        return $this->redirect('/admin/chapter/');
-    }
-
-    /**
-     * Chapter modified
-     *
-     * @param ServerRequest $request
-     * @return redirect
-     */
-    public function edit(ServerRequest $request)
-    {
-        $this->chapter_handler->edit($request);
+        $this->chapter_handler->persist($request);
         return $this->redirect('/admin/chapter/');
     }
 
