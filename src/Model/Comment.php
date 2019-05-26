@@ -64,8 +64,7 @@ class Comment implements ModelInterface
                     new Constraints\MaxLenght(255,'This field must contain 255 characters maximum')
                 ],
                 "content" => [
-                    new Constraints\Required('This field must not be empty'),
-                    new Constraints\MinLenght(2,'This field must contain 2 characters minimum')
+                    new Constraints\Required('This field must not be empty')
                 ]
             ]
         ];

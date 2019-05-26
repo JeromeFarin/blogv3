@@ -2,51 +2,56 @@
 
 {% block content %}
 
-<h1><a href="/book/{{chapter.book}}">Chapter {{chapter.number}}</a></h1>
+<h2><a href="/book/{{chapter.book}}">Chapter {{chapter.number}}</a>: {{chapter.name}}</h2>
 
-<h2>{{chapter.name}}</h2>
+<div id="change_chapter">
+    {% if previous.id is defined %}
+        <a class="chapter_previous" href="/chapter/{{previous.id}}"><< Previous Chapter</a>
+    {% endif %}
 
-{% if previous.id is defined %}
-    <a href="/chapter/{{previous.id}}">Previous Chapter</a>
-{% endif %}
+    {% if next.id is defined %}
+        <a class="chapter_next" href="/chapter/{{next.id}}">Next Chapter >></a>
+    {% endif %}
+</div>
 
-{% if next.id is defined %}
-    <a href="/chapter/{{next.id}}">Next Chapter</a>
-{% endif %}
+<div id="chapter_content">
+    {{chapter.content|raw}}
+</div><br>
 
-<br>
+<button onclick="reply()" id="show_reply">Leave a message</button><br>
 
-{{chapter.content|raw}}
-
-{% if form.errors.owner is defined %}
-    ERROR : {{ form.errors.owner }}
-{% endif %}
-
-{% if form.errors.content is defined %}
-    ERROR : {{ form.errors.content }}
-{% endif %}
-
-<form method="post">
-    <input type="hidden" name="comment[chapter]" value="{{chapter.id}}">
-    <input type="text" name="comment[owner]" placeholder="Your name">
-    <textarea name="comment[content]" class="text_block" cols="30" rows="10"></textarea>
-    <input type="submit" value="Reply" formaction="/comment/create/{{chapter.id}}">
-</form>
+<div id="reply">
+    <form method="post">
+        <input type="hidden" name="comment[chapter]" value="{{chapter.id}}">
+        <textarea name="comment[content]" class="text_block" cols="30" rows="10"></textarea><br>
+        <div id="reply_form">
+            <input type="text" name="comment[owner]" placeholder="Your name"><br>
+            <input type="submit" value="Reply" formaction="/comment/create/{{chapter.id}}">
+        </div>
+    </form><br><br>
+</div>
 
 {% for comment in comments %}
-    {{comment.owner}}
-    
-    {{comment.content|raw}}
-    {% if comment.likes != 0 %}
-        {{comment.likes}}
-    {% endif %}
-    
-    <form method="post">
-        <input type="hidden" name="comment[id]" value="{{comment.id}}">
-        <input type="hidden" name="comment[chapter]" value="{{comment.chapter}}">
-        <input type="submit" name="comment[like]" value="Like" formaction="/comment/like/{{comment.id}}">
-        <input type="submit" name="comment[report]" value="Report" formaction="/comment/report/{{comment.id}}">
-    </form>
+    <div class="comment">
+        <div class="comment_content">
+            <p>{{comment.owner}} say:</p><br>
+            
+            <p>{{comment.content|raw}}</p>
+        </div>
+
+        <div class="like_report">
+            {% if comment.likes != 0 %}
+                <p>{{comment.likes}}</p>
+            {% endif %}
+            
+            <form method="post">
+                <input type="hidden" name="comment[id]" value="{{comment.id}}">
+                <input type="hidden" name="comment[chapter]" value="{{comment.chapter}}">
+                <button class="far fa-thumbs-up like_btn" type="submit" name="comment[like]" title="Like this comment" formaction="/comment/like/{{comment.id}}"></button>
+                <button class="far fa-flag report_btn" type="submit" name="comment[report]" title="Report this comment" formaction="/comment/report/{{comment.id}}"></button>
+            </form>
+        </div>
+    </div><br>
 {% endfor %}
 
 {% endblock %}

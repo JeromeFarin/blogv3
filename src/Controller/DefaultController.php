@@ -17,7 +17,7 @@ class DefaultController extends Controller
     public function home()
     {
         return $this->render('home.twig', array(
-            'title' => 'Home Page'
+            'title' => 'Best Blog'
         ));
     }
 }

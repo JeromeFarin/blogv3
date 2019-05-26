@@ -36,7 +36,7 @@ class UserController extends Controller
     public function login()
     {
         return $this->render('user/login.twig', array(
-            'title' => 'Connection'
+            'title' => 'Connect to admin panel'
         ));
     }
 

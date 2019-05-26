@@ -5,6 +5,11 @@
     justify-content: space-around;
     align-items: center;
 }
-#books li {
+#books li, #book li {
     list-style: none;
+}
+#book {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

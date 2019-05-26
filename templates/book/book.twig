@@ -2,20 +2,21 @@
 
 {% block content %}
 
-<h1><a href="/book">{{book.name}}</a></h1>
+<div id="book">
+    <div class="first_page">
+        <h2><a href="/book">{{book.name}}</a></h2>
+        <img height="200px" src= "/img/cover/{{book.cover}}" alt="Cover">
+        <p>By {{book.owner}}</p>
+    </div>
 
-{% if book.cover != 'null' %}
+    <div class="chapter_list">
+        {% for chapter in chapters %}
 
-    <img height="200px" src= "/img/cover/{{book.cover}}" alt="Cover">
+            <li><a href="/chapter/{{chapter.id}}">Chapter {{chapter.number}}: {{chapter.name}}</a></li>
 
-{% endif %}
+        {% endfor %}
+    </div>
+</div>
 
-{% for chapter in chapters %}
-
-    <li><a href="/chapter/{{chapter.id}}">{{chapter.name}}</a></li>
-
-{% endfor %}
-
-<p>By {{book.owner}}</p>
 
 {% endblock %}

@@ -4,18 +4,12 @@
 
 <div id="books">
     {% for book in books %}
-    <div class="book">
-
-        <li></li>
-    </div>
     <a href="/book/{{book.id}}">
-        {% if book.cover == 'null' %}            
-            <img width="300px" src="/img/cover/default.png" alt="{{book.name}}"><br>
-        {% else %}
-            <img width="300px" src="/img/cover/{{book.cover}}" alt="{{book.name}}"><br>
-        {% endif %}
+        <img width="300px" src="/img/cover/{{book.cover}}" alt="{{book.name}}">
 
         <p>{{book.name}}</p>
+
+        <p>By {{book.owner}}</p>
     </a>
         
     {% endfor %}

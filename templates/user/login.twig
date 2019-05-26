@@ -4,25 +4,9 @@
 
 <h1>{{title}}</h1>
 
-<a href="/">Back</a><br><br>
-
-{% if error is defined %}
-
-<em>{{error}}</em><br><br>
-
-{% endif %}
-
 <form method="post">
     <input type="email" name="user[mail]" placeholder="Mail">
-    {% if form.errors.mail is defined %}
-        <br>
-        ERROR : {{ form.errors.mail }}
-    {% endif %}
     <input type="password" name="user[pass]" placeholder="Password">
-    {% if form.errors.pass is defined %}
-        <br>
-        ERROR : {{ form.errors.pass }}
-    {% endif %}
     <input type="submit" value="Login" formaction="/login/send">
 </form>
 

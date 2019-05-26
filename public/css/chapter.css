@@ -1,0 +1,61 @@
+#chapter_content {
+    text-align: left;
+}
+#reply {
+    display: none;
+}
+#reply_form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+#change_chapter {
+    display: flex;
+    align-items: center;
+}
+.chapter_next {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.chapter_previous {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+.comment {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    background-color: #9e9e9e;
+    border-radius: 10px;
+    padding: 10px;
+}
+.comment p {
+    margin: 0;
+}
+#show_reply {
+    display: flex;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #666666;
+    padding: 5px;
+}
+#show_reply:hover {
+    background-color: #e4c200;
+}
+.report_btn, .like_btn {
+    background: none;
+    border: none;
+    padding: 0;
+}
+.report_btn:hover, .like_btn:hover {
+    color: #e4c200;
+}
+.like_report {
+    display: flex;
+}
+.like_report p {
+    margin-right: 5px;
+    font-size: 1em;
+}

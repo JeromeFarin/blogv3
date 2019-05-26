@@ -35,6 +35,7 @@ class Controller
             'cache' => false
         ));
         $twig->addGlobal('session', $_SESSION);
+
         $twig->addGlobal('messages', $container->get('Framework\FlashBag')->getFlash());
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
             $check = $container->get('Application\Controller\UserController')->loginAuto();

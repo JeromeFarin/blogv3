@@ -61,8 +61,15 @@ class Validator
             }
         }
     }
-
-    private function setMessage(string $key, array $constraint)
+    
+    /**
+     * Set error message
+     *
+     * @param string $key
+     * @param mixed $constraint
+     * @return void
+     */
+    private function setMessage(string $key, $constraint)
     {
         if (!isset($this->message[$key])) {
             $this->message[$key] = $constraint->getMessage();
