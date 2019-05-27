@@ -1,3 +1,4 @@
 .env.local.old
 .env.local
 /vendor/
+.phpunit.result.cache
