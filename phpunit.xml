@@ -5,7 +5,9 @@
     </test>
     <filter>
         <whitelist proceessUncoveredFromWhitelist="true">
-            <directory suffic=".php">./</directory>
+            <directory suffic=".php">./app</directory>
+            <directory suffic=".php">./src</directory>
+            <directory suffic=".php">./public</directory>
         </whitelist>
     </filter>
 </phpunit>
