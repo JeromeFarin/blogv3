@@ -10,6 +10,17 @@
 }
 #book {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    height: 500px;
+}
+.chapter_list {
+    align-items: center;
+    width: 50%;
+    font-size: 1.7em;
+}
+.first_page {
+    border-right: 1px solid #000;
+    align-items: center;
+    width: 50%;
 }

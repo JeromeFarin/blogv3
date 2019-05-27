@@ -1,15 +1,18 @@
 @import 'book.css';
 @import 'chapter.css';
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+html {
     height: 100%;
+}
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: relative;
     font-family: 'Dancing Script', cursive;
 }
 #flash {
@@ -24,10 +27,10 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
     border-radius: 10px;
     background-color: #666666;
     text-align: center;
+    border: 1px solid #000;
 }
 header {
     width: 100%;
@@ -50,6 +53,8 @@ footer {
     background-color: #666666;
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
 }
 a {
     color: #000000 ;
@@ -63,6 +68,7 @@ p {
 }
 #content {
     width: 80%;
+    margin-bottom: 70px;
 }
 input {
     border: 1px solid #000;
