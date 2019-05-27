@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit colors="true">
-    <test name="test">
+    <testsuite name="test">
         <directory>./tests</directory>
-    </test>
+    </testsuite>
     <filter>
         <whitelist proceessUncoveredFromWhitelist="true">
             <directory suffic=".php">./app</directory>

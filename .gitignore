@@ -1,4 +1,5 @@
 .env.local.old
+coverage
 .env.local
-/vendor/
+vendor
 .phpunit.result.cache
