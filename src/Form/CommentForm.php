@@ -54,43 +54,4 @@ class CommentForm extends Form implements FormInterface
 
         return $this;
     }
-
-    /**
-     * @return boolean
-     */
-    public function isSubmitted(): bool
-    {
-        return $this->submitted;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {
-        $valid = new Validator($this->model);
-        
-        if (!empty($valid->valid())) {
-            $this->errors = $valid->valid();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @return ModelInterface
-     */
-    public function getData(): ModelInterface
-    {
-        return $this->model;
-    }
 }

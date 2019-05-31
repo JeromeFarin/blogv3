@@ -6,7 +6,6 @@ use Application\Model\User;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Validator;
 use Application\Manager\UserManager;
 
 /**
@@ -23,17 +22,17 @@ class UserForm extends Form implements FormInterface
     /**
      * @var bool
      */
-    public $submitted = false;
+    protected $submitted = false;
 
     /**
      * @var array
      */
-    public $errors = [];
+    protected $errors = [];
 
     /**
      * @var UserManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * AddForm constructor.
@@ -60,44 +59,5 @@ class UserForm extends Form implements FormInterface
         }
         
         return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isSubmitted(): bool
-    {
-        return $this->submitted;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {        
-        $valid = new Validator($this->model);
-        
-        if (!empty($valid->valid())) {
-            $this->errors += $valid->valid();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @return ModelInterface
-     */
-    public function getData(): ModelInterface
-    {
-        return $this->model;
     }
 }

@@ -23,17 +23,17 @@ class ChapterForm extends Form implements FormInterface
     /** 
      * @var ChapterManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * @var bool
      */
-    private $submitted = false;
+    protected $submitted = false;
 
     /**
      * @var array
      */
-    private $errors = [];
+    protected $errors = [];
 
     /**
      * AddForm constructor.
@@ -85,44 +85,5 @@ class ChapterForm extends Form implements FormInterface
                 $this->model->setContent($content[0]['content']);
             }
         }
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isSubmitted(): bool
-    {
-        return $this->submitted;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {
-        $valid = new Validator($this->model);
-        
-        if (!empty($valid->valid())) {
-            $this->errors = $valid->valid();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @return ModelInterface
-     */
-    public function getData(): ModelInterface
-    {
-        return $this->model;
     }
 }

@@ -75,10 +75,10 @@ class Controller
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             if ($this->form->getData()->getId() == null) {
                 $this->manager->insert($this->form->getData());
-                return $this->flash->setFlash(['Chapter was created']);
+                return $this->flash->setFlash(['He is created']);
             } else {
                 $this->manager->update($this->form->getData());
-                return $this->flash->setFlash(['Chapter was modified']);
+                return $this->flash->setFlash(['He is modified']);
             }
         }
 
@@ -97,7 +97,7 @@ class Controller
         
         if ($this->form->isSubmitted()) {
             $this->manager->delete($this->form->getData());
-            return $this->flash->setFlash(['Chapter was deleted']);
+            return $this->flash->setFlash(['He is deleted']);
         }
 
         return $this->flash->setFlash($this->form->getErrors());
