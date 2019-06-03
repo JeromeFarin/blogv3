@@ -37,7 +37,6 @@ class BookManager extends Manager
                 $this->model::getInfo()["table"]
             )
         );
-
         if ($statement->execute()) {
             return $statement->fetchAll(\PDO::FETCH_CLASS);
         } else {

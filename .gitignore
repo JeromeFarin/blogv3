@@ -3,3 +3,4 @@ coverage
 .env.local
 vendor
 .phpunit.result.cache
+phpunit.xml

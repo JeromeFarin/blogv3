@@ -12,7 +12,7 @@ abstract class Manager
     /**
      * @var \PDO
      */
-    private static $pdo;
+    public static $pdo;
 
     public function getPdo()
     {

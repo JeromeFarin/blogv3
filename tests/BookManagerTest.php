@@ -1,24 +1,24 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Application\Manager\BookManager;
 
 class BookManagerTest extends TestCase
 {
-    private $manager;
-
     public function testFindAllDoneIfExecute()
     {
-        $this->manager = $this->getMockBuilder('BookManager')
-        ->setMethods(array('findAllDone'))
-        ->getMock();
+        // $param = $this
+        //     ->getMockBuilder('Application\Manager\BookManager')
+        //     ->setMethods(array('findAllDone'))
+        //     ->getMock();
 
-        
-        $this->manager->method('findAllDone')->willReturn($this->manager);
+            
+        $manager = new BookManager();
+        // $manager->findAllDone();
+        // $manager->findAllDone();
 
-        // $this->manager->findAllDone();
-        
-        $this->assertIsObject($this->manager->findAllDone());
-
+        // dd($manager::getInfo());
+        $this->assertIsObject($manager);
     }
 
     // public function testFindAllDoneIfThrow()
