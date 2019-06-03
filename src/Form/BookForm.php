@@ -5,6 +5,7 @@ namespace Application\Form;
 use Application\Model\Book;
 use Framework\FormInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\UploadedFile;
 
 /**
  * Class AddForm
@@ -66,9 +67,13 @@ class BookForm extends Form implements FormInterface
      */
     private function uploadFile()
     {
-        $extension = strtolower(pathinfo($_FILES['book_cover']['name'], PATHINFO_EXTENSION));
+        $file = new UploadedFile($_FILES['book_cover']['tmp_name'],$_FILES['book_cover']['size'],$_FILES['book_cover']['error'],$_FILES['book_cover']['name']);
+
+        $extension = strtolower(pathinfo($file->getClientFilename(), PATHINFO_EXTENSION));
             
         $cover = $this->model->getId().'.'.$extension;
+
+        dd($cover);
 
         move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../public/img/cover/$cover");
 

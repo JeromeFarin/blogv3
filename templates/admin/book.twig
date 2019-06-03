@@ -24,6 +24,7 @@
 
     {% if book.cover != "null" %}
         <input type="hidden" name="book[cover]" value="{{book.cover}}">
+        <input type="file" name="book_cover">
         <img height="100px" src="/img/cover/{{book.cover}}" alt="Cover">
     {% else %}
         <input type="file" name="book_cover">

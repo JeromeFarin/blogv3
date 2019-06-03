@@ -7,22 +7,21 @@ class BookManagerTest extends TestCase
 {
     public function testFindAllDoneIfExecute()
     {
-        // $param = $this
-        //     ->getMockBuilder('Application\Manager\BookManager')
-        //     ->setMethods(array('findAllDone'))
-        //     ->getMock();
-
-            
         $manager = new BookManager();
-        // $manager->findAllDone();
-        // $manager->findAllDone();
+        $manager->findAllDone();
 
-        // dd($manager::getInfo());
         $this->assertIsObject($manager);
     }
 
     // public function testFindAllDoneIfThrow()
     // {
-        
+    //     $manager = $this->getMockBuilder('Application\Manager\BookManager')
+    //     ->disableOriginalConstructor()
+    //     ->setMethods(['findAllDone'])
+    //     ->getMock();
+
+    //     $manager->method('findAllDone')->willReturn(new \Exception);
+
+    //     $this->expectException(InvalidArgumentException::class);
     // }
 }
