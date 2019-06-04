@@ -19,8 +19,8 @@ abstract class Manager
         if (self::$pdo === null) {
             self::$pdo = new \PDO(
                 getenv("DATABASE_DSN"),
-                getenv('DATABASE_USER'),
-                getenv('DATABASE_PASSWORD')
+                getenv("DATABASE_USER"),
+                getenv("DATABASE_PASSWORD")
             );
         }
 

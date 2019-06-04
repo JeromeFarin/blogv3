@@ -6,6 +6,7 @@ use Application\Model\Book;
 use Framework\FormInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\UploadedFile;
+use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * Class AddForm
@@ -52,8 +53,8 @@ class BookForm extends Form implements FormInterface
 
             $this->getSetter($bookData);
 
-            if (isset($_FILES['book_cover']) && $_FILES['book_cover']['size'] > 0) {
-                $this->model->setCover($this->uploadFile());
+            if (isset($request->getUploadedFiles()['book_cover']) && $request->getUploadedFiles()['book_cover']->getSize() > 0) {
+                $this->model->setCover($this->uploadFile($request->getUploadedFiles()['book_cover']));
             }
         }
 
@@ -65,17 +66,13 @@ class BookForm extends Form implements FormInterface
      *
      * @return mixed
      */
-    private function uploadFile()
+    private function uploadFile(UploadedFileInterface $uploadedFile)
     {
-        $file = new UploadedFile($_FILES['book_cover']['tmp_name'],$_FILES['book_cover']['size'],$_FILES['book_cover']['error'],$_FILES['book_cover']['name']);
-
-        $extension = strtolower(pathinfo($file->getClientFilename(), PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION));
             
         $cover = $this->model->getId().'.'.$extension;
 
-        dd($cover);
-
-        move_uploaded_file($_FILES["book_cover"]["tmp_name"], __DIR__."/../../public/img/cover/$cover");
+        $uploadedFile->moveTo(__DIR__."/../../public/img/cover/$cover");
 
         return $cover;
     }
