@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Zend\Diactoros\ServerRequest;
 use Framework\Container;
+use Zend\Diactoros\UploadedFile;
 
 class BookFormTest extends TestCase
 {
@@ -23,24 +24,40 @@ class BookFormTest extends TestCase
         $container = new Container();
 
         $request = $request->withMethod('POST');
-        $request = $request->withParsedBody(['book' => ['name'=>'book_1','owner'=>'Denis']]);
+        $request = $request->withParsedBody(['book' => [
+            'id'=>'1',
+            'name'=>'book_1',
+            'owner'=>'Denis',
+            'cover' => '1.png',
+            'finished_date' => '2019-01-01'
+            ]]);
         
         $form = $container->get('Application\Form\BookForm');
-        
+
         $form->handle($request);
 
-        $this->assertIsObject($form);
+        $this->assertTrue($form->submitted);
+
+        $this->assertIsNumeric($form->model->getId());
+        $this->assertIsString($form->model->getName());
+        $this->assertIsString($form->model->getOwner());
+        $this->assertIsString($form->model->getCover());
+        $this->assertIsString($form->model->getFinished_date());
 
         return $request;
     }
+
 
     /**
      * @depends testHandleWithPOST
      */
     public function testHandleWithCover(ServerRequest $request)
     {
-        $request = $request->withUploadedFiles(['book_cover' => 'dqzdqzdq']);
+        $file = new UploadedFile('/tmp/',123456,0,'yes.png','yes');
 
-        dd($request);
+        $request = $request->withUploadedFiles(['book_cover' => $file]);
+        
+        $this->assertArrayHasKey('book_cover',$request->getUploadedFiles());
+        $this->assertGreaterThan(0,$request->getUploadedFiles()['book_cover']->getSize());
     }
 }

@@ -17,12 +17,12 @@ class BookForm extends Form implements FormInterface
     /**
      * @var Book
      */
-    protected $model;
+    public $model;
 
     /**
      * @var bool
      */
-    protected $submitted = false;
+    public $submitted = false;
 
     /**
      * @var array
