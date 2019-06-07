@@ -50,7 +50,7 @@ class CommentManager extends Manager
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "select * from %s where chapter = %s",
+                "select * from %s where chapter = %s order by id desc",
                 $this->model::getInfo()["table"],
                 $param
             )
