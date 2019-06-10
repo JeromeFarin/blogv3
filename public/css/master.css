@@ -1,5 +1,6 @@
 @import 'book.css';
 @import 'chapter.css';
+@import 'footer.css';
 
 html {
     height: 100%;
@@ -45,17 +46,6 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-footer {
-    height: 70px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #666666;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
 a {
     color: #000000 ;
     text-decoration: none;
@@ -70,7 +60,7 @@ p {
     width: 80%;
     margin-bottom: 70px;
 }
-input {
+input, button, select {
     border: 1px solid #000;
     border-radius: 10px;
     padding: 5px;
@@ -78,9 +68,9 @@ input {
 input:focus {
     border: 2px solid #e4c200;
 }
-input[type=submit] {
+input[type=submit], button {
     background-color: #666666;
 }
-input[type=submit]:hover {
+input[type=submit]:hover, .button_submit:hover {
     background-color: #e4c200;
 }
