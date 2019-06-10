@@ -53,10 +53,16 @@ class BookFormTest extends TestCase
      */
     public function testHandleWithCover(ServerRequest $request)
     {
+        $container = new Container();
         $file = new UploadedFile('/tmp/',123456,0,'yes.png','yes');
 
         $request = $request->withUploadedFiles(['book_cover' => $file]);
         
+        $form = $container->get('Application\Form\BookForm');
+
+        $form->handle($request);
+
+
         $this->assertArrayHasKey('book_cover',$request->getUploadedFiles());
         $this->assertGreaterThan(0,$request->getUploadedFiles()['book_cover']->getSize());
     }
