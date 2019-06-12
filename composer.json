@@ -1,9 +1,9 @@
 {
-    "name": "tboileau/php-poo",
+    "name": "jfarin/blog",
     "authors": [
         {
-            "name": "Thomas Boileau",
-            "email": "t-boileau@email.com"
+            "name": "Jérôme Farin",
+            "email": "j.farin38@gmail.com"
         }
     ],
     "require": {
