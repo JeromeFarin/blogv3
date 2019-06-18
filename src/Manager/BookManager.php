@@ -33,7 +33,7 @@ class BookManager extends Manager
     {
         $statement = $this->getPdo()->prepare(
             sprintf(
-                "select b.* from %s b inner join chapter c on c.book=b.id where c.content not like 'null' group by b.id",
+                "select b.* from %s b inner join chapter c on c.book=b.id where b.hidden = 0 and c.content not like 'null' group by b.id",
                 $this->model::getInfo()["table"]
             )
         );

@@ -19,6 +19,11 @@
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" name="book[id]" value="{{book.id}}">
+    {% if book.hidden %}
+        <input type="checkbox" name="book[hidden]" checked>
+    {% else %}
+        <input type="checkbox" name="book[hidden]">
+    {% endif %}
     <input type="text" name="book[name]" value="{{book.name}}">
     <input type="text" name="book[owner]" value="{{book.owner}}">
 

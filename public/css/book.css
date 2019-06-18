@@ -24,3 +24,6 @@
     align-items: center;
     width: 50%;
 }
+input.hidden_book {
+    background-color: red !important;
+}

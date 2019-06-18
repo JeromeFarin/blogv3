@@ -37,6 +37,11 @@ class Book implements ModelInterface
     private $finished_date;
 
     /**
+     * @var bool
+     */
+    private $hidden = 0;
+
+    /**
      * Get model info
      *
      * @return array
@@ -52,6 +57,7 @@ class Book implements ModelInterface
                 "owner" => "owner",
                 "cover" => "cover",
                 "finished_date" => "finished_date",
+                "hidden" => "hidden",
             ],
             "constraints" => [
                 "name" => [
@@ -164,6 +170,26 @@ class Book implements ModelInterface
     public function setFinished_date($finished_date)
     {
         $this->finished_date = $finished_date;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hidden
+     */ 
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Set the value of finished_date
+     *
+     * @return  self
+     */ 
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
 
         return $this;
     }
