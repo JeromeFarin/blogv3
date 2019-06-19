@@ -4,6 +4,7 @@ namespace Framework;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\ServerRequestFactory;
 
 /**
  * Controller class
@@ -35,7 +36,10 @@ class Controller
             'cache' => false
         ));
         $twig->addGlobal('session', $_SESSION);
-
+        $request = ServerRequestFactory::fromGlobals();
+        if (strpos($request->getUri()->getPath(),"admin")) {
+            return new HtmlResponse('admin level required');
+        }
         $twig->addGlobal('messages', $container->get('Framework\FlashBag')->getFlash());
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
             $check = $container->get('Application\Controller\UserController')->loginAuto();
