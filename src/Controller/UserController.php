@@ -50,10 +50,8 @@ class UserController extends Controller
         $user = new User();
         $user->setMail($_SESSION['mail']);
         $user->setPass($_SESSION['pass']);
-
-        $this->handler->checkMail($user);
-
-        return $this->redirect('/');
+        
+        return $this->handler->checkMail($user);
     }
 
     /**

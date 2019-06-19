@@ -2,48 +2,53 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
+    {% if check %}
+        <h1>{{title}}</h1>
 
-<p>Go back to <a href="/">Home Page</a></p>
+        <p>Go back to <a href="/">Home Page</a></p>
 
-<p>Go back to <a href="/admin">Panel Admin</a></p>
+        <p>Go back to <a href="/admin">Panel Admin</a></p>
 
 
-{% if form.errors.send is defined %}
-    <em id="send_mail">{{form.errors.send}}</em>
-    <script>
-        var x= setTimeout(function(){
-            $('#send_mail').remove();
-        }, 5000)
-    </script>
-{% endif %}
+        {% if form.errors.send is defined %}
+            <em id="send_mail">{{form.errors.send}}</em>
+            <script>
+                var x= setTimeout(function(){
+                    $('#send_mail').remove();
+                }, 5000)
+            </script>
+        {% endif %}
 
-<form method="post">
-    <input type="text" name="user[username]" placeholder="username"/>
-    <input type="mail" name="user[mail]" placeholder="mail"/>
-    <button type="submit" formaction="/admin/user/persist">Create user</button>
-</form>
-<br>
+        <form method="post">
+            <input type="text" name="user[username]" placeholder="username"/>
+            <input type="mail" name="user[mail]" placeholder="mail"/>
+            <button type="submit" formaction="/admin/user/persist">Create user</button>
+        </form>
+        <br>
 
-{% if form.errors.name is defined %}
-    ERROR : {{ form.errors.name }}
-{% endif %}
+        {% if form.errors.name is defined %}
+            ERROR : {{ form.errors.name }}
+        {% endif %}
 
-{% if form.errors.mail is defined %}
-    ERROR : {{ form.errors.mail }}
-{% endif %}
+        {% if form.errors.mail is defined %}
+            ERROR : {{ form.errors.mail }}
+        {% endif %}
 
-{% for user in users %}
+        {% for user in users %}
 
-<form method="post" enctype="multipart/form-data">
-    <input type="hidden" name="user[id]" value="{{user.id}}">
-    <input type="text" name="user[username]" value="{{user.username}}">
-    <input type="mail" name="user[mail]" value="{{user.mail}}">
-    <input type="submit" name="reset" value="Reset Password" formaction="/admin/user/reset">
-    <input type="submit" name="edit" value="Edit user" formaction="/admin/user/persist">
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this user ?');" value="Delete user" formaction="/admin/user/remove">
-</form>
-    
-{% endfor %}
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="user[id]" value="{{user.id}}">
+            <input type="text" name="user[username]" value="{{user.username}}">
+            <input type="mail" name="user[mail]" value="{{user.mail}}">
+            <input type="submit" name="reset" value="Reset Password" formaction="/admin/user/reset">
+            <input type="submit" name="edit" value="Edit user" formaction="/admin/user/persist">
+            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this user ?');" value="Delete user" formaction="/admin/user/remove">
+        </form>
+            
+        {% endfor %}
+    {% else %}
+        <p><a href="/login">login</a> required</p>
+    {% endif %}
+
 
 {% endblock %}

@@ -2,16 +2,21 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
+    {% if check %}
 
-<p>Go back to <a href="/">Home Page</a></p>
+        <h1>{{title}}</h1>
 
-<a href="/admin/book">Manage Books</a><br>
+        <p>Go back to <a href="/">Home Page</a></p>
 
-<a href="/admin/chapter">Manage Chapters</a><br>
+        <a href="/admin/book">Manage Books</a><br>
 
-<a href="/admin/comment">Manage Comments</a><br>
+        <a href="/admin/chapter">Manage Chapters</a><br>
 
-<a href="/admin/user">Manager Users</a>
+        <a href="/admin/comment">Manage Comments</a><br>
+
+        <a href="/admin/user">Manager Users</a>
+    {% else %}
+        <p><a href="/login">login</a> required</p>
+    {% endif %}
 
 {% endblock %}

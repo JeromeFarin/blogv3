@@ -2,46 +2,51 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
+    {% if check %}
+        <h1>{{title}}</h1>
 
-<p>Go back to <a href="/">Home Page</a></p>
+        <p>Go back to <a href="/">Home Page</a></p>
 
-<p>Go back to <a href="/admin">Panel Admin</a></p>
+        <p>Go back to <a href="/admin">Panel Admin</a></p>
 
-<form method="post">
-    <select name="chapter[book]">
-        {% for book in books %}
-            <option value="{{book.id}}">{{book.name}}</option>
-        {% endfor %}
-    </select>
-    <input type="text" name="chapter[name]" placeholder="name"/>
-    <button class="button_submit" type="submit" formaction="/admin/chapter/persist">Create chapter</button>
-</form>
-<br>
+        <form method="post">
+            <select name="chapter[book]">
+                {% for book in books %}
+                    <option value="{{book.id}}">{{book.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="chapter[name]" placeholder="name"/>
+            <button class="button_submit" type="submit" formaction="/admin/chapter/persist">Create chapter</button>
+        </form>
+        <br>
 
-{% for chapter in chapters %}
+        {% for chapter in chapters %}
 
-<form method="post" enctype="multipart/form-data">
-    <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
-    <select name="chapter[book]">
-        {% for book in books %}
-            {% if book.id == chapter.book %}
-                <option value="{{book.id}}" selected>{{book.name}}</option>
-            {% else %}
-                <option value="{{book.id}}">{{book.name}}</option>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
+            <select name="chapter[book]">
+                {% for book in books %}
+                    {% if book.id == chapter.book %}
+                        <option value="{{book.id}}" selected>{{book.name}}</option>
+                    {% else %}
+                        <option value="{{book.id}}">{{book.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input type="number" name="chapter[number]" value="{{chapter.number}}">
+            <input type="text" name="chapter[name]" value="{{chapter.name}}">
+            <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/persist">
+            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
+            <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
+            {% if chapter.content != 'null' %}
+                <a href="/chapter/{{chapter.id}}">Go to chapter</a>
             {% endif %}
-        {% endfor %}
-    </select>
-    <input type="number" name="chapter[number]" value="{{chapter.number}}">
-    <input type="text" name="chapter[name]" value="{{chapter.name}}">
-    <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/persist">
-    <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
-    <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
-    {% if chapter.content != 'null' %}
-        <a href="/chapter/{{chapter.id}}">Go to chapter</a>
-    {% endif %}
-</form>
+        </form>
 
-{% endfor %}
+        {% endfor %}
+    {% else %}
+        <p><a href="/login">login</a> required</p>
+    {% endif %}
+
 
 {% endblock %}

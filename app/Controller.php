@@ -36,10 +36,7 @@ class Controller
             'cache' => false
         ));
         $twig->addGlobal('session', $_SESSION);
-        $request = ServerRequestFactory::fromGlobals();
-        if (strpos($request->getUri()->getPath(),"admin")) {
-            return new HtmlResponse('admin level required');
-        }
+        
         $twig->addGlobal('messages', $container->get('Framework\FlashBag')->getFlash());
         if (isset($_SESSION['mail']) && isset($_SESSION['pass'])) {
             $check = $container->get('Application\Controller\UserController')->loginAuto();

@@ -2,21 +2,25 @@
 
 {% block content %}
 
-<h1>{{title}}</h1>
+    {% if check %}
+        <h1>{{title}}</h1>
 
-<p>Go back to <a href="/">Home Page</a></p>
+        <p>Go back to <a href="/">Home Page</a></p>
 
-<p>Go back to <a href="/admin">Panel Admin</a></p>
+        <p>Go back to <a href="/admin">Panel Admin</a></p>
 
-<p>Go to chapter (<a href="/chapter/{{chapter.id}}">{{chapter.name}}</a>)</p>
+        <p>Go to chapter (<a href="/chapter/{{chapter.id}}">{{chapter.name}}</a>)</p>
 
-<form method="post">
-    <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
-    <input type="hidden" name="chapter[book]" value="{{chapter.book}}">
-    <input type="hidden" name="chapter[number]" value="{{chapter.number}}">
-    <input type="hidden" name="chapter[name]" value="{{chapter.name}}">
-    <textarea name="chapter[content]" class="text_block" cols="30" rows="10">{{chapter.content}}</textarea>
-    <input type="submit" value="Validate" formaction="/admin/content/update/{{chapter.id}}">
-</form>
-
+        <form method="post">
+            <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
+            <input type="hidden" name="chapter[book]" value="{{chapter.book}}">
+            <input type="hidden" name="chapter[number]" value="{{chapter.number}}">
+            <input type="hidden" name="chapter[name]" value="{{chapter.name}}">
+            <textarea name="chapter[content]" class="text_block" cols="30" rows="10">{{chapter.content}}</textarea>
+            <input type="submit" value="Validate" formaction="/admin/content/update/{{chapter.id}}">
+        </form>
+    {% else %}
+        <p><a href="/login">login</a> required</p>
+    {% endif %}
+    
 {% endblock %}
