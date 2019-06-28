@@ -29,7 +29,8 @@ class BookFormTest extends TestCase
             'name'=>'book_1',
             'owner'=>'Denis',
             'cover' => '1.png',
-            'finished_date' => '2019-01-01'
+            'finished_date' => '2019-01-01',
+            'hidden' => '1'
             ]]);
         
         $form = $container->get('Application\Form\BookForm');
@@ -43,6 +44,7 @@ class BookFormTest extends TestCase
         $this->assertIsString($form->model->getOwner());
         $this->assertIsString($form->model->getCover());
         $this->assertIsString($form->model->getFinished_date());
+        $this->assertIsNumeric($form->model->getHidden());
 
         return $request;
     }
