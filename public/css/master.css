@@ -74,3 +74,10 @@ input[type=submit], button {
 input[type=submit]:hover, .button_submit:hover {
     background-color: #e4c200;
 }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid #000
+}

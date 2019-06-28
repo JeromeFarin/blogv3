@@ -16,38 +16,64 @@
         </form>
         <br>
 
-        {% for book in books %}
-
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="book[id]" value="{{book.id}}">
-            {% if book.hidden %}
-                <input type="checkbox" name="book[hidden]" checked>
-            {% else %}
-                <input type="checkbox" name="book[hidden]">
-            {% endif %}
-            <input type="text" name="book[name]" value="{{book.name}}">
-            <input type="text" name="book[owner]" value="{{book.owner}}">
-
-            {% if book.cover != "null" %}
-                <input type="hidden" name="book[cover]" value="{{book.cover}}">
-                <input type="file" name="book_cover">
-                <img height="100px" src="/img/cover/{{book.cover}}" alt="Cover">
-            {% else %}
-                <input type="file" name="book_cover">
-            {% endif %}
-            
-            <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
-            <input type="submit" name="edit" value="Edit book" formaction="/admin/book/persist">
-            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book" formaction="/admin/book/remove">
-
-            {% for chapter in chapters %}
-                {% if chapter.id == book.id %}
-                    <a href="/book/{{book.id}}">Go to book</a>
-                {% endif %}
+        <table>
+            <tr>
+                <th>Hidden</th>
+                <th>Name</th>
+                <th>Owner</th>
+                <th>Cover</th>
+                <th>Finished date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>URL</th>
+            </tr>
+            {% for book in books %}
+                <tr>
+                    <form method="post" enctype="multipart/form-data">
+                        <td>
+                            <input type="hidden" name="book[id]" value="{{book.id}}">
+                            {% if book.hidden %}
+                                <input type="checkbox" name="book[hidden]" checked>
+                            {% else %}
+                                <input type="checkbox" name="book[hidden]">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input type="text" name="book[name]" value="{{book.name}}">
+                        </td>
+                        <td>
+                            <input type="text" name="book[owner]" value="{{book.owner}}">
+                        </td>
+                        <td>
+                            {% if book.cover != "null" %}
+                                <input type="hidden" name="book[cover]" value="{{book.cover}}">
+                                <input type="file" name="book_cover"><br>
+                                <img height="100px" src="/img/cover/{{book.cover}}" alt="Cover">
+                            {% else %}
+                                <input type="file" name="book_cover">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input type="date" name="book[finished_date]" value="{{book.finished_date}}">
+                        </td>
+                        <td>
+                            <input type="submit" name="edit" value="Edit book" formaction="/admin/book/persist">
+                        </td>
+                        <td>
+                            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this book ?');" value="Delete book" formaction="/admin/book/remove">
+                        </td>
+                        <td>
+                            {% for chapter in chapters %}
+                                {% if chapter.id == book.id %}
+                                    <a href="/book/{{book.id}}">Go to book</a>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </form>
+                </tr>
             {% endfor %}
-        </form>
+        </table>
             
-        {% endfor %}
     {% else %}
         <p><a href="/login">login</a> required</p>
     {% endif %}

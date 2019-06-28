@@ -54,6 +54,8 @@ class BookForm extends Form implements FormInterface
             
             if (isset($request->getUploadedFiles()['book_cover']) && $request->getUploadedFiles()['book_cover']->getSize() > 0) {
                 $this->model->setCover($this->uploadFile($request->getUploadedFiles()['book_cover']));
+            } else {
+                $this->model->setCover('default.png');
             }
 
             if (isset($request->getParsedBody()["book"]["hidden"])) {

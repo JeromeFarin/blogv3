@@ -20,30 +20,55 @@
         </form>
         <br>
 
-        {% for chapter in chapters %}
-
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
-            <select name="chapter[book]">
-                {% for book in books %}
-                    {% if book.id == chapter.book %}
-                        <option value="{{book.id}}" selected>{{book.name}}</option>
-                    {% else %}
-                        <option value="{{book.id}}">{{book.name}}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            <input type="number" name="chapter[number]" value="{{chapter.number}}">
-            <input type="text" name="chapter[name]" value="{{chapter.name}}">
-            <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/persist">
-            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
-            <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
-            {% if chapter.content != 'null' %}
-                <a href="/chapter/{{chapter.id}}">Go to chapter</a>
-            {% endif %}
-        </form>
-
-        {% endfor %}
+        <table>
+            <tr>
+                <th>Book</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Content</th>
+                <th>URL</th>
+            </tr>
+            {% for chapter in chapters %}
+                <tr>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="chapter[id]" value="{{chapter.id}}">
+                        <td>
+                            <select name="chapter[book]">
+                                {% for book in books %}
+                                    {% if book.id == chapter.book %}
+                                        <option value="{{book.id}}" selected>{{book.name}}</option>
+                                    {% else %}
+                                        <option value="{{book.id}}">{{book.name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" name="chapter[number]" value="{{chapter.number}}">
+                        </td>
+                        <td>
+                            <input type="text" name="chapter[name]" value="{{chapter.name}}">
+                        </td>
+                        <td>
+                            <input type="submit" name="edit" value="Edit chapter" formaction="/admin/chapter/persist">
+                        </td>
+                        <td>
+                            <input type="submit" name="delete" onclick="return confirm('Are you sure to delete this chapter ?');" value="Delete chapter" formaction="/admin/chapter/remove">
+                        </td>
+                        <td>
+                            <a href="/admin/content/{{chapter.id}}">Edit chapter content</a>
+                        </td>
+                        <td>
+                            {% if chapter.content != 'null' %}
+                                <a href="/chapter/{{chapter.id}}">Go to chapter</a>
+                            {% endif %}
+                        </td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
         <p><a href="/login">login</a> required</p>
     {% endif %}
