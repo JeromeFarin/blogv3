@@ -13,6 +13,7 @@ footer ul {
     display: flex;
     list-style: none;
     align-items: center;
+    margin: 0;
 }
 footer ul a {
     margin: 10px;
