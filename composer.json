@@ -11,7 +11,6 @@
         "zendframework/zend-httphandlerrunner": "^1.1",
         "twig/twig": "^2.0",
         "symfony/dotenv": "^4.2",
-        "symfony/var-dumper": "^4.2",
         "symfony/yaml": "^4.1",
         "swiftmailer/swiftmailer": "^6.0"
     },
@@ -22,6 +21,7 @@
         }
     },
     "require-dev": {
+        "symfony/var-dumper": "^4.2",
         "symfony/debug": "^4.2",
         "phpunit/phpunit": "^8"
     }
