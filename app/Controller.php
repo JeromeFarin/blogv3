@@ -4,7 +4,6 @@ namespace Framework;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
 
 /**
  * Controller class

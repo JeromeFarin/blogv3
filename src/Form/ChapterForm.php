@@ -6,7 +6,6 @@ use Application\Model\Chapter;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Validator;
 use Application\Manager\ChapterManager;
 
 /**

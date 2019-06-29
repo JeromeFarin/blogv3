@@ -6,7 +6,6 @@ use Application\Model\Comment;
 use Framework\FormInterface;
 use Framework\ModelInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\Validator;
 
 /**
  * Class AddForm

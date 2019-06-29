@@ -3,7 +3,6 @@ namespace Application\Handler;
 
 use Framework\Controller;
 use Application\Manager\CommentManager;
-use Zend\Diactoros\ServerRequest;
 use Application\Form\CommentForm;
 use Framework\FlashBag;
 

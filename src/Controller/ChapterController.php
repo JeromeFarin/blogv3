@@ -5,8 +5,6 @@ namespace Application\Controller;
 use Framework\Controller;
 use Application\Handler\ChapterHandler;
 use Application\Handler\CommentHandler;
-use Application\Form\CommentForm;
-use Application\Manager\CommentManager;
 use Zend\Diactoros\ServerRequest;
 
 /**

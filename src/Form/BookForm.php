@@ -5,7 +5,6 @@ namespace Application\Form;
 use Application\Model\Book;
 use Framework\FormInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\UploadedFile;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
